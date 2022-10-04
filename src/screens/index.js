@@ -1,0 +1,10 @@
+export { default as Splash } from './Splash';
+export { default as Login } from './Login';
+export { default as Signup } from './Signup';
+export { default as ForgotPassword } from './ForgotPassword';
+export { default as Thankyou } from './Thankyou';
+export { default as Home } from './Home';
+export { default as Projects } from './Projects';
+export { default as Staff } from './Staff';
+export { default as Notices } from './Notices';
+export { default as Account } from './Account';
