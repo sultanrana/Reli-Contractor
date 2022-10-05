@@ -1,4 +1,8 @@
+import 'react-native-gesture-handler';
 import React from 'react';
+import SimpleToast from 'react-native-simple-toast';
+import MainStack from './src/Stacks/MainStack'
+
 import {
   View,
   Text
@@ -7,11 +11,7 @@ import {
 const App = () => {
 
   return (
-    <View>
-      <Text>
-        Reli Contractor
-      </Text>
-    </View>
+    <MainStack/>
   );
 };
 

@@ -1,27 +1,66 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
-import { splashScreen } from '../theme/Images';
+import React, { useEffect } from 'react'
+import { Text, View, Image, useColorScheme } from 'react-native'
 
-const Splash = () => {
-  const navigation = useNavigation();
+import { Images } from '../Assets/Images/Index'
+import Colors from '../Theme/Colors'
+import Fonts from '../Assets/Fonts/Index'
+import { FontSize } from '../Theme/FontSize'
+import { References } from '../Constants/References'
 
-  useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('authStack');
-    }, 3000);
-  }, [navigation]);
 
-  return (
-    <ImageBackground source={splashScreen} style={styles.imageBackground} />
-  );
-};
+const Splash = ({ navigation }) => {
 
-export default Splash;
+    const scheme = useColorScheme()
 
-const styles = StyleSheet.create({
-  imageBackground: {
-    height: '100%',
-    width: '100%',
-  },
-});
+    useEffect(()=> {
+        setTimeout(()=> {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: References.AuthenticationStack }],
+            })
+        }, 1500)
+    }, [])
+
+    return (
+        <View style={{ height: '100%', flexDirection: 'column', width: '100%', backgroundColor: Colors(scheme).Primary, alignItems: 'center', justifyContent: 'center' }}>
+
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+
+            </View>
+
+            <View style={{ flex: 2, flexDirection: 'column', justifyContent: 'center' }}>
+
+                <Image source={Images.Logo} style={{
+                    width: 200, height: 200, tintColor: 'white'
+                }} resizeMode='contain' resizeMethod='resize'/>
+
+            </View>
+
+
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end', paddingVertical: 24 }}>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+
+                    <Text style={{
+                        fontFamily: Fonts.SemiBold,
+                        textAlignVertical: 'center',
+                        marginHorizontal: 2,
+                        color: Colors(scheme).White,
+                        fontSize: FontSize.xlarge
+                    }}>
+                        {'For Contractors'}
+                    </Text>
+
+                </View>
+
+
+            </View>
+
+
+
+
+        </View>
+    )
+}
+
+export default Splash

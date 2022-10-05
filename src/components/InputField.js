@@ -1,92 +1,160 @@
-import { StyleSheet, View, TextInput, Text } from 'react-native';
 import React from 'react';
-import PropTypes from 'prop-types';
-import { ThemeConstants } from '../theme';
+import SimpleToast from 'react-native-simple-toast';
 
-const InputField = ({
-  placeholder,
-  value,
-  leftIcon,
-  rightIcon,
-  rightIconPress,
-  onChangeText,
-  labelText,
-  keyboardType,
-  show,
-  secureTextEntry,
-  onSubmit,
-}) => {
-  return (
-    <View>
-      <Text style={styles.label}>{labelText}</Text>
-      <View style={styles.main}>
-        {/* {leftIcon && (
-          <Icon
-            type="Ionicons"
-            name={show ? 'ios-eye-off-outline' : 'ios-eye-outline'}
-            style={{ color: AppStyles.color.COLOR_WHITE }}
-          />
-        )} */}
-        <TextInput
-          placeholder={placeholder}
-          style={styles.textInput}
-          onChangeText={onChangeText}
-          value={value}
-          keyboardType={keyboardType}
-          secureTextEntry={show ? false : secureTextEntry}
-          placeholderTextColor={ThemeConstants.Colors.grey}
-          onSubmitEditing={onSubmit}
-        />
-        {/* {rightIcon && (
-          <Icon
-            type="Ionicons"
-            name={show ? 'ios-eye-off-outline' : 'ios-eye-outline'}
-            style={{ color: AppStyles.color.COLOR_WHITE }}
-            onPress={rightIconPress}
-          />
-        )} */}
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import colors from '../Theme/Colors';
+import Fonts from '../Assets/Fonts/Index';
+import { FontSize } from '../Theme/FontSize';
+
+const InputField =
+  ({
+    leftIcon,
+    rightIcon,
+    placeholder,
+    value,
+    onChangeText,
+    password,
+    autoCapitalize,
+    isRightIcon,
+    labelStyle,
+    keyboardType = 'default',
+    returnKeyType = 'next',
+    onSubmitEditing,
+    fieldRef,
+    customStyle,
+    rightIconOnPress,
+    label,
+    multiline,
+    rightIconStyle,
+    editable,
+    maxLength,
+    isTitle = true,
+    title,
+    isError,
+    errorText,
+    scheme = 'light'
+  }) => {
+
+
+
+
+    const styles = StyleSheet.create({
+
+      mainContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        backgroundColor: colors(scheme).White,
+        borderWidth: 0.75,
+        borderColor: colors(scheme).Black,
+        paddingHorizontal: 8,
+        elevation: 0,
+        borderRadius: 8,
+        height: 56
+      },
+      icon: {
+        height: '100%',
+        width: '12%',
+        paddingVertical: 12,
+        alignItems: 'center',
+      },
+      passwordIcon: {
+        height: '100%',
+        width: '12%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      input: {
+        //color: colors.textSecondary,
+        height: '100%',
+      },
+      leftIconStyle: {
+        height: 20,
+        width: 20,
+        resizeMode: 'contain',
+        tintColor: colors(scheme).Primary
+      },
+      rightIconStyle: {
+        height: 19,
+        width: 19,
+        resizeMode: 'contain',
+        tintColor: colors(scheme).Secondary
+      },
+    });
+
+    return (
+
+      <View style={{ justifyContent: 'center', flexDirection: 'column', marginVertical: 4 }}>
+        {
+          (isTitle && title !== '') &&
+          <View style={{
+            margin: 4,
+
+          }}>
+            <Text style={{fontSize: FontSize.medium, color: colors(scheme).Black, fontFamily: Fonts.SemiBold}}>{title}</Text>
+          </View>
+        }
+        <View style={[styles.mainContainer, customStyle]}>
+
+          {
+            leftIcon &&
+            <View style={[styles.icon, { justifyContent: multiline ? 'flex-start' : 'center' }]}>
+              <Image source={leftIcon} style={styles.leftIconStyle} />
+            </View>
+          }
+          {
+            label &&
+            <Text>{label}</Text>
+          }
+          <View style={[styles.input, {
+            width: isRightIcon ? '88%' : '100%',
+            justifyContent: multiline ? 'flex-start' : 'center'
+          }]}>
+            <TextInput
+              style={{ fontSize: 14, fontFamily: Fonts.Regular, color: colors(scheme).TextTitle }}
+              placeholder={placeholder}
+              value={value}
+              onChangeText={onChangeText}
+              secureTextEntry={password}
+              placeholderTextColor={colors(scheme).Grey}
+              autoCapitalize={autoCapitalize}
+              keyboardType={keyboardType}
+              returnKeyType={returnKeyType}
+              onSubmitEditing={onSubmitEditing}
+              multiline={multiline}
+              editable={editable}
+              ref={fieldRef}
+              blurOnSubmit={false}
+              maxLength={maxLength}
+
+            />
+          </View>
+
+          {
+            isRightIcon &&
+            <View style={styles.passwordIcon}>
+              <TouchableOpacity
+                onPress={rightIconOnPress}
+                activeOpacity={0.4}
+              >
+                <Image source={rightIcon} style={[styles.rightIconStyle]} />
+              </TouchableOpacity>
+            </View>
+          }
+
+        </View>
       </View>
-    </View>
-  );
-};
+
+
+
+    )
+  };
 
 export default InputField;
 
-InputField.propTypes = {
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  leftIcon: PropTypes.any,
-  rightIcon: PropTypes.any,
-  rightIconPress: PropTypes.func,
-  onChange: PropTypes.func,
-};
-
-InputField.defaultProps = {
-  placeholder: 'Please enter text here',
-};
-
-const styles = StyleSheet.create({
-  main: {
-    flexDirection: 'row',
-    borderColor: 'grey',
-    borderWidth: 1,
-    borderRadius: 5,
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0)',
-  },
-  label: {
-    color: ThemeConstants.Colors.text,
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginLeft: 5,
-    marginBottom: 5,
-  },
-  textInput: {
-    backgroundColor: 'rgba(255,255,255,0)',
-    width: '90%',
-    color: ThemeConstants.Colors.text,
-    paddingLeft: 10,
-    height: 50,
-  },
-});

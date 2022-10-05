@@ -4,6 +4,8 @@
 
 import 'react-native';
 import React from 'react';
+import SimpleToast from 'react-native-simple-toast';
+
 import App from '../App';
 
 // Note: test renderer must be required after react-native.
