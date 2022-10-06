@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../Theme/Colors';
+import Colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { FontSize } from '../Theme/FontSize';
 
@@ -50,9 +50,9 @@ const InputField =
       mainContainer: {
         flexDirection: 'row',
         width: '100%',
-        backgroundColor: colors(scheme).White,
+        backgroundColor: Colors(scheme).White,
         borderWidth: 0.75,
-        borderColor: colors(scheme).Black,
+        borderColor: Colors(scheme).Black,
         paddingHorizontal: 8,
         elevation: 0,
         borderRadius: 8,
@@ -71,20 +71,19 @@ const InputField =
         alignItems: 'center',
       },
       input: {
-        //color: colors.textSecondary,
         height: '100%',
       },
       leftIconStyle: {
         height: 20,
         width: 20,
         resizeMode: 'contain',
-        tintColor: colors(scheme).Primary
+        tintColor: Colors(scheme).Primary
       },
       rightIconStyle: {
         height: 19,
         width: 19,
         resizeMode: 'contain',
-        tintColor: colors(scheme).Secondary
+        tintColor: Colors(scheme).Secondary
       },
     });
 
@@ -97,7 +96,7 @@ const InputField =
             margin: 4,
 
           }}>
-            <Text style={{fontSize: FontSize.medium, color: colors(scheme).Black, fontFamily: Fonts.SemiBold}}>{title}</Text>
+            <Text style={{fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold}}>{title}</Text>
           </View>
         }
         <View style={[styles.mainContainer, customStyle]}>
@@ -117,12 +116,12 @@ const InputField =
             justifyContent: multiline ? 'flex-start' : 'center'
           }]}>
             <TextInput
-              style={{ fontSize: 14, fontFamily: Fonts.Regular, color: colors(scheme).TextTitle }}
+              style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
               placeholder={placeholder}
               value={value}
               onChangeText={onChangeText}
               secureTextEntry={password}
-              placeholderTextColor={colors(scheme).Grey}
+              placeholderTextColor={Colors(scheme).Grey}
               autoCapitalize={autoCapitalize}
               keyboardType={keyboardType}
               returnKeyType={returnKeyType}
