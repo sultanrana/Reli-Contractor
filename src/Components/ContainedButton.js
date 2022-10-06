@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors(scheme).Primary,
         flexDirection: 'row',
-        borderRadius:4,
+        borderRadius:10,
         elevation: 2
     },
     btnText: {

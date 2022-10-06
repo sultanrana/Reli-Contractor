@@ -26,16 +26,18 @@ const Notifications = ({ navigation }) => {
     <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
-      <Tabs.Navigator pageMargin={2} screenOptions={{
-        tabBarActiveTintColor: AppColors.Primary,
-        tabBarIndicatorContainerStyle: {
-          backgroundColor: AppColors.Background
-        },
-        tabBarIndicatorStyle: {
-          backgroundColor: AppColors.Primary,
+      <Tabs.Navigator pageMargin={2}
+        screenOptions={{
+          tabBarActiveTintColor: AppColors.Primary,
+          tabBarInactiveTintColor: '#979797',
+          tabBarIndicatorContainerStyle: {
+            backgroundColor: AppColors.Background
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: AppColors.Primary,
 
-        },
-      }}>
+          },
+        }}>
         <Tabs.Screen name='Unread' component={Unread} />
         <Tabs.Screen name='Read' component={Read} />
 

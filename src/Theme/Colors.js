@@ -9,7 +9,10 @@ class ColorsTemplate {
             text,
             textTitle,
             variation,
-            BlackGreyish
+            BlackGreyish,
+            dateBackground,
+            border,
+            red
         }
     ) {
         this.Background = background
@@ -23,8 +26,12 @@ class ColorsTemplate {
         this.Text = text
         this.TextTitle = textTitle
         this.Variation = variation,
-        this.BlackGreyish = '#181725',
-        this.Transparent = "rgba(0,0,0,0)"
+            this.BlackGreyish = '#181725',
+            this.Transparent = "rgba(0,0,0,0)",
+            this.DateBackground = dateBackground,
+            this.Border = border,
+            this.Danger = red
+
     }
 }
 
@@ -36,7 +43,10 @@ const lightColors = new ColorsTemplate({
     secondary: '#4C4F4D',
     text: '#212529',
     textTitle: 'black',
-    variation: '#dc3545'
+    variation: '#dc3545',
+    dateBackground: '#E0E0E0',
+    border: '#5F6368',
+    red: '#BA1A1A'
 })
 
 const darkColors = new ColorsTemplate({
@@ -47,10 +57,15 @@ const darkColors = new ColorsTemplate({
     secondary: '#4C4F4D',
     text: '#212529',
     textTitle: '#ffffff',
-    variation: '#FF685F'
+    variation: '#FF685F',
+    dateBackground: '#E0E0E0',
+    border: '#5F6368',
+    red: '#BA1A1A'
+
+
 })
 
-const Colors = (scheme)=>{
+const Colors = (scheme) => {
     //console.log('Color Scheme ', scheme);
     return (scheme === 'light') ? lightColors : darkColors;
     //return darkColors
@@ -60,4 +75,4 @@ export default Colors
 
 const colors = lightColors
 
-export {colors}
+export { colors }
