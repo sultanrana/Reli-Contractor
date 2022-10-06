@@ -17,7 +17,7 @@ import { Icons, Images } from '../Assets/Images/Index';
 import Colors from '../Theme/Colors';
 import { GetStyles } from '../Theme/AppStyles';
 
-const ProjectBoxWithService =
+const ProjectBoxWithDate =
     ({
         navigation,
         title,
@@ -40,7 +40,7 @@ const ProjectBoxWithService =
                 backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
                 borderRadius: 16,
                 zIndex: 0,
-                elevation:1,
+                elevation: 1,
                 // height:90,
             },
             image: {
@@ -48,6 +48,16 @@ const ProjectBoxWithService =
                 height: 88,
                 zIndex: 0,
                 borderRadius: 16
+            },
+            dateContainer: {
+                height: '70%',
+                width: '100%',
+                backgroundColor: AppColors.Background,
+                borderRadius: 10,
+                position: 'absolute',
+                top: 3,
+                // justifyContent: 'center',
+                // alignItems: 'center'
             }
 
         });
@@ -60,22 +70,57 @@ const ProjectBoxWithService =
                     <Image source={{ uri: imageURL1 }} style={styles.image} resizeMode='contain' resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
+                        alignItems: 'center',
                         width: 60,
                         height: 70,
-                        backgroundColor: AppColors.White,
-                        borderColor: AppColors.Primary,
-                        borderWidth: 1,
+                        backgroundColor: AppColors.DateBackground,
                         borderRadius: 10,
                         zIndex: 1,
                         position: 'absolute',
-                        right: 0
+                        right: 0,
+                        // paddingVertical: 4,
+                        paddingHorizontal: 3.5
                     }}>
-                        <Image source={{ uri: imageURL2 }} style={{
-                            zIndex: 2,
-                            height: 40,
-                            width: 40,
-                            alignSelf: 'center'
-                        }} resizeMode='contain' resizeMethod='resize' />
+                        <View style={styles.dateContainer}>
+
+                            <View style={{
+                                height: '40%',
+                                borderTopLeftRadius: 10,
+                                borderTopRightRadius: 10,
+                                backgroundColor: AppColors.Primary,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{
+                                    fontFamily: Fonts.Regular,
+                                    fontSize: FontSize.small,
+                                    color: AppColors.Background,
+                                    alignSelf: 'center'
+                                }}>
+                                    {'Wed'}
+                                </Text>
+                            </View>
+                            <Text style={{
+                                fontFamily: Fonts.Medium,
+                                fontSize: FontSize.large,
+                                color: AppColors.TextTitle,
+                                textAlignVertical: 'center',
+                                alignSelf: 'center'
+                            }}>
+                                {'06'}
+                            </Text>
+                        </View>
+                        <Text style={{
+                            fontFamily: Fonts.Medium,
+                            fontSize: FontSize.small,
+                            color: AppColors.TextTitle,
+                            textAlignVertical: 'center',
+                            position: 'absolute',
+                            bottom: 0
+                        }}>
+                            {'Oct'}
+                        </Text>
+
                     </View>
                 </View>
 
@@ -123,5 +168,5 @@ const ProjectBoxWithService =
         )
     };
 
-export default ProjectBoxWithService;
+export default ProjectBoxWithDate;
 

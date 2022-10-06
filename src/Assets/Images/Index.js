@@ -2,6 +2,7 @@ const Icons = {
     Back: require('./back_circle.png'),
     ShowPassword: require('./show_password.png'),
     HidePassword: require('./hide_password.png'),
+    Forward: require('./right.png'),
     
     Home: require('./home.png'),
     Projects: require('./projects.png'),
