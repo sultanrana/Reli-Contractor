@@ -30,7 +30,7 @@ const TabItemSimple = ({ navigation, icon, path, index, activeIndex, reset = fal
                 height: 20,
                 width: 20
 
-            }} resizeMode='contain' resizeMethod='resize' />
+            }} resizeMode='contain' />
 
         </TouchableOpacity>
     )

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack'
+import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+
 import { References } from '../Constants/References';
 import Splash from '../Screens/Splash';
 import AuthStack from './AuthStack';
-import { useColorScheme } from 'react-native';
 import DashboardStack from './DashboardStack';
+import ProjectDetails from '../Screens/Dashboard/ProjectDetails';
 
 const Stack = createStackNavigator()
 
@@ -17,7 +19,10 @@ const MainStack = () => {
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false
+                    headerShown: false,
+                    // gestureEnabled: true,
+                    gestureDirection: 'horizontal',
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 }} initialRouteName={References.Splash}>
 
                 <Stack.Screen
@@ -31,6 +36,10 @@ const MainStack = () => {
                 <Stack.Screen
                     name={References.DashboardStack}
                     component={DashboardStack} />
+
+                <Stack.Screen
+                    name={References.ProjectDetails}
+                    component={ProjectDetails} />
 
             </Stack.Navigator>
         </NavigationContainer>

@@ -23,6 +23,12 @@ const CommonStyles = StyleSheet.create({
         paddingTop: 27,
         backgroundColor: Colors('light').White,
     },
+    ProjectDetailsScreen: {
+        flex: 1,
+        paddingTop: 21,
+        paddingHorizontal: 10,
+        backgroundColor: Colors('light').White,
+    },
     DeleteBtn: {
         fontFamily: Fonts.Regular,
         fontSize: FontSize.xlarge,

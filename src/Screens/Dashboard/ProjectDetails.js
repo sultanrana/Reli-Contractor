@@ -4,35 +4,43 @@ import SimpleToast from 'react-native-simple-toast';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
-import LogoOver from '../../Components/LogoOver';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+import LogoOver from '../../Components/LogoOver';
 import { FontSize } from '../../Theme/FontSize';
 import Colors, { colors } from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Unread from '../Notifications/Unread';
-import Read from '../Notifications/Read';
+import Overview from '../ProjectDetails/Overview'
+import Message from '../ProjectDetails/Message'
+import Service from '../ProjectDetails/Service'
+import Assignment from '../ProjectDetails/Assignment'
+import Finances from '../ProjectDetails/Finances'
 
 const Tabs = createMaterialTopTabNavigator()
 const screenWidth = Dimensions.get('window').width
 
-const Notifications = ({ navigation }) => {
+const ProjectDetails = ({ navigation }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-
   return (
     <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
+      <LogoOver navigation={navigation} shouldShowBack bgWhite />
 
       <Tabs.Navigator
-       pageMargin={2}
+        // initialLayout={
+        //   {
+        //     width: Dimensions.get('window').width
+        //   }}
+
+        pageMargin={2}
         screenOptions={{
-          tabBarItemStyle: { width: screenWidth / 2.1 },
-          tabBarScrollEnabled:true,
+          lazy: true,
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: screenWidth / 3.15 },
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
@@ -43,8 +51,11 @@ const Notifications = ({ navigation }) => {
 
           },
         }}>
-        <Tabs.Screen name={References.UnReadNotifications} component={Unread} />
-        <Tabs.Screen name={References.ReadNotifications} component={Read} />
+        <Tabs.Screen name='Overview' component={Overview} />
+        <Tabs.Screen name='Message' component={Message} />
+        <Tabs.Screen name='Service' component={Service} />
+        <Tabs.Screen name='Assignment' component={Assignment} />
+        <Tabs.Screen name='Finances' component={Finances} />
 
       </Tabs.Navigator>
 
@@ -53,4 +64,4 @@ const Notifications = ({ navigation }) => {
 
 }
 
-export default Notifications;
+export default ProjectDetails;

@@ -30,10 +30,20 @@ const References = {
     Notifications: 'Notifications',
     Account: 'Account',
 
-    //
-    ActiveProjects: 'ActiveProjects',
-    AvailableProjects: 'AvailableProjects',
-    CompletedProjects: 'CompletedProjects',
+    //Projects
+    ActiveProjects: 'Active',
+    AvailableProjects: 'Available',
+    CompletedProjects: 'Completed',
+    ProjectDetails:'ProjectDetails',
+
+    //Notifications
+    UnReadNotifications:'Unread',
+    ReadNotifications:'Read',
+
+    //Account
+    About: 'About',
+    Notification: 'Notification',
+    Transaction: 'Transaction',
     
 }
 

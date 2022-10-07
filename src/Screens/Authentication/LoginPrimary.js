@@ -19,14 +19,14 @@ const LoginPrimary = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
 
   const onSubmit = () => {
-    if (email === '') {
-      SimpleToast.show('Email cannot be empty');
-      return;
-    } else {
+    // if (email === '') {
+    //   SimpleToast.show('Email cannot be empty');
+    //   return;
+    // } else {
       navigation.navigate(References.LoginSecondary, {
         email: email
       });
-    }
+    // }
   }
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import About from '../Profile/About';
@@ -15,6 +15,7 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 
 const Tabs = createMaterialTopTabNavigator()
+const screenWidth = Dimensions.get('window').width
 
 const Account = ({ navigation }) => {
   const scheme = useColorScheme()
@@ -28,6 +29,8 @@ const Account = ({ navigation }) => {
 
       <Tabs.Navigator pageMargin={2}
         screenOptions={{
+          tabBarItemStyle: { width: screenWidth / 3.15 },
+          tabBarScrollEnabled:true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
@@ -38,9 +41,9 @@ const Account = ({ navigation }) => {
 
           },
         }}>
-        <Tabs.Screen name='About' component={About} />
-        <Tabs.Screen name='Notifications' component={Notifications} />
-        <Tabs.Screen name='Transactions' component={Transactions} />
+        <Tabs.Screen name={References.About} component={About} />
+        <Tabs.Screen name={References.Notification} component={Notifications} />
+        <Tabs.Screen name={References.Transaction} component={Transactions} />
 
       </Tabs.Navigator>
 
