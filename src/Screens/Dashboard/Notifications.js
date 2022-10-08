@@ -25,13 +25,13 @@ const Notifications = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator
        pageMargin={2}
         screenOptions={{
-          tabBarItemStyle: { width: screenWidth / 2.1 },
+          tabBarItemStyle: { width: screenWidth / 2 },
           tabBarScrollEnabled:true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',

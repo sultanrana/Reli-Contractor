@@ -11,6 +11,7 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
 import ServiceContainer from '../../Components/ServiceContainer';
+import OutlinedButton from '../../Components/OutlinedButton';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -170,6 +171,22 @@ const Overview = ({ navigation }) => {
       borderRadius: 10,
       marginTop: 16
     },
+    locationContainer: {
+      width: '100%',
+      backgroundColor: AppColors.Background,
+      paddingHorizontal: 13,
+      paddingVertical: 17,
+      borderRadius: 10,
+      marginTop: 16
+    },
+    paymentContainer: {
+      width: '100%',
+      backgroundColor: AppColors.Background,
+      paddingHorizontal: 13,
+      paddingVertical: 17,
+      borderRadius: 10,
+      marginVertical: 16
+    }
   })
 
   const listHeaderComponent = () => {
@@ -189,7 +206,7 @@ const Overview = ({ navigation }) => {
               <View style={[styles.stepCircle, { backgroundColor: (step >= 0.75 && step <= 1) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
               <View style={[styles.stepCircle, { backgroundColor: step == 1 ? AppColors.Primary : AppColors.DarkGrey }]}></View>
             </View>
-            <Progress.Bar animated progress={step} height={5} width={screenWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
+            <Progress.Bar animated progress={step} height={4} width={screenWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
           </View>
           <Text style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
           <View style={{ width: '100%', marginVertical: 16 }}>
@@ -216,6 +233,41 @@ const Overview = ({ navigation }) => {
         </View>
 
         <Text style={styles.mainTitle}>{'Service'}</Text>
+      </>
+    )
+  }
+
+  const listFooterComponent = () => {
+    return (
+      <>
+        <OutlinedButton
+          label={'Mark as Ordered'}
+          style={{ borderColor: AppColors.Primary, marginVertical: 16 }}
+          labelStyle={{ color: AppColors.Primary }}
+        />
+        <View style={styles.locationContainer}>
+          <Text style={styles.title}>{'Location: '}
+            <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'123 Indus Park, California'}</Text>
+          </Text>
+        </View>
+        <View style={styles.paymentContainer}>
+          <Text style={styles.title}>{'Paid: '}
+            <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'$410'}</Text>
+          </Text>
+          <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'Can click to see details'}</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 }}>
+          <OutlinedButton
+            label={'Get Suport'}
+            style={{ width: '45%', borderColor: AppColors.Primary }}
+            labelStyle={{ color: AppColors.Primary }}
+          />
+          <ContainedButton
+            label="Claim"
+            style={{width:'25%'}}
+          />
+        </View>
       </>
     )
   }
@@ -276,7 +328,7 @@ const Overview = ({ navigation }) => {
         }}
         keyExtractor={(item, index) => 'ser' + index}
         ListHeaderComponent={listHeaderComponent}
-
+        ListFooterComponent={listFooterComponent}
         contentContainerStyle={{ paddingBottom: '10%' }}
       />
     </View>

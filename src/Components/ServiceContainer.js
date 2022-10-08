@@ -23,7 +23,8 @@ const ServiceContainer = ({ Details }) => {
             paddingHorizontal: 13,
             paddingVertical: 17,
             borderRadius: 10,
-            marginTop: 16
+            marginTop: 16,
+            // elevation:
         },
         serviceNameContainer: {
             width: '100%',

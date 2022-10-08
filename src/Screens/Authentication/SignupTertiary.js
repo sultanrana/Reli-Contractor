@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -13,7 +13,6 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { NativeBaseProvider } from 'native-base';
 
 const servicesList = [
   {
@@ -31,6 +30,7 @@ const servicesList = [
     title: 'Interior Doors',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
   },
+  
 ];
 
 const SignupTertiary = ({ navigation, route }) => {
@@ -42,6 +42,7 @@ const SignupTertiary = ({ navigation, route }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+  const screenWidth = Dimensions.get('window').width
 
 
 
@@ -54,10 +55,10 @@ const SignupTertiary = ({ navigation, route }) => {
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 4,
+        margin: '2%',
         backgroundColor: '#E0E0E0',
         padding: 4,
-        width: '45%',
+        width: screenWidth/2.3,
         height: 164,
         borderRadius: 16
       }}>
@@ -101,7 +102,7 @@ const SignupTertiary = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
+    <View style={[AppStyles.Screen, AppStyles.AuthScreens, AppStyles.HorizontalStyle]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <Text style={[AppStyles.AuthScreenTitle]}>
         What services can you offer?
@@ -109,13 +110,19 @@ const SignupTertiary = ({ navigation, route }) => {
 
       <FlatList
             scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
             data={servicesList}
             style={{
-              alignSelf: 'center'
+              width:'100%',
+              alignSelf: 'center',
             }}
             renderItem={({ item }) => (
               <ServiceBox title={item?.title} imageURL={item?.image} />
             )}
+            // contentContainerStyle={{justifyContent:'space-around'}}
+            // ItemSeparatorComponent={()=>{
+            //   return <View style={{height:24, width:24}}></View>
+            // }}
             numColumns={'2'}
             ListFooterComponent={
               () => {

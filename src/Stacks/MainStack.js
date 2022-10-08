@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack'
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
 import { useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -8,6 +8,10 @@ import Splash from '../Screens/Splash';
 import AuthStack from './AuthStack';
 import DashboardStack from './DashboardStack';
 import ProjectDetails from '../Screens/Dashboard/ProjectDetails';
+import Location from '../Screens/Dashboard/Location';
+import Email from '../Screens/Dashboard/Email';
+import NewNumber from '../Screens/Dashboard/NewNumber';
+import NewPassword from '../Screens/Dashboard/NewPassword';
 
 const Stack = createStackNavigator()
 
@@ -40,6 +44,22 @@ const MainStack = () => {
                 <Stack.Screen
                     name={References.ProjectDetails}
                     component={ProjectDetails} />
+
+                <Stack.Screen
+                    name={References.Location}
+                    component={Location} />
+
+                <Stack.Screen
+                    name={References.Email}
+                    component={Email} />
+
+                <Stack.Screen
+                    name={References.NewNumber}
+                    component={NewNumber} />
+
+                <Stack.Screen
+                    name={References.NewPassword}
+                    component={NewPassword} />
 
             </Stack.Navigator>
         </NavigationContainer>

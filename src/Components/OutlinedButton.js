@@ -4,8 +4,9 @@ import Fonts from '../Assets/Fonts/Index'
 import colors from '../Theme/Colors'
 import { FontSize } from '../Theme/FontSize'
 import { Icons } from '../Assets/Images/Index'
+import { References } from '../Constants/References'
 
-const OutlinedButton = ({ style, onPress, labelStyle, label, rightIcon, scheme = 'light' }) => {
+const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIcon, scheme = 'light' }) => {
 
     const styles = StyleSheet.create({
         mainContainer: {
@@ -35,7 +36,20 @@ const OutlinedButton = ({ style, onPress, labelStyle, label, rightIcon, scheme =
     return (
 
         <TouchableOpacity
-            onPress={onPress}
+            onPress={() => {
+                navigation && (
+                    label === 'Location' ?
+                        navigation.navigate(References.Location)
+                        :
+                        label === 'Email' ?
+                            navigation.navigate(References.Email)
+                            :
+                            label === 'Change Password' ?
+                                navigation.navigate(References.NewPassword)
+                                :
+                                navigation.navigate(References.NewNumber)
+                )
+            }}
             activeOpacity={0.8}
             style={[styles.mainContainer, style]} >
             <Text style={[styles.btnText, labelStyle]}>{label}</Text>

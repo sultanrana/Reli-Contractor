@@ -1,31 +1,30 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
-
+import Slider from "react-native-slider";
 import { FontSize } from '../../Theme/FontSize';
 import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { NativeBaseProvider, Slider } from 'native-base';
 
 const SignupSecondary = ({ navigation, route }) => {
 
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
-  const [travel, setTravel] = useState('');
+  const [travel, setTravel] = useState(0.2);
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const {email, password, firstname, lastname} = route?.params
+  const { email, password, firstname, lastname } = route?.params
 
   const onSubmit = () => {
     navigation.navigate(References.SignupTertiary, {
@@ -76,15 +75,15 @@ const SignupSecondary = ({ navigation, route }) => {
 
             <View style={{ marginVertical: 4 }} />
 
-            <NativeBaseProvider>
-              <Slider defaultValue={70} style={{ width: '90%' }}>
-                <Slider.Track>
-                  <Slider.FilledTrack bgColor={Colors(scheme).Primary} />
-                </Slider.Track>
-                <Slider.Thumb bgColor={Colors(scheme).Primary} />
-              </Slider>
-            </NativeBaseProvider>
-
+            <View style={{ paddingHorizontal: 10 }}>
+              <Slider
+                value={travel}
+                onValueChange={value => setTravel(value)}
+                minimumTrackTintColor={Colors(scheme).Primary}
+                maximumTrackTintColor={'#FDECDF'}
+                thumbTintColor={Colors(scheme).Primary}
+              />
+            </View>
             <View style={{ marginVertical: 16 }} />
 
             <ContainedButton
@@ -92,7 +91,7 @@ const SignupSecondary = ({ navigation, route }) => {
               label="Continue"
             />
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{alignSelf:'center'}}>
+          <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
             <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
               Already have an account?
               <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>

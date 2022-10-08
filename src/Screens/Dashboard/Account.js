@@ -24,12 +24,12 @@ const Account = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator pageMargin={2}
         screenOptions={{
-          tabBarItemStyle: { width: screenWidth / 3.15 },
+          tabBarItemStyle: { width: screenWidth / 3 },
           tabBarScrollEnabled:true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',

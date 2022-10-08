@@ -13,7 +13,6 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { NativeBaseProvider } from 'native-base';
 
 
 const ThankyouForSignup = ({ navigation, route }) => {

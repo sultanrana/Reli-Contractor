@@ -101,7 +101,7 @@ const Home = ({ navigation }) => {
 
   return (
 
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <SectionList
         showsVerticalScrollIndicator={false}

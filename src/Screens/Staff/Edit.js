@@ -18,7 +18,7 @@ const Edit = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
       
       
 

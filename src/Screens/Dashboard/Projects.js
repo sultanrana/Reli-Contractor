@@ -24,20 +24,15 @@ const Projects = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator
-        // initialLayout={
-        //   {
-        //     width: Dimensions.get('window').width
-        //   }}
-
         pageMargin={2}
         screenOptions={{
           lazy: true,
           tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: screenWidth / 3.15 },
+          tabBarItemStyle: { width: screenWidth / 3 },
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {

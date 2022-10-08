@@ -72,7 +72,7 @@ const Transactions = ({ navigation }) => {
   ]
 
   return (
-    <View style={[AppStyles.ProfileScreen]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, {backgroundColor: AppColors.White,paddingTop:10}]}>
 
       <SectionList
         showsVerticalScrollIndicator={false}

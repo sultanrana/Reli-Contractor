@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-
+import Slider from 'react-native-slider'
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
-
 import { FontSize } from '../../Theme/FontSize';
 import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
-
-import { Slider } from 'native-base';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { GetStyles } from '../../Theme/AppStyles';
+import { Icons } from '../../Assets/Images/Index';
+import FloatingLabelInput from '../../Components/FloatingLabelInput';
 
 const Location = ({ navigation }) => {
 
@@ -22,90 +23,99 @@ const Location = ({ navigation }) => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [zip, setZip] = useState('');
-    const [travel, setTravel] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [travel, setTravel] = useState(0);
+
     const scheme = useColorScheme()
-
-
+    const AppStyles = GetStyles(scheme)
+    const AppColors = Colors(scheme)
 
     const styles = StyleSheet.create({
-        header: {
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
+        screenTitle: {
+            fontSize: FontSize.xxxlarge,
+            fontFamily: Fonts.SemiBold,
+            color: AppColors.TextTitle,
+            textAlign: 'center'
+
         },
-    });
+        travel: {
+            fontSize: FontSize.medium,
+            fontFamily: Fonts.Regular,
+            color: AppColors.TextTitle,
+            marginVertical: 30
 
-    const onSubmit = () => {
-        if (step === 1) {
-            if (address === '') {
-                SimpleToast.show('Address cannot be empty');
-                return;
-            }
-            if (apartment === '') {
-                SimpleToast.show('Apartment cannot be empty');
-                return;
-            }
-            if (city === '') {
-                SimpleToast.show('City cannot be empty');
-                return;
-            }
-            if (state === '') {
-                SimpleToast.show('State cannot be empty');
-                return;
-            } if (zip === '') {
-                SimpleToast.show('Zip cannot be empty');
-                return;
-            }
         }
-        setLoading(false);
-        setButtonDisabled(false);
-    };
+    })
 
 
-
-    const renderTitle = () => {
-        if (step === 1) {
-            return 'Sign Up';
-        } else if (step === 2) {
-            return 'Where do you work';
-        } else if (step === 3) {
-            return 'What services can you offer?';
-        }
-    };
-
-    const onBackPress = () => {
-        if (step === 1) {
-            navigation.goBack();
-        } else {
-            setStep(step - 1);
-        }
-    };
 
     return (
-
-        <View style={[{ paddingTop: 40, backgroundColor: Colors(scheme).Background, width: '100%', height: '100%', alignItems: 'center' }]}>
-            <View style={styles.header}>
-                <LogoOver navigation={navigation} shouldShowBack />
-            </View>
-            <KeyboardAwareScrollView>
+        <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
+            <LogoOver navigation={navigation} shouldShowBack />
+            <Text style={styles.screenTitle}>{'Location'}</Text>
+            <KeyboardAwareScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: '5%' }}>
                 <>
-                    <Text style={[{
-                        margin: 24,
-                        fontSize: FontSize.xlarge + 4,
-                        fontFamily: Fonts.SemiBold,
-                        color: Colors(scheme).TextTitle,
-                        textAlign: 'center'
-                    }]}>
-                        {renderTitle()}
-                    </Text>
+                    <FloatingLabelInput
+                        value={address}
+                        onChangeText={(val) => setAddress(val)}
+                        placeholder="Address"
+                        keyboardType='default'
+                    />
 
+                    <FloatingLabelInput
+                        value={apartment}
+                        onChangeText={(val) => setApartment(val)}
+                        placeholder="Apartment/Unit"
+                        keyboardType='default'
+                    />
+
+                    <FloatingLabelInput
+                        value={city}
+                        onChangeText={(val) => setCity(val)}
+                        placeholder="City"
+                        keyboardType='default'
+                    />
+
+                    <View style={{ paddingRight: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <FloatingLabelInput
+                            value={state}
+                            onChangeText={(val) => setState(val)}
+                            placeholder="State"
+                            keyboardType='default'
+                            customStyle={{ width: '30%' }}
+                        />
+
+                        <FloatingLabelInput
+                            value={zip}
+                            onChangeText={(val) => setZip(val)}
+                            placeholder="Zip"
+                            keyboardType='default'
+                            customStyle={{ width: '50%' }}
+                        />
+                    </View>
+
+                    <Text style={styles.travel}>{'Wiling to travel:'}</Text>
+                    <View style={{ paddingHorizontal: 10 }}>
+                        <Slider
+                            value={travel}
+                            onValueChange={value => setTravel(value)}
+                            minimumTrackTintColor={Colors(scheme).Primary}
+                            maximumTrackTintColor={'#FDECDF'}
+                            thumbTintColor={Colors(scheme).Primary}
+                        />
+                    </View>
+
+                    <ContainedButton
+                        // onPress={onSubmit}
+                        label="Confirm Changes"
+                        style={{marginTop:30}}
+                    />
                 </>
             </KeyboardAwareScrollView>
-        </View>
+        </View >
     );
-};
+
+}
 
 export default Location;
-
