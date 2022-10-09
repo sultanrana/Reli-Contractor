@@ -9,12 +9,23 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import OutlinedButton from '../../Components/OutlinedButton';
 import ContainedButton from '../../Components/ContainedButton';
+import { FontSize } from '../../Theme/FontSize';
 
 const About = ({ navigation }) => {
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+
+  const styles = StyleSheet.create({
+    DeleteBtn: {
+      fontFamily: Fonts.Regular,
+      fontSize: FontSize.xlarge,
+      color: AppColors.Danger,
+      alignSelf: 'center',
+      marginTop: 25
+    }
+  })
 
   const ButtonsData = [
     {
@@ -40,6 +51,7 @@ const About = ({ navigation }) => {
       <OutlinedButton
         label={item.title}
         rightIcon={true}
+        navigation={navigation}
       />
     )
   }
@@ -63,13 +75,13 @@ const About = ({ navigation }) => {
           label={'Terms'}
           style={{ marginTop: 16, }}
         />
-        <Text style={AppStyles.DeleteBtn}>{'Delete Account'}</Text>
+        <Text style={styles.DeleteBtn}>{'Delete Account'}</Text>
       </>
     )
   }
 
   return (
-    <View style={[AppStyles.ProfileScreen]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
 
       <FlatList
         showsVerticalScrollIndicator={false}

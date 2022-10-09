@@ -12,7 +12,8 @@ class ColorsTemplate {
             BlackGreyish,
             dateBackground,
             border,
-            red
+            red,
+            darkGrey
         }
     ) {
         this.Background = background
@@ -30,7 +31,8 @@ class ColorsTemplate {
             this.Transparent = "rgba(0,0,0,0)",
             this.DateBackground = dateBackground,
             this.Border = border,
-            this.Danger = red
+            this.Danger = red,
+            this.DarkGrey = darkGrey
 
     }
 }
@@ -46,7 +48,9 @@ const lightColors = new ColorsTemplate({
     variation: '#dc3545',
     dateBackground: '#E0E0E0',
     border: '#5F6368',
-    red: '#BA1A1A'
+    red: '#BA1A1A',
+    darkGrey: '#979797'
+
 })
 
 const darkColors = new ColorsTemplate({
@@ -60,7 +64,8 @@ const darkColors = new ColorsTemplate({
     variation: '#FF685F',
     dateBackground: '#E0E0E0',
     border: '#5F6368',
-    red: '#BA1A1A'
+    red: '#BA1A1A',
+    darkGrey: '#979797'
 
 
 })

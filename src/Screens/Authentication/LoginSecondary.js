@@ -24,18 +24,17 @@ const LoginSecondary = ({ navigation, route }) => {
   const { email } = route?.params
 
   const onSubmit = () => {
-    if (password === '') {
-      SimpleToast.show('Please enter your password');
+    // if (password === '') {
+    //   SimpleToast.show('Please enter your password');
       
 
-      return;
-    } else {
-      //Login API here
+    //   return;
+    // } else {
       navigation.reset({
         index: 0,
         routes: [{ name: References.DashboardStack }],
       })
-    }
+    // }
   }
 
   const styles = StyleSheet.create({

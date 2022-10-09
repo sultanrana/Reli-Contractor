@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -17,21 +17,24 @@ import AvailableProjects from '../Projects/AvailableProjects'
 import CompletedProjects from '../Projects/CompletedProjects'
 
 const Tabs = createMaterialTopTabNavigator()
-
+const screenWidth = Dimensions.get('window').width
 const Projects = ({ navigation }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator
-       pageMargin={2}
+        pageMargin={2}
         screenOptions={{
+          lazy: true,
+          tabBarScrollEnabled: true,
+          tabBarItemStyle: { width: screenWidth / 3 },
           tabBarActiveTintColor: AppColors.Primary,
-          tabBarInactiveTintColor:'#979797',
+          tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
             backgroundColor: AppColors.Background
           },
@@ -40,10 +43,9 @@ const Projects = ({ navigation }) => {
 
           },
         }}>
-        <Tabs.Screen name='Active' component={ActiveProjects} />
-        <Tabs.Screen name='Available' component={AvailableProjects} />
-        <Tabs.Screen name='Completed' component={CompletedProjects} />
-
+        <Tabs.Screen name={References.ActiveProjects} component={ActiveProjects} />
+        <Tabs.Screen name={References.AvailableProjects} component={AvailableProjects} />
+        <Tabs.Screen name={References.CompletedProjects} component={CompletedProjects} />
       </Tabs.Navigator>
 
     </View>

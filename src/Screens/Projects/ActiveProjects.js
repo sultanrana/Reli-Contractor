@@ -90,7 +90,7 @@ const ActiveProjects = ({ navigation }) => {
   ]
 
   return (
-    <View style={[AppStyles.ProjectsScreen]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background, paddingTop: 10 }]}>
       <SectionList
         showsVerticalScrollIndicator={false}
         sections={Data}

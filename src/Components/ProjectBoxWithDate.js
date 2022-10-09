@@ -16,6 +16,7 @@ import { FontSize } from '../Theme/FontSize';
 import { Icons, Images } from '../Assets/Images/Index';
 import Colors from '../Theme/Colors';
 import { GetStyles } from '../Theme/AppStyles';
+import { References } from '../Constants/References';
 
 const ProjectBoxWithDate =
     ({
@@ -64,7 +65,10 @@ const ProjectBoxWithDate =
 
         return (
 
-            <View style={[styles.mainContainer]}>
+            <TouchableOpacity
+                activeOpacity={1}
+                onPress={()=>navigation.navigate(References.ProjectDetails)}
+                style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
                     <Image source={{ uri: imageURL1 }} style={styles.image} resizeMode='contain' resizeMethod='resize' />
@@ -164,7 +168,7 @@ const ProjectBoxWithDate =
 
                 </View>
 
-            </View>
+            </TouchableOpacity>
         )
     };
 

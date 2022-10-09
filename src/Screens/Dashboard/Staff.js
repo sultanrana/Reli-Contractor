@@ -23,7 +23,7 @@ const Staff = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.DashboardScreens]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite/>
       
       {/* <Tabs.Navigator pageMargin={2} screenOptions={{

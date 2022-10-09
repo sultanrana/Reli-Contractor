@@ -28,18 +28,34 @@ const LogoOver =
         const styles = StyleSheet.create({
             mainContainer: {
                 width: '100%',
-                paddingHorizontal: 8,
-                alignSelf: 'center',
+                // alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
-                margin: 16,
-                flexDirection: 'row'
+                flexDirection: 'row',
+                // backgroundColor:'pink'
             },
             image: {
                 width: 100,
                 height: 100,
                 tintColor: colors(scheme).Primary
-            }
+            },
+            backContainer: {
+                position: 'absolute',
+                left: 16,
+                height: 32,
+                width: 32,
+                borderRadius: 32,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: colors(scheme).Primary
+            },
+            icon: {
+                width: 25,
+                height: 25,
+                tintColor: colors(scheme).White,
+                position:'absolute',
+                right:4
+            },
 
         });
 
@@ -47,24 +63,20 @@ const LogoOver =
 
             <View style={[styles.mainContainer]}>
                 {shouldShowBack && isBack &&
-                    <View style={{ justifyContent: 'center', alignItems: 'center', width: '10%' }}>
-                        <TouchableOpacity
-                            style={{}}
-                            onPress={() => { navigation.goBack() }}
-                        >
-                            <Image source={Icons.Back} />
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => { navigation.goBack() }}
+                        style={styles.backContainer}>
+                        <Image source={Icons.Backward} style={styles.icon} />
+                    </TouchableOpacity>
                 }
-                <View style={{ justifyContent: 'center', alignItems: 'center', width: (shouldShowBack && isBack) ? '80%' : '100%' }}>
-                    <Image source={Images.Logo} style={styles.image} resizeMode='contain' resizeMethod='resize' />
-                </View>
+                <Image source={Images.Logo} style={styles.image} resizeMode='contain' resizeMethod='resize' />
 
-                {shouldShowBack && isBack &&
+                {/* {shouldShowBack && isBack &&
                     <View style={{ justifyContent: 'center', alignItems: 'center', width: '10%' }}>
 
                     </View>
-                }
+                } */}
             </View>
 
         )

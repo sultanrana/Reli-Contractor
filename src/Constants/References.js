@@ -9,7 +9,7 @@ const References = {
     StaffStack: 'StaffStack',
     NotificationsStack: 'NotificationsStack',
     AccountStack: 'AccountStack',
-    
+
     Splash: 'Splash',
 
     //Auth Stack
@@ -30,11 +30,25 @@ const References = {
     Notifications: 'Notifications',
     Account: 'Account',
 
-    //
-    ActiveProjects: 'ActiveProjects',
-    AvailableProjects: 'AvailableProjects',
-    CompletedProjects: 'CompletedProjects',
-    
+    //Projects
+    ActiveProjects: 'Active',
+    AvailableProjects: 'Available',
+    CompletedProjects: 'Completed',
+    ProjectDetails: 'ProjectDetails',
+
+    //Notifications
+    UnReadNotifications: 'Unread',
+    ReadNotifications: 'Read',
+
+    //Account
+    About: 'About',
+    Notification: 'Notification',
+    Transaction: 'Transaction',
+    Location: 'Location',
+    Email: 'Email',
+    NewNumber: 'NewNumber',
+    NewPassword: 'NewPassword',
+
 }
 
 export { References }

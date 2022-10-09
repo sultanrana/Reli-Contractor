@@ -7,29 +7,24 @@ const CommonStyles = StyleSheet.create({
     AuthScreens: {
         paddingTop: 40
     },
-    DashboardScreens: {
-        // paddingTop: 4
+    CommonScreenStyles: {
         flex: 1,
+    },
+    HorizontalStyle: {
+        paddingHorizontal: 12,
+    },
+    ProjectDetailsScreen: {
+        flex: 1,
+        paddingTop: 21,
         paddingHorizontal: 10,
-        
-    },
-    ProjectsScreen: {
-        flex: 1,
-        paddingTop: 18,
-        backgroundColor: Colors('light').Background,
-    },
-    ProfileScreen: {
-        flex: 1,
-        paddingTop: 27,
         backgroundColor: Colors('light').White,
     },
-    DeleteBtn: {
-        fontFamily: Fonts.Regular,
-        fontSize: FontSize.xlarge,
-        color: Colors('light').Danger,
-        alignSelf:'center',
-        marginTop:25
-    }
+    MessagesScreen: {
+        flex: 1,
+        paddingTop: 21,
+        backgroundColor: Colors('light').White,
+    },
+
 })
 
 const LightStyles = StyleSheet.create({

@@ -19,14 +19,14 @@ const LoginPrimary = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
 
   const onSubmit = () => {
-    if (email === '') {
-      SimpleToast.show('Email cannot be empty');
-      return;
-    } else {
+    // if (email === '') {
+    //   SimpleToast.show('Email cannot be empty');
+    //   return;
+    // } else {
       navigation.navigate(References.LoginSecondary, {
         email: email
       });
-    }
+    // }
   }
 
   return (
@@ -50,7 +50,9 @@ const LoginPrimary = ({ navigation }) => {
           onPress={onSubmit}
           label="Continue"
         />
-        <TouchableOpacity onPress={() => navigation.navigate(References.SignupPrimary)} style={{alignSelf:'center'}}>
+        <TouchableOpacity 
+        activeOpacity={0.6}
+        onPress={() => navigation.navigate(References.SignupPrimary)} style={{alignSelf:'center'}}>
         <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.SemiBold }}>
           Need an account?
           <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign Up</Text>
