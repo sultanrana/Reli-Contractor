@@ -22,22 +22,25 @@ const StaffItemBox = ({ navigation, image, name }) => {
             borderColor: '#E0E0E0',
             borderWidth: 0.25,
             borderRadius: 8,
-            alignItems:'center',
-            paddingHorizontal: 8
+            alignItems: 'center',
+            paddingHorizontal: 8,
+            elevation: 2
         }
     })
 
     return (
-        <TouchableOpacity onPress={() => {
-            navigation.navigate(References.StaffTabs)
-        }} style={styles.mainView}>
+        <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+                navigation.navigate(References.StaffTabs)
+            }} style={styles.mainView}>
 
             <Image source={Images.DummyUser} style={{
                 height: 32,
                 width: 32,
                 borderRadius: 32
 
-            }} resizeMode='contain' resizeMethod='resize'/>
+            }} resizeMode='contain' resizeMethod='resize' />
 
             <Text style={{
                 fontSize: FontSize.large,

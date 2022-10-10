@@ -14,6 +14,7 @@ const Icons = {
     Property: require('./property.png'),
     Cart: require('./shoppingcart.png'),
     Briefcase: require('./briefcase.png'),
+    Add: require('./add.png'),
 
 }
 

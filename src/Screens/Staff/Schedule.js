@@ -95,9 +95,7 @@ const Data = [
 ]
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, {
-      padding:8
-    }]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
       
       <SectionList
         showsVerticalScrollIndicator={false}

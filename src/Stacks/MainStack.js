@@ -12,6 +12,7 @@ import Location from '../Screens/Dashboard/Location';
 import Email from '../Screens/Dashboard/Email';
 import NewNumber from '../Screens/Dashboard/NewNumber';
 import NewPassword from '../Screens/Dashboard/NewPassword';
+import ContactUs from '../Screens/Dashboard/ContactUs';
 
 const Stack = createStackNavigator()
 
@@ -60,6 +61,10 @@ const MainStack = () => {
                 <Stack.Screen
                     name={References.NewPassword}
                     component={NewPassword} />
+
+                <Stack.Screen
+                    name={References.ContactUs}
+                    component={ContactUs} />
 
             </Stack.Navigator>
         </NavigationContainer>

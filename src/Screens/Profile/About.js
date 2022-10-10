@@ -66,6 +66,7 @@ const About = ({ navigation }) => {
         <ContainedButton
           label="Contact Us"
           style={{ marginTop: 16, backgroundColor: AppColors.Black }}
+          onPress={() => navigation.navigate(References.ContactUs)}
         />
         <OutlinedButton
           label={'Privacy'}
