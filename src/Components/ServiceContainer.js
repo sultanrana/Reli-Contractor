@@ -44,8 +44,8 @@ const ServiceContainer = ({ Details }) => {
             width: 60,
             borderRadius: 10,
             backgroundColor: AppColors.White,
-            // justifyContent: 'center',
-            // alignItems: 'center'
+            justifyContent: 'center',
+            alignItems: 'center'
         },
         serviceImage: {
             height: 50,
@@ -67,7 +67,11 @@ const ServiceContainer = ({ Details }) => {
         <View style={styles.serviceContainer}>
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                 <View style={styles.imageContainer}>
-                    <Image resizeMode='contain' source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU' }} />
+                    <Image resizeMode='contain' style={{
+                        height: 40,
+                        width: 40,
+                        alignSelf: 'center'
+                    }} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU' }} />
                 </View>
                 <Text style={styles.mainTitle}>{'Premium Window'}</Text>
             </View>

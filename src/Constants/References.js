@@ -49,6 +49,11 @@ const References = {
     NewNumber: 'NewNumber',
     NewPassword: 'NewPassword',
 
+    StaffTabs: 'Staff Details',
+    ScheduleStaff: 'Schedule Staff',
+    EditStaff: 'Edit Staff',
+    
+
 }
 
 export { References }
