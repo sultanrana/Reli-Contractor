@@ -5,6 +5,7 @@ import { StatusBar } from 'react-native'
 import { References } from '../../Constants/References'
 
 import Staff from '../../Screens/Dashboard/Staff'
+import StaffTabs from '../../Screens/Staff/StaffTabs'
 
 const Stack = createStackNavigator()
 const StaffStack = ({navigation, route}) => {
@@ -17,6 +18,7 @@ const StaffStack = ({navigation, route}) => {
         }} 
         initialRouteName={References.Staff}>
             <Stack.Screen name={References.Staff} component={Staff} />
+            <Stack.Screen name={References.StaffTabs} component={StaffTabs} />
         </Stack.Navigator>
     )
 }

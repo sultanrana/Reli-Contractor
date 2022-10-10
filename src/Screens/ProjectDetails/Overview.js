@@ -12,6 +12,7 @@ import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
 import ServiceContainer from '../../Components/ServiceContainer';
 import OutlinedButton from '../../Components/OutlinedButton';
+import DateSchedule from '../../Components/DateSchedule';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -265,7 +266,7 @@ const Overview = ({ navigation }) => {
           />
           <ContainedButton
             label="Claim"
-            style={{width:'25%'}}
+            style={{ width: '25%' }}
           />
         </View>
       </>
@@ -274,43 +275,7 @@ const Overview = ({ navigation }) => {
 
   const renderSchedule = ({ item }) => {
     return (
-      <View style={styles.dateContainer}>
-        <View style={{ height: '75%', paddingHorizontal: 7, }}>
-          <View style={styles.dateInnerContainer}>
-            <View style={{
-              height: '35%',
-              backgroundColor: AppColors.DarkGrey,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-              <Text style={{
-                fontFamily: Fonts.Regular,
-                fontSize: FontSize.medium,
-                color: AppColors.White,
-              }}>{item.day}</Text>
-            </View>
-
-            <Text style={{
-              fontFamily: Fonts.Regular,
-              fontSize: 40,
-              color: AppColors.TextTitle,
-              alignSelf: 'center'
-            }}>{item.date}</Text>
-          </View>
-          <Text style={{
-            fontFamily: Fonts.SemiBold,
-            fontSize: FontSize.medium,
-            color: AppColors.TextTitle,
-            alignSelf: 'center',
-            marginTop: 5
-          }}>{item.month}</Text>
-        </View>
-        <View style={styles.timeContainer}>
-          <Text style={styles.time}>{item.time}</Text>
-        </View>
-      </View>
+      <DateSchedule Details={item} />
     )
   }
 

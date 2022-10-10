@@ -11,12 +11,16 @@ const Icons = {
     Notifications: require('./notifications.png'),
     Profile: require('./profile.png'),
     Send: require('./Send.png'),
-
+    Property: require('./property.png'),
+    Cart: require('./shoppingcart.png'),
+    Briefcase: require('./briefcase.png'),
+    Add: require('./add.png'),
 
 }
 
 const Images = {
     Logo: require('./Logo.png'),
+    DummyUser: require('./dummy_user.png')
 }
 
 const Symbols = {

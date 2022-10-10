@@ -48,6 +48,12 @@ const References = {
     Email: 'Email',
     NewNumber: 'NewNumber',
     NewPassword: 'NewPassword',
+    ContactUs: 'ContactUs',
+
+    StaffTabs: 'Staff Details',
+    ScheduleStaff: 'Schedule Staff',
+    EditStaff: 'Edit Staff',
+    
 
 }
 

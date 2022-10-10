@@ -41,7 +41,7 @@ const lightColors = new ColorsTemplate({
     background: '#fafafa',
     backgroundInverse: 'black',
     primary: '#FDAA63',
-    primaryOutline: '#F2F3F2',
+    primaryOutline: '#FAFAFA',
     secondary: '#4C4F4D',
     text: '#212529',
     textTitle: 'black',

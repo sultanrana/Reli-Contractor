@@ -25,7 +25,8 @@ const ProjectBoxWithDate =
         subtitle1,
         subtitle2,
         imageURL1,
-        imageURL2
+        imageURL2,
+        clickable = true
 
     }) => {
 
@@ -67,7 +68,7 @@ const ProjectBoxWithDate =
 
             <TouchableOpacity
                 activeOpacity={1}
-                onPress={()=>navigation.navigate(References.ProjectDetails)}
+                onPress={clickable ? ()=>navigation.navigate(References.ProjectDetails) : ()=> {}}
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>

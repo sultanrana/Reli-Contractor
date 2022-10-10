@@ -19,17 +19,18 @@ const DashboardStack = ({ navigation }) => {
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
-    
-    return (
-        <Tab.Navigator sceneContainerStyle={{
-            backgroundColor: AppColors.Background
-        }}
 
+    return (
+        <Tab.Navigator
+            sceneContainerStyle={{
+                backgroundColor: AppColors.Background
+            }}
             initialRouteName={References.HomeStack}
             activeColor="#fff"
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
+                tabBarHideOnKeyboard: true
             }}
             tabBar={(props) => {
                 const { navigation, state } = props
@@ -48,16 +49,16 @@ const DashboardStack = ({ navigation }) => {
                             index={0}
                             activeIndex={state.index}
                             navigation={navigation}
-                            path={References.HomeStack} 
-                            title='Home'/>
+                            path={References.HomeStack}
+                            title='Home' />
 
                         <TabItem reset
                             icon={Icons.Projects}
                             index={1}
                             activeIndex={state.index}
                             navigation={navigation}
-                            path={References.ProjectsStack} 
-                            title='Projects'/>
+                            path={References.ProjectsStack}
+                            title='Projects' />
 
                         <TabItem reset
                             icon={Icons.Staff}
@@ -65,23 +66,23 @@ const DashboardStack = ({ navigation }) => {
                             activeIndex={state.index}
                             navigation={navigation}
                             path={References.StaffStack}
-                            title='Staff'/>
+                            title='Staff' />
 
                         <TabItem reset
                             icon={Icons.Notifications}
                             index={3}
                             activeIndex={state.index}
                             navigation={navigation}
-                            path={References.NotificationsStack} 
-                            title='Notifications'/>
+                            path={References.NotificationsStack}
+                            title='Notifications' />
 
                         <TabItem reset
                             icon={Icons.Profile}
                             index={4}
                             activeIndex={state.index}
                             navigation={navigation}
-                            path={References.AccountStack} 
-                            title='Account'/>
+                            path={References.AccountStack}
+                            title='Account' />
 
                     </View>
 
