@@ -72,9 +72,10 @@ const Transactions = ({ navigation }) => {
   ]
 
   return (
-    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, {backgroundColor: AppColors.White,paddingTop:10}]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
 
       <SectionList
+        stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
         keyExtractor={(item, index) => 'ci' + index}

@@ -101,9 +101,10 @@ const Home = ({ navigation }) => {
 
   return (
 
-    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <SectionList
+        stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
         keyExtractor={(item, index) => 'ci' + index}
@@ -124,7 +125,7 @@ const Home = ({ navigation }) => {
         SectionSeparatorComponent={() => {
           return <View style={{ marginTop: 8 }} />
         }}
-        contentContainerStyle={{paddingBottom:10}}
+        contentContainerStyle={{ paddingBottom: 10 }}
       />
 
     </View>
