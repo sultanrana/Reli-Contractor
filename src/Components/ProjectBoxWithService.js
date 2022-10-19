@@ -61,7 +61,7 @@ const ProjectBoxWithService =
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
-                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMethod='resize' />
+                    <Image source={imageURL1} style={styles.image} resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
                         width: 60,
@@ -74,7 +74,7 @@ const ProjectBoxWithService =
                         position: 'absolute',
                         right: 0
                     }}>
-                        <Image source={{ uri: imageURL2 }} style={{
+                        <Image source={Images.SlidingDoor} style={{
                             zIndex: 2,
                             height: 40,
                             width: 40,

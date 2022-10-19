@@ -74,7 +74,7 @@ const ProjectBoxWithDate =
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
-                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMethod='resize' />
+                    <Image source={imageURL1} style={styles.image} resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
                         alignItems: 'center',

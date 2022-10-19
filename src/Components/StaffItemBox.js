@@ -24,7 +24,7 @@ const StaffItemBox = ({ navigation, image, name }) => {
             borderRadius: 8,
             alignItems: 'center',
             paddingHorizontal: 8,
-            elevation: 2
+            elevation: 1
         }
     })
 

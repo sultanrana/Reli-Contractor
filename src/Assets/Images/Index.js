@@ -39,6 +39,11 @@ const Images = {
     Dummy7:require('./dummyProfile7.png'),
     Dummy8:require('./dummyProfile8.png'),
 
+    //
+    House:require('./house.png'),
+
+
+
 }
 
 const Symbols = {

@@ -100,10 +100,10 @@ const ConfirmationPopup = (props) => {
             animationInTiming={350}
             animationOutTimixng={350}
             onBackButtonPress={onRequestClose}
-            hasBackdrop={true}
+            // hasBackdrop={true}
             useNativeDriver={true}
             useNativeDriverForBackdrop={true}
-            backdropColor='rgba(0,0,0,0.9)'
+            // backdropColor='rgba(0,0,0,0.9)'
         >
 
 
