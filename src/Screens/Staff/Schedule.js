@@ -32,6 +32,7 @@ const Schedule = ({ navigation }) => {
         imageURL1={item?.image1}
         imageURL2={item?.image2}
         clickable={false}
+        staff={true}
       />
     )
   }

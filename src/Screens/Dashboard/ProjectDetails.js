@@ -48,8 +48,10 @@ const ProjectDetails = ({ navigation }) => {
           },
           tabBarIndicatorStyle: {
             backgroundColor: AppColors.Primary,
-
           },
+          tabBarLabelStyle: {
+            textTransform: 'none'
+          }
         }}>
         <Tabs.Screen name='Overview' component={Overview} />
         <Tabs.Screen name='Message' component={Message} />

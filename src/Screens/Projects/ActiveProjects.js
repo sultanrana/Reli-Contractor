@@ -61,7 +61,7 @@ const ActiveProjects = ({ navigation }) => {
       ]
     },
     {
-      title: 'Wednesday Oct,06',
+      title: 'Wednesday, Oct 06',
       renderItem: renderDateItem,
       data: [
         {

@@ -20,7 +20,7 @@ const Notifications = ({ navigation }) => {
       title: 'Push Notifications',
       data: [
         {
-          title: 'New msg from customer',
+          title: 'New message from customer',
         },
         {
           title: 'New Order',
@@ -31,7 +31,7 @@ const Notifications = ({ navigation }) => {
       ]
     },
     {
-      title: 'Email',
+      title: 'Emails',
       data: [
         {
           title: 'New msg from customer',

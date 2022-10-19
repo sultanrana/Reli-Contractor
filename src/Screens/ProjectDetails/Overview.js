@@ -9,10 +9,11 @@ import Colors, { colors } from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
+import Popup from '../../Components/Popup';
 import ServiceContainer from '../../Components/ServiceContainer';
 import OutlinedButton from '../../Components/OutlinedButton';
 import DateSchedule from '../../Components/DateSchedule';
+import { Icons } from '../../Assets/Images/Index';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -23,6 +24,7 @@ const Overview = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   const [step, setStep] = useState(0)
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const schedulesData = [
     {
@@ -57,7 +59,7 @@ const Overview = ({ navigation }) => {
   ]
   const serviceData = [
     {
-      stacked: 'yes',
+      stacked: 'Yes',
       topSection: 'L 36" x H 48"',
       bottomSection: 'L 36" x H 48"',
       color: 'Brown',
@@ -69,7 +71,7 @@ const Overview = ({ navigation }) => {
       room: 'Bedroom',
     },
     {
-      stacked: 'yes',
+      stacked: 'Yes',
       topSection: 'L 36" x H 48"',
       bottomSection: 'L 36" x H 48"',
       color: 'Brown',
@@ -121,7 +123,7 @@ const Overview = ({ navigation }) => {
     },
     title: {
       fontFamily: Fonts.SemiBold,
-      fontSize: FontSize.medium,
+      fontSize: FontSize.large,
       color: AppColors.TextTitle,
     },
     dateContainer: {
@@ -183,10 +185,11 @@ const Overview = ({ navigation }) => {
     paymentContainer: {
       width: '100%',
       backgroundColor: AppColors.Background,
-      paddingHorizontal: 13,
       paddingVertical: 17,
       borderRadius: 10,
-      marginVertical: 16
+      marginVertical: 16,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   })
 
@@ -252,10 +255,13 @@ const Overview = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.paymentContainer}>
-          <Text style={styles.title}>{'Paid: '}
+          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '23%' }}>
+            <Text style={styles.title}>{'Paid: '}</Text>
             <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'$410'}</Text>
-          </Text>
-          <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'Can click to see details'}</Text>
+          </View>
+          <View style={{ marginTop: 15, paddingHorizontal: '22%' }}>
+            <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'Can click to see details'}</Text>
+          </View>
         </View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 }}>
@@ -265,6 +271,7 @@ const Overview = ({ navigation }) => {
             labelStyle={{ color: AppColors.Primary }}
           />
           <ContainedButton
+            onPress={() => { setPopupVisible(true) }}
             label="Claim"
             style={{ width: '25%' }}
           />
@@ -296,6 +303,15 @@ const Overview = ({ navigation }) => {
         ListFooterComponent={listFooterComponent}
         contentContainerStyle={{ paddingBottom: '10%' }}
       />
+      <Popup 
+      visible={popupVisible}
+       onRequestClose={() => setPopupVisible(false)}
+        Icon={Icons.Alert} 
+        IconBackground={AppColors.DateBackground}
+        Title={'Alert'}
+        TitleStyle={{color:'#BA1A1A'}}
+         />
+
     </View>
   );
 

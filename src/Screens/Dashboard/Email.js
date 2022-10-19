@@ -46,7 +46,7 @@ const Email = ({ navigation }) => {
                 keyboardType='email-address'
             />
             <ContainedButton
-                onPress={onSubmit}
+                // onPress={onSubmit}
                 label="Confirm Changes"
                 style={{ marginTop: 22 }}
             />

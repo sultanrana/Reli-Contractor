@@ -63,7 +63,7 @@ const LoginSecondary = ({ navigation, route }) => {
           title="Email"
           value={email}
           onChangeText={setEmail}
-          placeholder="Your email"
+          placeholder="Your Email"
         />
         <View style={{ marginVertical: 10 }} />
         <ContainedButton

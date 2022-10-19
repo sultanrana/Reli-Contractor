@@ -8,6 +8,7 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
+    useColorScheme,
 } from 'react-native';
 import colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
@@ -17,11 +18,15 @@ import { Icons, Images } from '../Assets/Images/Index';
 const LogoOver =
     ({
         navigation,
-        scheme = 'light',
+        // scheme = 'light',
         isBack = false,
         shouldShowBack = true
 
     }) => {
+
+        const scheme = useColorScheme()
+        const AppColors = colors(scheme)
+      
 
         isBack = navigation.canGoBack()
 
@@ -32,12 +37,13 @@ const LogoOver =
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row',
-                // backgroundColor:'pink'
+                borderBottomWidth:1,
+                borderBottomColor:AppColors.DateBackground
             },
             image: {
                 width: 100,
                 height: 100,
-                tintColor: colors(scheme).Primary
+                tintColor: AppColors.Primary
             },
             backContainer: {
                 position: 'absolute',
@@ -47,12 +53,12 @@ const LogoOver =
                 borderRadius: 32,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: colors(scheme).Primary
+                backgroundColor: AppColors.Primary
             },
             icon: {
                 width: 25,
                 height: 25,
-                tintColor: colors(scheme).White,
+                tintColor: AppColors.White,
                 position:'absolute',
                 right:4
             },

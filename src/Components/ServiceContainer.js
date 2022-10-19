@@ -5,6 +5,7 @@ import { FontSize } from '../Theme/FontSize';
 import Colors, { colors } from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
+import { Images } from '../Assets/Images/Index';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -68,10 +69,10 @@ const ServiceContainer = ({ Details }) => {
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                 <View style={styles.imageContainer}>
                     <Image resizeMode='contain' style={{
-                        height: 40,
-                        width: 40,
+                        height: 50,
+                        width: 50,
                         alignSelf: 'center'
-                    }} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU' }} />
+                    }} source={Images.SideWindow} />
                 </View>
                 <Text style={styles.mainTitle}>{'Premium Window'}</Text>
             </View>

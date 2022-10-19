@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import Slider from 'react-native-slider'
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -15,6 +14,7 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Icons } from '../../Assets/Images/Index';
 import FloatingLabelInput from '../../Components/FloatingLabelInput';
+import RangeSlider from '../../Components/Slider/Index';
 
 const Location = ({ navigation }) => {
 
@@ -41,7 +41,7 @@ const Location = ({ navigation }) => {
             fontSize: FontSize.medium,
             fontFamily: Fonts.Regular,
             color: AppColors.TextTitle,
-            marginVertical: 30
+            marginTop: 30
 
         }
     })
@@ -96,15 +96,7 @@ const Location = ({ navigation }) => {
                     </View>
 
                     <Text style={styles.travel}>{'Wiling to travel:'}</Text>
-                    <View style={{ paddingHorizontal: 10 }}>
-                        <Slider
-                            value={travel}
-                            onValueChange={value => setTravel(value)}
-                            minimumTrackTintColor={Colors(scheme).Primary}
-                            maximumTrackTintColor={'#FDECDF'}
-                            thumbTintColor={Colors(scheme).Primary}
-                        />
-                    </View>
+                    <RangeSlider from={4} to={3000} />
 
                     <ContainedButton
                         // onPress={onSubmit}

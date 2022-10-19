@@ -24,17 +24,17 @@ const LoginSecondary = ({ navigation, route }) => {
   const { email } = route?.params
 
   const onSubmit = () => {
-    // if (password === '') {
-    //   SimpleToast.show('Please enter your password');
-      
-
-    //   return;
-    // } else {
+    if (password === '') {
+      SimpleToast.show('Please enter your password');
+      return;
+    } else if(email != 'Tester@gmail.com' || password != '12345678'){
+      SimpleToast.show('Invalid Credentials')
+    } else {
       navigation.reset({
         index: 0,
         routes: [{ name: References.DashboardStack }],
       })
-    // }
+    }
   }
 
   const styles = StyleSheet.create({
@@ -66,11 +66,11 @@ const LoginSecondary = ({ navigation, route }) => {
       <Text style={[AppStyles.AuthScreenTitle]}>
         Contractor Sign In
       </Text>
-      
+
       <KeyboardAwareScrollView>
-      <View style={styles.emailTextView}>
-        <Text style={styles.emailText}>{email}</Text>
-      </View>
+        <View style={styles.emailTextView}>
+          <Text style={styles.emailText}>{email}</Text>
+        </View>
         <View style={{
           padding: 8
         }}>
@@ -94,12 +94,14 @@ const LoginSecondary = ({ navigation, route }) => {
             loading={loading}
           />
         </View>
+
+        <TouchableOpacity onPress={() => navigation.navigate(References.ForgotPassword)} style={{ alignSelf: 'center' }}>
+          <Text style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular }}>
+            Forgot Password
+          </Text>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
-      <TouchableOpacity onPress={() => navigation.navigate(References.ForgotPassword)} style={{ alignSelf: 'center' }}>
-        <Text style={{ color: Colors(scheme).Primary, marginTop: 30, fontFamily: Fonts.Regular }}>
-          Forgot Password
-        </Text>
-      </TouchableOpacity>
+
     </View>
   );
 

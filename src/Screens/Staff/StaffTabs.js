@@ -34,9 +34,11 @@ const StaffTabs = ({ navigation }) => {
                     backgroundColor: AppColors.Background
                 },
                 tabBarIndicatorStyle:{
-                    backgroundColor: AppColors.Primary,
-                    
+                    backgroundColor: AppColors.Primary, 
                 },
+                tabBarLabelStyle: {
+                  textTransform: 'none'
+                }
             }}>
                 <Tabs.Screen name={References.ScheduleStaff} component={Schedule} />
                 <Tabs.Screen name={References.EditStaff} component={Edit} />

@@ -13,18 +13,19 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import StaffItemBox from '../../Components/StaffItemBox'
+import { Images } from '../../Assets/Images/Index';
 
 const Tabs = createMaterialTopTabNavigator()
 
 const STAFF_MEMBERS_DATA = [
-  { image: '', name: 'John Doe' },
-  { image: '', name: 'John Cooper' },
-  { image: '', name: 'Esther Howard' },
-  { image: '', name: 'Leslie Alaxander' },
-  { image: '', name: 'Kristan Watson' },
-  { image: '', name: 'Robert Fox' },
-  { image: '', name: 'Codie Fixer' },
-  { image: '', name: 'Cameron Sasy' },
+  { image: Images.Dummy1, name: 'John Doe' },
+  { image: Images.Dummy2, name: 'Jane Cooper' },
+  { image: Images.Dummy3, name: 'Esther Howard' },
+  { image: Images.Dummy4, name: 'Leslie Alexander' },
+  { image: Images.Dummy5, name: 'Kristin Watson' },
+  { image: Images.Dummy7, name: 'Cameron Williamson' },
+  { image: Images.Dummy6, name: 'Robert Fox' },
+  { image: Images.Dummy8, name: 'Cody Fisher' },
 ]
 
 const Staff = ({ navigation }) => {
@@ -34,7 +35,7 @@ const Staff = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, {backgroundColor:AppColors.White}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite/>
 
       <FlatList

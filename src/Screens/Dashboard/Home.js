@@ -101,8 +101,9 @@ const Home = ({ navigation }) => {
 
   return (
 
-    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
+    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
+      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
       <SectionList
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
@@ -127,7 +128,7 @@ const Home = ({ navigation }) => {
         }}
         contentContainerStyle={{ paddingBottom: 10 }}
       />
-
+</View>
     </View>
 
 

@@ -26,7 +26,8 @@ const ProjectBoxWithDate =
         subtitle2,
         imageURL1,
         imageURL2,
-        clickable = true
+        clickable = true,
+        staff
 
     }) => {
 
@@ -42,12 +43,13 @@ const ProjectBoxWithDate =
                 backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
                 borderRadius: 16,
                 zIndex: 0,
-                elevation: 1,
+                elevation: 2,
+                // shadowColor:'pink'
                 // height:90,
             },
             image: {
                 width: 90,
-                height: 88,
+                height: 90,
                 zIndex: 0,
                 borderRadius: 16
             },
@@ -72,7 +74,7 @@ const ProjectBoxWithDate =
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
-                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMode='contain' resizeMethod='resize' />
+                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -156,15 +158,40 @@ const ProjectBoxWithDate =
                         }}>
                             {subtitle1}
                         </Text>
-                        <Text style={{
-                            fontFamily: Fonts.Light,
-                            fontSize: FontSize.small,
-                            color: AppColors.Text,
-                            marginVertical: 1,
-                            textAlignVertical: 'center'
-                        }}>
-                            {subtitle2}
-                        </Text>
+                        {
+                            staff ? 
+                            <>
+                            <Text style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                marginVertical: 1,
+                                textAlignVertical: 'center'
+                            }}>
+                                {'Project Status: Materials Ordered'}
+                            </Text>
+                            <Text style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                marginVertical: 1,
+                                textAlignVertical: 'center'
+                            }}>
+                                {'Staff Assigned: Robert Fox'}
+                            </Text>
+                            </>
+                            :
+                            <Text style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                marginVertical: 1,
+                                textAlignVertical: 'center'
+                            }}>
+                                {subtitle2}
+                            </Text>
+                        }
+                       
                     </View>
 
                 </View>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList, FlatList } from 'react-native';
 
+import Popup from '../../Components/Popup'
 import { FontSize } from '../../Theme/FontSize';
 import Colors, { colors } from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
@@ -12,6 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ServiceContainer from '../../Components/ServiceContainer';
 import ContainedButton from '../../Components/ContainedButton';
 import OutlinedButton from '../../Components/OutlinedButton';
+import { Icons } from '../../Assets/Images/Index';
 
 
 const serviceData = [
@@ -48,6 +49,8 @@ const Service = ({ navigation }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+  const [popupVisible, setPopupVisible] = useState(false);
+
 
   const serviceName = 'Window Replacement';
 
@@ -55,9 +58,7 @@ const Service = ({ navigation }) => {
     return (
       <>
         <Text style={styles.title}>{'Service Details'}</Text>
-        <Text style={[styles.title, {
-          fontSize: 16
-        }]}>{'Service: ' + serviceName}</Text>
+        <Text style={[styles.title, { marginTop: 15 }]}>{'Service: ' + serviceName}</Text>
       </>
     )
   }
@@ -76,17 +77,18 @@ const Service = ({ navigation }) => {
           labelStyle={{ color: AppColors.Primary }}
         />
         <ContainedButton
-            label="Claim"
-            style={{ width: '30%' }}
-          />
+          onPress={() => { setPopupVisible(true) }}
+          label="Claim"
+          style={{ width: '30%' }}
+        />
       </View>
     )
   }
 
   const styles = StyleSheet.create({
     title: {
-      fontFamily: Fonts.Bold,
-      fontSize: FontSize.xxlarge,
+      fontFamily: Fonts.SemiBold,
+      fontSize: FontSize.xlarge,
       color: AppColors.TextTitle,
       textAlignVertical: 'center'
     }
@@ -107,6 +109,15 @@ const Service = ({ navigation }) => {
         ListFooterComponent={listFooterComponent}
         contentContainerStyle={{ paddingBottom: '10%' }}
       />
+
+      <Popup
+        visible={popupVisible}
+        onRequestClose={() => setPopupVisible(false)}
+        Icon={Icons.Congrats}
+        IconBackground={AppColors.DateBackground}
+        Title={'Thank You!'}
+        TitleStyle={{ color: '#00C389' }} />
+
     </View>
   );
 

@@ -34,7 +34,7 @@ const About = ({ navigation }) => {
     },
     {
       id: '2',
-      title: 'Email'
+      title: 'Account Details'
     },
     {
       id: '3',

@@ -35,7 +35,7 @@ const StaffItemBox = ({ navigation, image, name }) => {
                 navigation.navigate(References.StaffTabs)
             }} style={styles.mainView}>
 
-            <Image source={Images.DummyUser} style={{
+            <Image source={image} style={{
                 height: 32,
                 width: 32,
                 borderRadius: 32

@@ -61,7 +61,7 @@ const ProjectBoxWithService =
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
-                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMode='contain' resizeMethod='resize' />
+                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
                         width: 60,

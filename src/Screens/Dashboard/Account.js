@@ -24,13 +24,13 @@ const Account = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
+    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator pageMargin={2}
         screenOptions={{
           tabBarItemStyle: { width: screenWidth / 3 },
-          tabBarScrollEnabled:true,
+          tabBarScrollEnabled: true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
@@ -38,8 +38,10 @@ const Account = ({ navigation }) => {
           },
           tabBarIndicatorStyle: {
             backgroundColor: AppColors.Primary,
-
           },
+          tabBarLabelStyle: {
+            textTransform: 'none'
+          }
         }}>
         <Tabs.Screen name={References.About} component={About} />
         <Tabs.Screen name={References.Notification} component={Notifications} />

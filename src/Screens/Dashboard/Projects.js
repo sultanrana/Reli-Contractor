@@ -40,8 +40,10 @@ const Projects = ({ navigation }) => {
           },
           tabBarIndicatorStyle: {
             backgroundColor: AppColors.Primary,
-
           },
+          tabBarLabelStyle: {
+            textTransform: 'none'
+          }
         }}>
         <Tabs.Screen name={References.ActiveProjects} component={ActiveProjects} />
         <Tabs.Screen name={References.AvailableProjects} component={AvailableProjects} />

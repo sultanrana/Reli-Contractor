@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
-import Slider from "react-native-slider";
+import RangeSlider from '../../Components/Slider/Index';
 import { FontSize } from '../../Theme/FontSize';
 import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
@@ -74,16 +74,7 @@ const SignupSecondary = ({ navigation, route }) => {
             </Text>
 
             <View style={{ marginVertical: 4 }} />
-
-            <View style={{ paddingHorizontal: 10 }}>
-              <Slider
-                value={travel}
-                onValueChange={value => setTravel(value)}
-                minimumTrackTintColor={Colors(scheme).Primary}
-                maximumTrackTintColor={'#FDECDF'}
-                thumbTintColor={Colors(scheme).Primary}
-              />
-            </View>
+              <RangeSlider from={4} to={3000} />
             <View style={{ marginVertical: 16 }} />
 
             <ContainedButton

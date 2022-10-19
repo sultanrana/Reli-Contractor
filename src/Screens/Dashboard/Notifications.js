@@ -42,6 +42,9 @@ const Notifications = ({ navigation }) => {
             backgroundColor: AppColors.Primary,
 
           },
+          tabBarLabelStyle: {
+            textTransform: 'none'
+          }
         }}>
         <Tabs.Screen name={References.UnReadNotifications} component={Unread} />
         <Tabs.Screen name={References.ReadNotifications} component={Read} />
