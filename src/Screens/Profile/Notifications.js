@@ -34,7 +34,7 @@ const Notifications = ({ navigation }) => {
       title: 'Emails',
       data: [
         {
-          title: 'New msg from customer',
+          title: 'New message from customer',
         },
         {
           title: 'Project Updates',

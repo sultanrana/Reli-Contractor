@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -35,27 +35,28 @@ const Staff = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, {backgroundColor:AppColors.White}]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} bgWhite/>
+    <SafeAreaView style={[AppStyles.Screen, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
+      <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
+      <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={STAFF_MEMBERS_DATA}
-        renderItem={({ item }) => (
-          <StaffItemBox navigation={navigation} name={item?.name} image={item?.image}/>
-        )}
-        keyExtractor={(item, index) => 'stf' + index}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={STAFF_MEMBERS_DATA}
+          renderItem={({ item }) => (
+            <StaffItemBox navigation={navigation} name={item?.name} image={item?.image} />
+          )}
+          keyExtractor={(item, index) => 'stf' + index}
 
-        contentContainerStyle={{ paddingBottom: '10%', padding: 8 }}
-        style={{
-          flexGrow: 0,
-        }}
-        ItemSeparatorComponent={()=> (
-          <View style={{marginVertical: 4}}/>
-        )}
-      />
-      
-    </View>
+          contentContainerStyle={{ paddingBottom: '30%' }}
+          style={{
+            flexGrow: 0,
+          }}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginVertical: 4 }} />
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 
 }

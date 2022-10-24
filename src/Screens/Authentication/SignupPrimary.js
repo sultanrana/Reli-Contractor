@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -54,16 +54,15 @@ const SignupPrimary = ({ navigation }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Sign Up
-      </Text>
-      <KeyboardAwareScrollView>
-        <>
-          <View style={{
-            padding: 8
-          }}>
+      <View style={[AppStyles.HorizontalStyle]}>
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          Sign Up
+        </Text>
+        <KeyboardAwareScrollView>
+          <>
+
 
             <InputField
               title="First Name"
@@ -110,16 +109,17 @@ const SignupPrimary = ({ navigation }) => {
               onPress={onSubmit}
               label="Continue"
             />
-          </View>
-          <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center', marginBottom: 8 }}>
-            <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-              Already have an account?
-              <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-            </Text>
-          </TouchableOpacity>
-        </>
-      </KeyboardAwareScrollView>
-    </View>
+
+            <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center', marginBottom: 8 }}>
+              <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                Already have an account?
+                <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+              </Text>
+            </TouchableOpacity>
+          </>
+        </KeyboardAwareScrollView>
+      </View>
+    </SafeAreaView>
   );
 
 }

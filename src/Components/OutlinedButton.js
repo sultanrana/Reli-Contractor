@@ -42,7 +42,7 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
                         navigation.navigate(References.Location)
                         :
                         label === 'Account Details' ?
-                            navigation.navigate(References.Email)
+                            navigation.navigate(References.AccountDetails)
                             :
                             label === 'Change Password' ?
                                 navigation.navigate(References.NewPassword)

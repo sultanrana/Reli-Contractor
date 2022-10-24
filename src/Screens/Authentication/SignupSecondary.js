@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ContainedButton from '../../Components/ContainedButton'
@@ -39,16 +39,15 @@ const SignupSecondary = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Where do you work?
-      </Text>
-      <KeyboardAwareScrollView>
-        <>
-          <View style={{
-            padding: 8
-          }}>
+      <View style={[AppStyles.HorizontalStyle]}>
+
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          Where do you work?
+        </Text>
+        <KeyboardAwareScrollView >
+          <>
 
             <InputField
               title="Address"
@@ -74,23 +73,28 @@ const SignupSecondary = ({ navigation, route }) => {
             </Text>
 
             <View style={{ marginVertical: 4 }} />
-              <RangeSlider from={4} to={3000} />
+            <RangeSlider from={4} to={3000} />
             <View style={{ marginVertical: 16 }} />
 
-            <ContainedButton
-              onPress={onSubmit}
-              label="Continue"
-            />
-          </View>
+
+          </>
+        </KeyboardAwareScrollView>
+       
+      </View>
+      <View style={{ width: '100%', paddingHorizontal:12, position: 'absolute', bottom: 50, alignSelf: 'center' }}>
+          <ContainedButton
+            onPress={onSubmit}
+            label="Continue"
+          />
+
           <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
             <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
               Already have an account?
               <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
             </Text>
           </TouchableOpacity>
-        </>
-      </KeyboardAwareScrollView>
-    </View>
+        </View>
+    </SafeAreaView>
   );
 
 }

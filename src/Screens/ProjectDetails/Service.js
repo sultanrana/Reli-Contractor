@@ -17,7 +17,7 @@ import { Icons } from '../../Assets/Images/Index';
 
 const serviceData = [
   {
-    stacked: 'yes',
+    stacked: 'Yes',
     topSection: 'L 36" x H 48"',
     bottomSection: 'L 36" x H 48"',
     color: 'Brown',
@@ -29,7 +29,7 @@ const serviceData = [
     room: 'Bedroom',
   },
   {
-    stacked: 'yes',
+    stacked: 'Yes',
     topSection: 'L 36" x H 48"',
     bottomSection: 'L 36" x H 48"',
     color: 'Brown',

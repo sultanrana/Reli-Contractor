@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -50,15 +50,13 @@ const LoginSecondary = ({ navigation, route }) => {
   });
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
-      <LogoOver navigation={navigation} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Forgot Password
-      </Text>
-      <View style={{
-        padding: 8
-      }}>
-        
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <View style={[AppStyles.HorizontalStyle]}>
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          Forgot Password
+        </Text>
+
         <InputField
           title="Email"
           value={email}
@@ -71,7 +69,7 @@ const LoginSecondary = ({ navigation, route }) => {
           label="Continue"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 
 }

@@ -27,17 +27,17 @@ const Message = ({ navigation }) => {
 
     bottomContainer: {
       width: '100%',
+      height:70,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: AppColors.White,
-      elevation: 5,
+      shadowColor: AppColors.BlackGreyish,
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.16,
       position: 'absolute',
       bottom: 0,
-      // shadowColor: AppColors.Black,
-      // shadowOffset: { width: 1, height: 1 },
-      // shadowOpacity: 1,
-      // shadowRadius: 3,
-      paddingVertical:14,
+      shadowRadius: 6,
+      paddingVertical: 14,
       paddingHorizontal: 18,
       borderTopWidth: 0.2,
       borderTopColor: AppColors.Border
@@ -52,16 +52,16 @@ const Message = ({ navigation }) => {
       width: '100%',
       flexDirection: 'row',
       borderRadius: 20,
-      backgroundColor: AppColors.Background,
+      backgroundColor: 'pink',
     },
     input: {
-      paddingVertical:10,
+      paddingVertical: 10,
       maxHeight: 150,
       width: '85%',
       paddingHorizontal: 20,
     },
     send: {
-      paddingVertical:10,
+      paddingVertical: 10,
       height: '100%',
       width: '15%',
       justifyContent: 'flex-end',
@@ -80,8 +80,9 @@ const Message = ({ navigation }) => {
       <KeyboardAvoidingView
         style={styles.bottomContainer}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={0}
+      // keyboardVerticalOffset={200}
       >
+
           <View style={styles.inputContainer}>
             <TextInput
               multiline={true}

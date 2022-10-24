@@ -257,7 +257,7 @@ const Overview = ({ navigation }) => {
         <View style={styles.paymentContainer}>
           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '23%' }}>
             <Text style={styles.title}>{'Paid: '}</Text>
-            <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'$410'}</Text>
+            <Text style={[styles.title]}>{'$410'}</Text>
           </View>
           <View style={{ marginTop: 15, paddingHorizontal: '22%' }}>
             <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'Can click to see details'}</Text>

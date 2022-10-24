@@ -39,13 +39,15 @@ const ProjectBoxWithDate =
             mainContainer: {
                 width: '99.5%',
                 flexDirection: 'row',
-                // backgroundColor: 'pink',
-                backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
+                // backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
+                backgroundColor: AppColors.White,
                 borderRadius: 16,
                 zIndex: 0,
                 elevation: 2,
-                // shadowColor:'pink'
-                // height:90,
+                shadowColor: AppColors.BlackGreyish,
+                shadowOffset: { width: 0, height:1 },
+                shadowOpacity: 0.16,
+                // shadowRadius: 6
             },
             image: {
                 width: 90,

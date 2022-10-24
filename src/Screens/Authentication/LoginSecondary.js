@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -27,13 +27,13 @@ const LoginSecondary = ({ navigation, route }) => {
     if (password === '') {
       SimpleToast.show('Please enter your password');
       return;
-    } else if(email != 'Tester@gmail.com' || password != '12345678'){
+    } else if(email != 't1@tepia.co' || password != '12345678'){
       SimpleToast.show('Invalid Credentials')
     } else {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: References.DashboardStack }],
-      })
+    navigation.reset({
+      index: 0,
+      routes: [{ name: References.DashboardStack }],
+    })
     }
   }
 
@@ -61,19 +61,21 @@ const LoginSecondary = ({ navigation, route }) => {
   });
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Contractor Sign In
-      </Text>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <View style={[AppStyles.HorizontalStyle]}>
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          Contractor Sign In
+        </Text>
 
-      <KeyboardAwareScrollView>
-        <View style={styles.emailTextView}>
-          <Text style={styles.emailText}>{email}</Text>
-        </View>
-        <View style={{
-          padding: 8
-        }}>
+        <KeyboardAwareScrollView>
+          {  email ?
+            <View style={styles.emailTextView}>
+              <Text style={styles.emailText}>{email}</Text>
+            </View>
+            :
+            null
+          }
 
           <InputField
             title="Password"
@@ -93,16 +95,16 @@ const LoginSecondary = ({ navigation, route }) => {
             disabled={buttonDisabled}
             loading={loading}
           />
-        </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate(References.ForgotPassword)} style={{ alignSelf: 'center' }}>
-          <Text style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular }}>
-            Forgot Password
-          </Text>
-        </TouchableOpacity>
-      </KeyboardAwareScrollView>
 
-    </View>
+          <TouchableOpacity onPress={() => navigation.navigate(References.ForgotPassword)} style={{ alignSelf: 'center' }}>
+            <Text style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular }}>
+              Forgot Password
+            </Text>
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
+      </View>
+    </SafeAreaView>
   );
 
 }

@@ -16,7 +16,7 @@ const CommonStyles = StyleSheet.create({
     ProjectDetailsScreen: {
         flex: 1,
         paddingTop: 21,
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         backgroundColor: Colors('light').White,
     },
     MessagesScreen: {

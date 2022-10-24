@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -24,7 +24,7 @@ const Projects = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   return (
-    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator
@@ -50,7 +50,7 @@ const Projects = ({ navigation }) => {
         <Tabs.Screen name={References.CompletedProjects} component={CompletedProjects} />
       </Tabs.Navigator>
 
-    </View>
+    </SafeAreaView>
   );
 
 }

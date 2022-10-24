@@ -67,6 +67,7 @@ const Edit = ({ navigation }) => {
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
       <KeyboardAwareScrollView
         contentContainerStyle={{ paddingVertical: 35 }}
+        showsVerticalScrollIndicator={false}
       >
 
         <View style={{ alignSelf: 'center', alignItems: 'center' }}>

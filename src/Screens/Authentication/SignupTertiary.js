@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -55,7 +55,7 @@ const SignupTertiary = ({ navigation, route }) => {
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: '2%',
+        margin: '1.9%',
         backgroundColor: '#E0E0E0',
         width: screenWidth / 2.3,
         borderRadius: 16,
@@ -106,51 +106,51 @@ const SignupTertiary = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens, AppStyles.HorizontalStyle]}>
+    <SafeAreaView style={[AppStyles.Screen]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        What services can you offer?
-      </Text>
-
-      <FlatList
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        data={servicesList}
-        style={{
-          width: '100%',
-          alignSelf: 'center',
-        }}
-        renderItem={({ item, index }) => (
-          <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
-        )}
-        // contentContainerStyle={{justifyContent:'space-around'}}
-        // ItemSeparatorComponent={()=>{
-        //   return <View style={{height:24, width:24}}></View>
-        // }}
-        numColumns={'2'}
-        ListFooterComponent={
-          () => {
-            return (
-              <View style={{
-                marginVertical: 16
-              }}>
-                <ContainedButton
-                  onPress={onSubmit}
-                  label="Continue"
-                />
-                <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-                  <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-                    Already have an account?
-                    <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )
+      <View style={[AppStyles.HorizontalStyle]}>
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          What services can you offer?
+        </Text>
+        <FlatList
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          data={servicesList}
+          style={{
+            width: '100%',
+            alignSelf: 'center',
+          }}
+          renderItem={({ item, index }) => (
+            <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
+          )}
+          // contentContainerStyle={{justifyContent:'space-around'}}
+          // ItemSeparatorComponent={()=>{
+          //   return <View style={{height:24, width:24}}></View>
+          // }}
+          numColumns={'2'}
+          ListFooterComponent={
+            () => {
+              return (
+                <View style={{
+                  marginVertical: 16
+                }}>
+                  <ContainedButton
+                    onPress={onSubmit}
+                    label="Continue"
+                  />
+                  <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+                    <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                      Already have an account?
+                      <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )
+            }
           }
-        }
-      />
-
-    </View>
+        />
+      </View>
+    </SafeAreaView>
   );
 
 }

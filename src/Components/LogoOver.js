@@ -33,12 +33,14 @@ const LogoOver =
         const styles = StyleSheet.create({
             mainContainer: {
                 width: '100%',
+                height:90,
                 // alignSelf: 'center',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'row',
                 borderBottomWidth:1,
-                borderBottomColor:AppColors.DateBackground
+                borderBottomColor:AppColors.DateBackground,
+                // backgroundColor:'pink'
             },
             image: {
                 width: 100,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -59,14 +59,13 @@ const ResetPassword = ({ navigation, route }) => {
   });
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
-      <LogoOver navigation={navigation} shouldShowBack={false}/>
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Set Password
-      </Text>
-      <View style={{
-        padding: 8
-      }}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+      <LogoOver navigation={navigation} shouldShowBack={false} />
+      <View style={[AppStyles.HorizontalStyle]}>
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          Set Password
+        </Text>
+
         <InputField
           title="New Password"
           value={password}
@@ -74,7 +73,7 @@ const ResetPassword = ({ navigation, route }) => {
           placeholder="New Password"
           password={isPassVisible ? false : true}
           rightIcon={(isPassVisible) ? Icons.ShowPassword : Icons.HidePassword}
-          rightIconOnPress={()=> {setIsPassVisible(!isPassVisible)}}
+          rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }}
 
         />
         <View style={{ marginVertical: 10 }} />
@@ -85,7 +84,7 @@ const ResetPassword = ({ navigation, route }) => {
           loading={loading}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 
 }

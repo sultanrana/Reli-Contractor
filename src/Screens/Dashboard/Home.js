@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList, } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList, SafeAreaView, } from 'react-native';
 
 // ------------------------------------------
 import LogoOver from '../../Components/LogoOver';
@@ -103,7 +103,7 @@ const Home = ({ navigation }) => {
 
   return (
 
-    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <SectionList
@@ -131,7 +131,7 @@ const Home = ({ navigation }) => {
           contentContainerStyle={{ paddingBottom: 10 }}
         />
       </View>
-    </View>
+    </SafeAreaView>
 
 
   );

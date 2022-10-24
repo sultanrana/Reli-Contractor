@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -26,27 +26,28 @@ const LoginPrimary = ({ navigation }) => {
     } else if (EMAIL_REG.test(email) == false) {
       SimpleToast.show('Invalid email')
     } else {
-      navigation.navigate(References.LoginSecondary, {
-        email: email
-      });
+    navigation.navigate(References.LoginSecondary, {
+      email: email
+    });
     }
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Contractor Sign In
-      </Text>
-      <View style={{
-        padding: 8
-      }}>
+      <View style={[AppStyles.HorizontalStyle]}>
+
+        <Text style={[AppStyles.AuthScreenTitle]}>
+          Contractor Sign In
+        </Text>
+
         <InputField
           title="Email"
           value={email}
           onChangeText={setEmail}
           placeholder="yourname@email.com"
           keyboardType='email-address'
+          autoCapitalize={'none'}
         />
         <View style={{ marginVertical: 10 }} />
         <ContainedButton
@@ -62,8 +63,7 @@ const LoginPrimary = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-
-    </View>
+    </SafeAreaView>
   );
 
 }

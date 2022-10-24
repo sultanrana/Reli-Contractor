@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ContainedButton from '../../Components/ContainedButton'
@@ -49,12 +49,13 @@ const Location = ({ navigation }) => {
 
 
     return (
-        <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
+        <SafeAreaView style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
+            <View style={[AppStyles.HorizontalStyle, {paddingTop:16}]}>
             <Text style={styles.screenTitle}>{'Location'}</Text>
             <KeyboardAwareScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: '5%' }}>
+                contentContainerStyle={{ paddingBottom: '40%' }}>
                 <>
                     <FloatingLabelInput
                         value={address}
@@ -105,7 +106,8 @@ const Location = ({ navigation }) => {
                     />
                 </>
             </KeyboardAwareScrollView>
-        </View >
+            </View>
+        </SafeAreaView >
     );
 
 }
