@@ -12,6 +12,7 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const AccountDetails = ({ navigation }) => {
 
@@ -43,48 +44,49 @@ const AccountDetails = ({ navigation }) => {
                 Contractor Sign In
             </Text> */}
             <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
+                <KeyboardAwareScrollView>
 
-
-                <InputField
-                    title="First Name"
-                    value={firstName}
-                    onChangeText={(val) => setFirstName(val)}
-                    placeholder="First Name"
-                    keyboardType='default'
-                    ref={fNameRef}
-                    onSubmitEditing={() => {
-                        lNameRef?.current?.focus()
-                    }}
-                />
-                <View style={{ marginVertical: 8 }} />
-                <InputField
-                    title="Last Name"
-                    value={lastName}
-                    onChangeText={(val) => setLastName(val)}
-                    placeholder="Last Name"
-                    keyboardType='default'
-                    ref={lNameRef}
-                    onSubmitEditing={() => {
-                        emailRef?.current?.focus()
-                    }}
-                />
-                <View style={{ marginVertical: 8 }} />
-                <InputField
-                    title="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholder="yourname@email.com"
-                    keyboardType='email-address'
-                    ref={emailRef}
-                    onSubmitEditing={() => {
-                        Keyboard.dismiss()
-                    }}
-                />
-                <ContainedButton
-                    // onPress={onSubmit}
-                    label="Confirm Changes"
-                    style={{ marginTop: 22 }}
-                />
+                    <InputField
+                        title="First Name"
+                        value={firstName}
+                        onChangeText={(val) => setFirstName(val)}
+                        placeholder="First Name"
+                        keyboardType='default'
+                        ref={fNameRef}
+                        onSubmitEditing={() => {
+                            lNameRef?.current?.focus()
+                        }}
+                    />
+                    <View style={{ marginVertical: 8 }} />
+                    <InputField
+                        title="Last Name"
+                        value={lastName}
+                        onChangeText={(val) => setLastName(val)}
+                        placeholder="Last Name"
+                        keyboardType='default'
+                        ref={lNameRef}
+                        onSubmitEditing={() => {
+                            emailRef?.current?.focus()
+                        }}
+                    />
+                    <View style={{ marginVertical: 8 }} />
+                    <InputField
+                        title="Email"
+                        value={email}
+                        onChangeText={setEmail}
+                        placeholder="yourname@email.com"
+                        keyboardType='email-address'
+                        ref={emailRef}
+                        onSubmitEditing={() => {
+                            Keyboard.dismiss()
+                        }}
+                    />
+                    <ContainedButton
+                        // onPress={onSubmit}
+                        label="Confirm Changes"
+                        style={{ marginTop: 22 }}
+                    />
+                </KeyboardAwareScrollView>
             </View>
         </SafeAreaView>
 

@@ -27,13 +27,13 @@ const LoginSecondary = ({ navigation, route }) => {
     if (password === '') {
       SimpleToast.show('Please enter your password');
       return;
-    } else if(email != 't1@tepia.co' || password != '12345678'){
+    } else if (email != 't1@tepia.co' || password != '12345678') {
       SimpleToast.show('Invalid Credentials')
     } else {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: References.DashboardStack }],
-    })
+      navigation.reset({
+        index: 0,
+        routes: [{ name: References.DashboardStack }],
+      })
     }
   }
 
@@ -64,12 +64,12 @@ const LoginSecondary = ({ navigation, route }) => {
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
-        <Text style={[AppStyles.AuthScreenTitle]}>
-          Contractor Sign In
-        </Text>
 
         <KeyboardAwareScrollView>
-          {  email ?
+          <Text style={[AppStyles.AuthScreenTitle]}>
+            Contractor Sign In
+          </Text>
+          {email ?
             <View style={styles.emailTextView}>
               <Text style={styles.emailText}>{email}</Text>
             </View>

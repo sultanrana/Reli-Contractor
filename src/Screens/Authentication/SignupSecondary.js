@@ -43,11 +43,11 @@ const SignupSecondary = ({ navigation, route }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
 
-        <Text style={[AppStyles.AuthScreenTitle]}>
-          Where do you work?
-        </Text>
         <KeyboardAwareScrollView >
           <>
+            <Text style={[AppStyles.AuthScreenTitle]}>
+              Where do you work?
+            </Text>
 
             <InputField
               title="Address"
@@ -79,21 +79,21 @@ const SignupSecondary = ({ navigation, route }) => {
 
           </>
         </KeyboardAwareScrollView>
-       
-      </View>
-      <View style={{ width: '100%', paddingHorizontal:12, position: 'absolute', bottom: 50, alignSelf: 'center' }}>
-          <ContainedButton
-            onPress={onSubmit}
-            label="Continue"
-          />
 
-          <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-            <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-              Already have an account?
-              <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
+      </View>
+      <View style={{ width: '100%', paddingHorizontal: 12, position: 'absolute', bottom: 50, alignSelf: 'center' }}>
+        <ContainedButton
+          onPress={onSubmit}
+          label="Continue"
+        />
+
+        <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+          <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+            Already have an account?
+            <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 

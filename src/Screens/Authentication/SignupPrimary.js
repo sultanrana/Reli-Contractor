@@ -57,12 +57,14 @@ const SignupPrimary = ({ navigation }) => {
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
-        <Text style={[AppStyles.AuthScreenTitle]}>
-          Sign Up
-        </Text>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView
+        contentContainerStyle={{paddingBottom:100}}
+        showsVerticalScrollIndicator={false}
+        >
           <>
-
+            <Text style={[AppStyles.AuthScreenTitle]}>
+              Sign Up
+            </Text>
 
             <InputField
               title="First Name"

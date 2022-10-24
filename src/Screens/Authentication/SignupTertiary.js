@@ -109,9 +109,7 @@ const SignupTertiary = ({ navigation, route }) => {
     <SafeAreaView style={[AppStyles.Screen]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
-        <Text style={[AppStyles.AuthScreenTitle]}>
-          What services can you offer?
-        </Text>
+
         <FlatList
           scrollEnabled={true}
           showsVerticalScrollIndicator={false}
@@ -123,11 +121,18 @@ const SignupTertiary = ({ navigation, route }) => {
           renderItem={({ item, index }) => (
             <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
           )}
-          // contentContainerStyle={{justifyContent:'space-around'}}
+          contentContainerStyle={{paddingBottom:100}}
           // ItemSeparatorComponent={()=>{
           //   return <View style={{height:24, width:24}}></View>
           // }}
-          numColumns={'2'}
+          numColumns={2}
+          ListHeaderComponent={() => {
+            return (
+              <Text style={[AppStyles.AuthScreenTitle]}>
+                What services can you offer?
+              </Text>
+            )
+          }}
           ListFooterComponent={
             () => {
               return (

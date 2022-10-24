@@ -23,7 +23,7 @@ const MainStack = () => {
     const AppColors = Colors(scheme)
     return (
         <NavigationContainer>
-            <StatusBar barStyle='light-content' translucent backgroundColor={AppColors.Background} />
+            {/* <StatusBar barStyle='light-content' translucent backgroundColor={AppColors.Background} /> */}
             <Stack.Navigator
                 screenOptions={{
                     headerShown: false,

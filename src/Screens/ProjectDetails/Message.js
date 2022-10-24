@@ -51,14 +51,16 @@ const Message = ({ navigation }) => {
       // height:50,
       width: '100%',
       flexDirection: 'row',
-      borderRadius: 20,
-      backgroundColor: 'pink',
+      borderRadius: 50,
+      backgroundColor: AppColors.Background
     },
     input: {
       paddingVertical: 10,
       maxHeight: 150,
       width: '85%',
       paddingHorizontal: 20,
+      alignItems:'center'
+      
     },
     send: {
       paddingVertical: 10,
