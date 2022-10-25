@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, SafeAreaView, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -14,6 +14,7 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+const screenHeight = Dimensions.get('window').height
 
 const ThankyouForSignup = ({ navigation, route }) => {
 
@@ -56,7 +57,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
 
 
 
-        <View style={{ position: 'absolute', bottom: 50, width:'100%', alignSelf:'center' }}>
+        <View style={{ position: 'absolute', bottom: 40, width: '100%', alignSelf: 'center' }}>
           <ContainedButton
             onPress={onRefresh}
             label="Refresh"

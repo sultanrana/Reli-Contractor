@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -11,6 +11,9 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+const screenHeight = Dimensions.get('window').height
+
 
 const LoginSecondary = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
@@ -52,7 +55,7 @@ const LoginSecondary = ({ navigation, route }) => {
   });
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,]}>
         <KeyboardAwareScrollView contentContainerStyle={{ height: '100%' }} showsVerticalScrollIndicator={false} >
@@ -71,13 +74,14 @@ const LoginSecondary = ({ navigation, route }) => {
             onPress={onSubmit}
             label="Continue"
           />
+          <View style={{ width: '100%', position:'absolute', marginTop: screenHeight-150, alignSelf: 'center' }}>
 
-          <TouchableOpacity style={{ alignSelf: 'center', position: 'absolute', bottom: '15%' }}>
-            <Text style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
-              Contact Support
-            </Text>
-          </TouchableOpacity>
-
+            <TouchableOpacity style={{ alignSelf: 'center' }}>
+              <Text style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
+                Contact Support
+              </Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
 
       </View>
