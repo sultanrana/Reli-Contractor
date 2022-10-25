@@ -15,7 +15,7 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 
 const SignupSecondary = ({ navigation, route }) => {
-
+ 
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
   const [travel, setTravel] = useState(0.2);
