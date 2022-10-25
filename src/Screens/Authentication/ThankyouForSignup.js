@@ -30,50 +30,48 @@ const ThankyouForSignup = ({ navigation, route }) => {
     <SafeAreaView style={[AppStyles.CommonScreenStyles,]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
 
-      <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 12 }}>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { justifyContent: 'center' }]}>
+        <KeyboardAwareScrollView contentContainerStyle={{ height: '100%', }} showsVerticalScrollIndicator={false} >
+
+          <Text style={{
+            color: AppColors.Primary,
+            fontSize: FontSize.xxxlarge + 2,
+            fontFamily: Fonts.Bold,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            
+          }}>{'Thank you!'}</Text>
+
+          <Text style={{
+            color: AppColors.TextTitle,
+            fontSize: FontSize.xxlarge,
+            fontFamily: Fonts.SemiBold,
+            textAlign: 'center',
+            textAlignVertical: 'center'
+          }}>{'We will be getting back to you...'}</Text>
 
 
 
 
 
-        <Text style={{
-          color: AppColors.Primary,
-          fontSize: FontSize.xxxlarge + 2,
-          fontFamily: Fonts.Bold,
-          textAlign: 'center',
-          textAlignVertical: 'center'
-        }}>{'Thank you!'}</Text>
+          <View style={{ position: 'absolute', bottom: '5%', width: '100%', alignSelf: 'center' }}>
+            <ContainedButton
+              onPress={onRefresh}
+              label="Refresh"
+            />
+            <TouchableOpacity onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: References.AuthenticationStack }],
+              })
+            }} style={{ alignSelf: 'center' }}>
+              <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}>Sign Out</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-        <Text style={{
-          color: AppColors.TextTitle,
-          fontSize: FontSize.xxlarge,
-          fontFamily: Fonts.SemiBold,
-          textAlign: 'center',
-          textAlignVertical: 'center'
-        }}>{'We will be getting back to you...'}</Text>
-
-
-
-
-
-        <View style={{ position: 'absolute', bottom: 50, width:'100%', alignSelf:'center' }}>
-          <ContainedButton
-            onPress={onRefresh}
-            label="Refresh"
-          />
-          <TouchableOpacity onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: References.AuthenticationStack }],
-            })
-          }} style={{ alignSelf: 'center' }}>
-            <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-              <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}>Sign Out</Text>
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-
+        </KeyboardAwareScrollView>
       </View>
     </SafeAreaView >
   );

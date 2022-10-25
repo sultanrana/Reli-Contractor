@@ -79,7 +79,7 @@ const SignupSecondary = ({ navigation, route }) => {
 
           </>
 
-          <View style={{ width: '100%', paddingHorizontal: 12, position: 'absolute', bottom: '15%', alignSelf: 'center' }}>
+          <View style={{ width: '100%',position: 'absolute', bottom: '17%', alignSelf: 'center' }}>
             <ContainedButton
               onPress={onSubmit}
               label="Continue"
