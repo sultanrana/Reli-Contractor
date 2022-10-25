@@ -10,10 +10,12 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const LoginSecondary = ({ navigation, route }) => {
   const [email, setEmail] = useState('');
   const scheme = useColorScheme()
+  const AppColors = Colors(scheme)
   const AppStyles = GetStyles(scheme)
 
   const onSubmit = () => {
@@ -43,32 +45,43 @@ const LoginSecondary = ({ navigation, route }) => {
     },
     emailText: {
       textAlign: 'center',
-      color: Colors(scheme).Primary,
+      color: AppColors.Primary,
       fontFamily: Fonts.SemiBold,
       fontSize: 14,
     },
   });
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.HorizontalStyle]}>
-        <Text style={[AppStyles.AuthScreenTitle]}>
-          Forgot Password
-        </Text>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,]}>
+        <KeyboardAwareScrollView contentContainerStyle={{ height: '100%' }} showsVerticalScrollIndicator={false} >
+          <Text style={[AppStyles.AuthScreenTitle]}>
+            Forgot Password
+          </Text>
 
-        <InputField
-          title="Email"
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Your Email"
-        />
-        <View style={{ marginVertical: 10 }} />
-        <ContainedButton
-          onPress={onSubmit}
-          label="Continue"
-        />
+          <InputField
+            title="Email"
+            value={email}
+            onChangeText={setEmail}
+            placeholder="Your Email"
+          />
+          <View style={{ marginVertical: 10 }} />
+          <ContainedButton
+            onPress={onSubmit}
+            label="Continue"
+          />
+
+          <TouchableOpacity style={{ alignSelf: 'center', position: 'absolute', bottom: '15%' }}>
+            <Text style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
+              Contact Support
+            </Text>
+          </TouchableOpacity>
+
+        </KeyboardAwareScrollView>
+
       </View>
+
     </SafeAreaView>
   );
 

@@ -43,7 +43,7 @@ const SignupSecondary = ({ navigation, route }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
 
-        <KeyboardAwareScrollView >
+        <KeyboardAwareScrollView contentContainerStyle={{height:'100%'}} showsVerticalScrollIndicator={false} >
           <>
             <Text style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
@@ -78,22 +78,24 @@ const SignupSecondary = ({ navigation, route }) => {
 
 
           </>
+
+          <View style={{ width: '100%', paddingHorizontal: 12, position: 'absolute', bottom: '15%', alignSelf: 'center' }}>
+            <ContainedButton
+              onPress={onSubmit}
+              label="Continue"
+            />
+
+            <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+              <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                Already have an account?
+                <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
 
       </View>
-      <View style={{ width: '100%', paddingHorizontal: 12, position: 'absolute', bottom: 50, alignSelf: 'center' }}>
-        <ContainedButton
-          onPress={onSubmit}
-          label="Continue"
-        />
 
-        <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-          <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-            Already have an account?
-            <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 

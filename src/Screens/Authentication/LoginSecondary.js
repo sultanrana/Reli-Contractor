@@ -63,9 +63,11 @@ const LoginSecondary = ({ navigation, route }) => {
   return (
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
 
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
+        >
           <Text style={[AppStyles.AuthScreenTitle]}>
             Contractor Sign In
           </Text>
