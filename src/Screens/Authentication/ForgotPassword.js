@@ -74,7 +74,7 @@ const LoginSecondary = ({ navigation, route }) => {
             onPress={onSubmit}
             label="Continue"
           />
-          <View style={{ width: '100%', position:'absolute', marginTop: screenHeight-150, alignSelf: 'center' }}>
+          <View style={{ width: '100%', position:'absolute', bottom:50, alignSelf: 'center' }}>
 
             <TouchableOpacity style={{ alignSelf: 'center' }}>
               <Text style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>

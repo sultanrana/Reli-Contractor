@@ -107,9 +107,9 @@ const SignupTertiary = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={[AppStyles.Screen]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
 
         <FlatList
           scrollEnabled={true}
@@ -122,7 +122,7 @@ const SignupTertiary = ({ navigation, route }) => {
           renderItem={({ item, index }) => (
             <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
           )}
-          contentContainerStyle={{ paddingBottom: 100 }}
+          contentContainerStyle={{ paddingBottom: 50 }}
           // ItemSeparatorComponent={()=>{
           //   return <View style={{height:24, width:24}}></View>
           // }}
@@ -137,7 +137,7 @@ const SignupTertiary = ({ navigation, route }) => {
           ListFooterComponent={
             () => {
               return (
-                <View style={{ width: '100%', marginTop: screenHeight - 650, alignSelf: 'center' }}>
+                <View style={{ width: '100%', marginTop:12, alignSelf: 'center' }}>
 
                   <ContainedButton
                     onPress={onSubmit}

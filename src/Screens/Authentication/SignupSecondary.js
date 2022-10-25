@@ -45,7 +45,7 @@ const SignupSecondary = ({ navigation, route }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
 
-        <KeyboardAwareScrollView contentContainerStyle={{paddingBottom:100}} showsVerticalScrollIndicator={false} >
+        <KeyboardAwareScrollView contentContainerStyle={{height:'100%', paddingBottom:100,}} showsVerticalScrollIndicator={false} >
           <>
             <Text style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
@@ -81,7 +81,7 @@ const SignupSecondary = ({ navigation, route }) => {
 
           </>
 
-          <View style={{ width: '100%', marginTop: screenHeight-650, alignSelf: 'center' }}>
+          <View style={{ width: '100%', position:'absolute', bottom:100, alignSelf: 'center' }}>
             <ContainedButton
               onPress={onSubmit}
               label="Continue"

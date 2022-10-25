@@ -58,7 +58,7 @@ const SignupPrimary = ({ navigation }) => {
   return (
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView
           contentContainerStyle={{ paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
@@ -108,7 +108,6 @@ const SignupPrimary = ({ navigation }) => {
               rightIcon={(isPassVisible) ? Icons.ShowPassword : Icons.HidePassword}
               rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }} />
 
-            <View style={{ marginVertical: 12 }} />
             <View style={{ width: '100%', marginTop: 70, alignSelf: 'center' }}>
 
               <ContainedButton
