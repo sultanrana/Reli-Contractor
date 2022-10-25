@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ContainedButton from '../../Components/ContainedButton'
@@ -13,6 +13,8 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+
+const screenHeight = Dimensions.get('window').height
 
 const SignupSecondary = ({ navigation, route }) => {
  
@@ -43,7 +45,7 @@ const SignupSecondary = ({ navigation, route }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
 
-        <KeyboardAwareScrollView contentContainerStyle={{height:'100%'}} showsVerticalScrollIndicator={false} >
+        <KeyboardAwareScrollView contentContainerStyle={{paddingBottom:100}} showsVerticalScrollIndicator={false} >
           <>
             <Text style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
@@ -79,7 +81,7 @@ const SignupSecondary = ({ navigation, route }) => {
 
           </>
 
-          <View style={{ width: '100%',position: 'absolute', bottom: '17%', alignSelf: 'center' }}>
+          <View style={{ width: '100%', marginTop: screenHeight-650, alignSelf: 'center' }}>
             <ContainedButton
               onPress={onSubmit}
               label="Continue"

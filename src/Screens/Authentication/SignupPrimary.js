@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -14,6 +14,8 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Icons } from '../../Assets/Images/Index';
+
+const screenHeight = Dimensions.get('window').height
 
 const SignupPrimary = ({ navigation }) => {
 
@@ -58,8 +60,8 @@ const SignupPrimary = ({ navigation }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView
-        contentContainerStyle={{paddingBottom:100}}
-        showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}
+          showsVerticalScrollIndicator={false}
         >
           <>
             <Text style={[AppStyles.AuthScreenTitle]}>
@@ -107,17 +109,20 @@ const SignupPrimary = ({ navigation }) => {
               rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }} />
 
             <View style={{ marginVertical: 12 }} />
-            <ContainedButton
-              onPress={onSubmit}
-              label="Continue"
-            />
+            <View style={{ width: '100%', marginTop: 70, alignSelf: 'center' }}>
 
-            <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center', marginBottom: 8 }}>
-              <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-                Already have an account?
-                <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-              </Text>
-            </TouchableOpacity>
+              <ContainedButton
+                onPress={onSubmit}
+                label="Continue"
+              />
+
+              <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+                <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                  Already have an account?
+                  <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
           </>
         </KeyboardAwareScrollView>
       </View>

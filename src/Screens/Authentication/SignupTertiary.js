@@ -31,6 +31,8 @@ const servicesList = [
   },
 
 ];
+const screenHeight = Dimensions.get('window').height
+const screenWidth = Dimensions.get('window').width
 
 const SignupTertiary = ({ navigation, route }) => {
 
@@ -41,7 +43,6 @@ const SignupTertiary = ({ navigation, route }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
-  const screenWidth = Dimensions.get('window').width
 
 
 
@@ -121,7 +122,7 @@ const SignupTertiary = ({ navigation, route }) => {
           renderItem={({ item, index }) => (
             <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
           )}
-          contentContainerStyle={{paddingBottom:100}}
+          contentContainerStyle={{ paddingBottom: 100 }}
           // ItemSeparatorComponent={()=>{
           //   return <View style={{height:24, width:24}}></View>
           // }}
@@ -136,9 +137,8 @@ const SignupTertiary = ({ navigation, route }) => {
           ListFooterComponent={
             () => {
               return (
-                <View style={{
-                  marginVertical: 16
-                }}>
+                <View style={{ width: '100%', marginTop: screenHeight - 650, alignSelf: 'center' }}>
+
                   <ContainedButton
                     onPress={onSubmit}
                     label="Continue"
