@@ -47,7 +47,7 @@ const SignupSecondary = ({ navigation, route }) => {
 
         <KeyboardAwareScrollView contentContainerStyle={{height:'100%', paddingBottom:100,}} showsVerticalScrollIndicator={false} >
           <>
-            <Text style={[AppStyles.AuthScreenTitle]}>
+            <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
             </Text>
 
@@ -70,7 +70,7 @@ const SignupSecondary = ({ navigation, route }) => {
 
             <View style={{ marginVertical: 8 }} />
 
-            <Text style={{ textAlign: 'left', width: '90%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish }}>
+            <Text allowFontScaling={false} style={{ textAlign: 'left', width: '90%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish }}>
               Wiling to travel
             </Text>
 
@@ -88,9 +88,9 @@ const SignupSecondary = ({ navigation, route }) => {
             />
 
             <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-              <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+              <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
                 Already have an account?
-                <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
               </Text>
             </TouchableOpacity>
           </View>

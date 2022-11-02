@@ -76,7 +76,7 @@ const About = ({ navigation }) => {
           label={'Terms'}
           style={{ marginTop: 16, }}
         />
-        <Text style={styles.DeleteBtn}>{'Delete Account'}</Text>
+        <Text allowFontScaling={false} style={styles.DeleteBtn}>{'Delete Account'}</Text>
       </>
     )
   }

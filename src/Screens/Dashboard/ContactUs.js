@@ -42,7 +42,7 @@ const ContactUs = ({ navigation }) => {
         <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
             <View style={[AppStyles.HorizontalStyle,{paddingTop:16}]}>
-                <Text style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Subject'}</Text>
+                <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Subject'}</Text>
                 <DropDownPicker
                     closeAfterSelecting={true}
                     open={openSubject}

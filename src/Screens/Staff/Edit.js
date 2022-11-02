@@ -74,7 +74,7 @@ const Edit = ({ navigation }) => {
           <View style={styles.addImage}>
             <Image source={Icons.Add} style={styles.addIcon} resizeMode={'contain'} />
           </View>
-          <Text style={styles.title}>{'Add Image'}</Text>
+          <Text allowFontScaling={false} style={styles.title}>{'Add Image'}</Text>
         </View>
 
         <InputField
@@ -106,7 +106,7 @@ const Edit = ({ navigation }) => {
         />
 
         <View style={{ marginVertical: 12 }} />
-        <Text style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Role'}</Text>
+        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Role'}</Text>
         <DropDownPicker
           closeAfterSelecting={true}
           open={openRole}
@@ -163,7 +163,7 @@ const Edit = ({ navigation }) => {
         />
 
         <View style={{ marginVertical: 12 }} />
-        <Text style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
+        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
         <DropDownPicker
           closeAfterSelecting={true}
           open={openStatus}

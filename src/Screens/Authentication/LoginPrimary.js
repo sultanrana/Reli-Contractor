@@ -38,7 +38,7 @@ const LoginPrimary = ({ navigation }) => {
       <LogoOver navigation={navigation} shouldShowBack={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView>
-          <Text style={[AppStyles.AuthScreenTitle]}>
+          <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
             Contractor Sign In
           </Text>
 
@@ -60,9 +60,9 @@ const LoginPrimary = ({ navigation }) => {
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => navigation.navigate(References.SignupPrimary)} style={{ alignSelf: 'center' }}>
-            <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.SemiBold }}>
+            <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.SemiBold }}>
               Need an account?
-              <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign Up</Text>
+              <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign Up</Text>
             </Text>
           </TouchableOpacity>
         </KeyboardAwareScrollView>

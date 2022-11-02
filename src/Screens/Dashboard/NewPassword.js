@@ -49,7 +49,7 @@ const NewPassword = ({ navigation }) => {
     return (
         <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
-            {/* <Text style={[AppStyles.AuthScreenTitle]}>
+            {/* <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
                 Contractor Sign In
             </Text> */}
             <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
@@ -62,20 +62,20 @@ const NewPassword = ({ navigation }) => {
                     keyboardType='default'
                 />
 
-                <Text style={styles.Hint}>{'Requirements:'}</Text>
+                <Text allowFontScaling={false} style={styles.Hint}>{'Requirements:'}</Text>
 
                 <View style={{ marginTop: 16 }}>
                     <View style={styles.requirementSection}>
                         <View style={styles.requirementNumber}></View>
-                        <Text style={styles.requirementTitle}>{'Uppercase Letters'}</Text>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Uppercase Letters'}</Text>
                     </View>
                     <View style={styles.requirementSection}>
                         <View style={styles.requirementNumber}></View>
-                        <Text style={styles.requirementTitle}>{'Lowercase Letters'}</Text>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Lowercase Letters'}</Text>
                     </View>
                     <View style={styles.requirementSection}>
                         <View style={styles.requirementNumber}></View>
-                        <Text style={styles.requirementTitle}>{'Symbols'}</Text>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Symbols'}</Text>
                     </View>
                 </View>
                 <ContainedButton

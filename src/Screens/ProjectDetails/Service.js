@@ -57,8 +57,8 @@ const Service = ({ navigation }) => {
   const listHeaderComponent = () => {
     return (
       <>
-        <Text style={styles.title}>{'Service Details'}</Text>
-        <Text style={[styles.title, { marginTop: 15 }]}>{'Service: ' + serviceName}</Text>
+        <Text allowFontScaling={false} style={styles.title}>{'Service Details'}</Text>
+        <Text allowFontScaling={false} style={[styles.title, { marginTop: 15 }]}>{'Service: ' + serviceName}</Text>
       </>
     )
   }

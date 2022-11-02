@@ -52,7 +52,7 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
             }}
             activeOpacity={0.8}
             style={[styles.mainContainer, style]} >
-            <Text style={[styles.btnText, labelStyle]}>{label}</Text>
+            <Text allowFontScaling={false} style={[styles.btnText, labelStyle]}>{label}</Text>
             {
                 rightIcon &&
                 <Image source={Icons.Forward} style={styles.btnImage} />

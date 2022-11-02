@@ -62,7 +62,7 @@ const ResetPassword = ({ navigation, route }) => {
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
       <View style={[AppStyles.HorizontalStyle]}>
-        <Text style={[AppStyles.AuthScreenTitle]}>
+        <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
           Set Password
         </Text>
 

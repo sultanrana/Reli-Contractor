@@ -116,22 +116,22 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
             </TouchableOpacity> */}
             <View style={styles.detailContainer}>
 
-                <Text style={styles.order}>{Details.title}</Text>
-                <Text style={styles.generalTitles}>{'Date Assigned: '}
-                    <Text style={styles.generalDesc}>{Details.assigned}</Text>
+                <Text allowFontScaling={false} style={styles.order}>{Details.title}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Assigned: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.assigned}</Text>
                 </Text>
-                <Text style={styles.generalTitles}>{'Date Completed: '}
-                    <Text style={styles.generalDesc}>{Details.completed}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Completed: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.completed}</Text>
                 </Text>
-                <Text style={styles.generalTitles}>{'Amount: '}
-                    <Text style={styles.generalDesc}>{Details.amount}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Amount: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.amount}</Text>
                 </Text>
 
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.detailsBtn}
                 >
-                    <Text style={styles.detailBtnTitle}>{'More Details'}</Text>
+                    <Text allowFontScaling={false} style={styles.detailBtnTitle}>{'More Details'}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.imageContainer}>
@@ -141,10 +141,10 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
                             style={styles.image}
                             resizeMode='contain'
                             source={Images.Window} />
-                        <Text style={[styles.titleText, labelStyle]}>{'Status'}</Text>
+                        <Text allowFontScaling={false} style={[styles.titleText, labelStyle]}>{'Status'}</Text>
                     </View>
                     <View style={styles.statusContainer}>
-                        <Text style={[styles.statusText]}>{Details.status}</Text>
+                        <Text allowFontScaling={false} style={[styles.statusText]}>{Details.status}</Text>
                     </View>
                 </View>
 

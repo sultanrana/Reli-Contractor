@@ -106,7 +106,7 @@ const Schedule = ({ navigation }) => {
         keyExtractor={(item, index) => 'cis' + index}
         renderItem={({ section: { renderItem } }) => { renderItem }}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             fontFamily: Fonts.SemiBold,
             fontSize: FontSize.xxlarge,
             color: AppColors.TextTitle,

@@ -64,7 +64,7 @@ const SignupPrimary = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <>
-            <Text style={[AppStyles.AuthScreenTitle]}>
+            <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
               Sign Up
             </Text>
 
@@ -116,9 +116,9 @@ const SignupPrimary = ({ navigation }) => {
               />
 
               <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-                <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
                   Already have an account?
-                  <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                  <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
                 </Text>
               </TouchableOpacity>
             </View>

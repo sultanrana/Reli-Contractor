@@ -87,7 +87,7 @@ const SignupTertiary = ({ navigation, route }) => {
           height: '35%',
           width: '100%',
         }}>
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             color: AppColors.TextTitle,
             fontSize: FontSize.xlarge,
             fontFamily: Fonts.Bold,
@@ -129,7 +129,7 @@ const SignupTertiary = ({ navigation, route }) => {
           numColumns={2}
           ListHeaderComponent={() => {
             return (
-              <Text style={[AppStyles.AuthScreenTitle]}>
+              <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
                 What services can you offer?
               </Text>
             )
@@ -144,9 +144,9 @@ const SignupTertiary = ({ navigation, route }) => {
                     label="Continue"
                   />
                   <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-                    <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                    <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
                       Already have an account?
-                      <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                      <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
                     </Text>
                   </TouchableOpacity>
                 </View>

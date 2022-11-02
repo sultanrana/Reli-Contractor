@@ -73,9 +73,9 @@ const NotificationDetail = ({ style, title, Details, labelStyle, label }) => {
                             <View style={styles.dateContainer}>
 
                                 <View style={{ height: '20%', justifyContent: 'center', alignItems: 'center', backgroundColor: AppColors.Primary, borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
-                                    <Text style={[styles.month]}>{'Oct'}</Text>
+                                    <Text allowFontScaling={false} style={[styles.month]}>{'Oct'}</Text>
                                 </View>
-                                <Text style={[styles.date]}>{'10'}</Text>
+                                <Text allowFontScaling={false} style={[styles.date]}>{'10'}</Text>
 
 
                             </View>
@@ -87,9 +87,9 @@ const NotificationDetail = ({ style, title, Details, labelStyle, label }) => {
 
                 </View>
                 <View style={{ width: '74%', }}>
-                    <Text style={[styles.title]}>{`${Details.title}`}</Text>
-                    <Text style={[styles.desc]}>{`${Details.location}`}</Text>
-                    <Text style={[styles.time]}>{`${Details.time} ago`}</Text>
+                    <Text allowFontScaling={false} style={[styles.title]}>{`${Details.title}`}</Text>
+                    <Text allowFontScaling={false} style={[styles.desc]}>{`${Details.location}`}</Text>
+                    <Text allowFontScaling={false} style={[styles.time]}>{`${Details.time} ago`}</Text>
 
                 </View>
             </View>

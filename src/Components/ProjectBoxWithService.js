@@ -97,7 +97,7 @@ const ProjectBoxWithService =
                         marginHorizontal: 8,
                         flexDirection: 'column'
                     }}>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.SemiBold,
                             fontSize: FontSize.xlarge,
                             color: AppColors.TextTitle,
@@ -105,7 +105,7 @@ const ProjectBoxWithService =
                         }}>
                             {title}
                         </Text>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,
                             fontSize: FontSize.small,
                             color: AppColors.Text,
@@ -113,7 +113,7 @@ const ProjectBoxWithService =
                         }}>
                             {subtitle1}
                         </Text>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,
                             fontSize: FontSize.small,
                             color: AppColors.Text,
