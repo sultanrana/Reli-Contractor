@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { s, vs, ms, mvs } from 'react-native-size-matters';
+
 import Fonts from "../Assets/Fonts/Index";
 import Colors from "./Colors";
 import { FontSize } from "./FontSize";

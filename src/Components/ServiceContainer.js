@@ -74,56 +74,56 @@ const ServiceContainer = ({ Details }) => {
                         alignSelf: 'center'
                     }} source={Images.SideWindow} />
                 </View>
-                <Text style={styles.mainTitle}>{'Premium Window'}</Text>
+                <Text allowFontScaling={false} style={styles.mainTitle}>{'Premium Window'}</Text>
             </View>
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Stacked: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.stacked}</Text>
-            </View>
-
-            <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Top Section: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.topSection}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Stacked: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.stacked}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Bottom Section: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.bottomSection}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Top Section: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.topSection}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Color: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.color}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Bottom Section: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.bottomSection}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Grid: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.grid}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Color: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.color}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Safety: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.safety}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Grid: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.grid}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Fire Safety: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.fireSafety}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Safety: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.safety}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Privacy: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.privacy}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Fire Safety: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.fireSafety}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Floor: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.floor}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Privacy: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.privacy}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
-                <Text style={styles.serviceName}>{'Room: '}</Text>
-                <Text style={styles.seriveDesc}>{Details.room}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Floor: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.floor}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Room: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.room}</Text>
             </View>
         </View>
     );

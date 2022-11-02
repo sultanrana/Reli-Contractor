@@ -112,8 +112,8 @@ const ConfirmationPopup = (props) => {
                 <View style={[styles.iconContainer]}>
                     <Image source={Icon} style={styles.popupIcon} resizeMode={'contain'} />
                 </View>
-                <Text style={[styles.Title, TitleStyle]}>{Title}</Text>
-                <Text style={styles.Desc}>{`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`}</Text>
+                <Text allowFontScaling={false} style={[styles.Title, TitleStyle]}>{Title}</Text>
+                <Text allowFontScaling={false} style={styles.Desc}>{`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. \n\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`}</Text>
 
                 <View style={styles.btnContainer}>
                     <TouchableOpacity
@@ -121,7 +121,7 @@ const ConfirmationPopup = (props) => {
                         activeOpacity={0.8}
                         style={styles.negativeBtn}
                     >
-                        <Text style={styles.btnTitle}>{'Cancel'}</Text>
+                        <Text allowFontScaling={false} style={styles.btnTitle}>{'Cancel'}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -129,28 +129,10 @@ const ConfirmationPopup = (props) => {
                         activeOpacity={0.8}
                         style={styles.positiveBtn}
                     >
-                        <Text style={styles.btnTitle}>{'Okay'}</Text>
+                        <Text allowFontScaling={false} style={styles.btnTitle}>{'Okay'}</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <TouchableOpacity
-                    style={{
-                        position: 'absolute',
-                        right: 16,
-                        top: 16
-                    }}
-                    activeOpacity={0.6}
-                    onPress={onRequestClose}
-                >
-                    <Image source={Images.Close} resizeMode='contain' style={styles.cross} />
-                </TouchableOpacity>
-                <Text style={styles.Title}>{'Please provide the following Info!'}</Text>
-                <View style={{ marginTop: 10 }}>
-                    <Text style={styles.Desc}>{'Name'}</Text>
-                    <Text style={styles.Desc}>{'Phone No'}</Text>
-                    <Text style={styles.Desc}>{'Tax filing address'}</Text>
-                    <Text style={styles.Desc}>{'Date Of Birth (must be at least 15 years)'}</Text>
-                </View> */}
-
+                
 
             </View>
 

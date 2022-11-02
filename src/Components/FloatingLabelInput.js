@@ -57,6 +57,7 @@ const FloatingLabelInput =
       // <View style={[styles.mainContainer, customStyle]}>
 
       <TextInput
+        allowFontScaling={false}
         label={placeholder}
         // placeholder={placeholder}
         value={value}

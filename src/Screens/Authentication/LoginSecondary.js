@@ -68,12 +68,12 @@ const LoginSecondary = ({ navigation, route }) => {
         <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         >
-          <Text style={[AppStyles.AuthScreenTitle]}>
+          <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
             Contractor Sign In
           </Text>
           {email ?
             <View style={styles.emailTextView}>
-              <Text style={styles.emailText}>{email}</Text>
+              <Text allowFontScaling={false} style={styles.emailText}>{email}</Text>
             </View>
             :
             null
@@ -100,7 +100,7 @@ const LoginSecondary = ({ navigation, route }) => {
 
 
           <TouchableOpacity onPress={() => navigation.navigate(References.ForgotPassword)} style={{ alignSelf: 'center' }}>
-            <Text style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular }}>
+            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular }}>
               Forgot Password
             </Text>
           </TouchableOpacity>

@@ -36,7 +36,7 @@ const VerifyOTP = ({ navigation, route }) => {
   return (
     <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
       <LogoOver navigation={navigation} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
+      <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
         Enter Verification Code
       </Text>
       <View style={{
@@ -51,7 +51,7 @@ const VerifyOTP = ({ navigation, route }) => {
           maxLength={MAX_CODE_LENGTH}
         />
         <View style={{ marginVertical: 2 }} />
-        <Text style={{
+        <Text allowFontScaling={false} style={{
           fontSize: FontSize.medium,
           fontFamily: Fonts.Light,
           color: Colors(scheme).Grey

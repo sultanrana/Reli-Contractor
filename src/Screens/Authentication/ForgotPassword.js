@@ -59,7 +59,7 @@ const LoginSecondary = ({ navigation, route }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,]}>
         <KeyboardAwareScrollView contentContainerStyle={{ height: '100%' }} showsVerticalScrollIndicator={false} >
-          <Text style={[AppStyles.AuthScreenTitle]}>
+          <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
             Forgot Password
           </Text>
 
@@ -77,7 +77,7 @@ const LoginSecondary = ({ navigation, route }) => {
           <View style={{ width: '100%', position:'absolute', bottom:50, alignSelf: 'center' }}>
 
             <TouchableOpacity style={{ alignSelf: 'center' }}>
-              <Text style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
+              <Text allowFontScaling={false} style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
                 Contact Support
               </Text>
             </TouchableOpacity>

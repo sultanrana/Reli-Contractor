@@ -83,12 +83,12 @@ const FinanceBox =
                             flexDirection: 'row',
                             marginVertical: 4
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.large,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Window Project: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.large,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -98,12 +98,12 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Ordered: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -113,12 +113,12 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Scheduled: '}</Text>
-                            <Text style={{
+                            <Text  allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -129,12 +129,12 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Completed: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -167,12 +167,12 @@ const FinanceBox =
                             flexDirection: 'row',
                             marginVertical: 4
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.large,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Property ID: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.large,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -182,7 +182,7 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -192,7 +192,7 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -204,7 +204,7 @@ const FinanceBox =
                             width: '100%',
                             justifyContent: 'space-between'
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -212,7 +212,7 @@ const FinanceBox =
                                 width: '65%',
                                 textAlign: 'left',
                             }}>{address3}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -246,7 +246,7 @@ const FinanceBox =
                             flexDirection: 'row',
                             marginVertical: 4
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.large,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
@@ -255,12 +255,12 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Total: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -270,12 +270,12 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Windows: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
@@ -306,7 +306,7 @@ const FinanceBox =
                             flexDirection: 'row',
                             marginVertical: 4
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.large,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
@@ -315,12 +315,12 @@ const FinanceBox =
                         <View style={{
                             flexDirection: 'row',
                         }}>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
                             }}>{'Total: '}</Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,

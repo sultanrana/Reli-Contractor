@@ -99,7 +99,7 @@ const ActiveProjects = ({ navigation }) => {
         keyExtractor={(item, index) => 'ci' + index}
         renderItem={({ section: { renderItem } }) => { renderItem }}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             fontFamily: Fonts.SemiBold,
             fontSize: FontSize.xxlarge,
             color: AppColors.TextTitle,

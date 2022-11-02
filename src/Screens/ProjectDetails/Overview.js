@@ -196,10 +196,10 @@ const Overview = ({ navigation }) => {
   const listHeaderComponent = () => {
     return (
       <>
-        <Text style={styles.mainTitle}>{'2x Windows'}</Text>
+        <Text allowFontScaling={false} style={styles.mainTitle}>{'2x Windows'}</Text>
         <View style={styles.projectStatusContainer}>
-          <Text style={styles.title}>{'Project Status: '}
-            <Text style={{ fontFamily: Fonts.Regular }}>{'Pending Accetance'}</Text>
+          <Text allowFontScaling={false} style={styles.title}>{'Project Status: '}
+            <Text allowFontScaling={false} style={{ fontFamily: Fonts.Regular }}>{'Pending Accetance'}</Text>
           </Text>
 
           <View style={styles.progressMainCon}>
@@ -212,7 +212,7 @@ const Overview = ({ navigation }) => {
             </View>
             <Progress.Bar animated progress={step} height={4} width={screenWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
           </View>
-          <Text style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
+          <Text allowFontScaling={false} style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
           <View style={{ width: '100%', marginVertical: 16 }}>
             <FlatList
               showsHorizontalScrollIndicator={false}
@@ -231,12 +231,12 @@ const Overview = ({ navigation }) => {
           />
 
           <View style={styles.reminderContainer}>
-            <Text style={styles.reminderTitle}>{'Reminder'}</Text>
-            <Text style={styles.reminderDesc}>{'You must be able to schedule the project in a period listed above'}</Text>
+            <Text allowFontScaling={false} style={styles.reminderTitle}>{'Reminder'}</Text>
+            <Text allowFontScaling={false} style={styles.reminderDesc}>{'You must be able to schedule the project in a period listed above'}</Text>
           </View>
         </View>
 
-        <Text style={styles.mainTitle}>{'Service'}</Text>
+        <Text allowFontScaling={false} style={styles.mainTitle}>{'Service'}</Text>
       </>
     )
   }
@@ -250,17 +250,17 @@ const Overview = ({ navigation }) => {
           labelStyle={{ color: AppColors.Primary }}
         />
         <View style={styles.locationContainer}>
-          <Text style={styles.title}>{'Location: '}
-            <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'123 Indus Park, California'}</Text>
+          <Text allowFontScaling={false} style={styles.title}>{'Location: '}
+            <Text allowFontScaling={false} style={[styles.title, { fontFamily: Fonts.Regular }]}>{'123 Indus Park, California'}</Text>
           </Text>
         </View>
         <View style={styles.paymentContainer}>
           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '23%' }}>
-            <Text style={styles.title}>{'Paid: '}</Text>
-            <Text style={[styles.title]}>{'$410'}</Text>
+            <Text allowFontScaling={false} style={styles.title}>{'Paid: '}</Text>
+            <Text allowFontScaling={false} style={[styles.title]}>{'$410'}</Text>
           </View>
           <View style={{ marginTop: 15, paddingHorizontal: '22%' }}>
-            <Text style={[styles.title, { fontFamily: Fonts.Regular }]}>{'Can click to see details'}</Text>
+            <Text allowFontScaling={false} style={[styles.title, { fontFamily: Fonts.Regular }]}>{'Can click to see details'}</Text>
           </View>
         </View>
 

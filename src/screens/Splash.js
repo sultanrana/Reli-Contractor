@@ -48,7 +48,7 @@ const Splash = ({ navigation }) => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 
-                    <Text style={{
+                    <Text allowFontScaling={false} style={{
                         fontFamily: Fonts.SemiBold,
                         textAlignVertical: 'center',
                         marginHorizontal: 2,

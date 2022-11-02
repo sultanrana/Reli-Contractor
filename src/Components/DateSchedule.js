@@ -60,21 +60,21 @@ const DateSchedule = ({ Details }) => {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Regular,
                             fontSize: FontSize.medium,
                             color: AppColors.White,
                         }}>{Details.day}</Text>
                     </View>
 
-                    <Text style={{
+                    <Text allowFontScaling={false} style={{
                         fontFamily: Fonts.Regular,
                         fontSize: 40,
                         color: AppColors.TextTitle,
                         alignSelf: 'center'
                     }}>{Details.date}</Text>
                 </View>
-                <Text style={{
+                <Text allowFontScaling={false} style={{
                     fontFamily: Fonts.SemiBold,
                     fontSize: FontSize.medium,
                     color: AppColors.TextTitle,
@@ -83,7 +83,7 @@ const DateSchedule = ({ Details }) => {
                 }}>{Details.month}</Text>
             </View>
             <View style={styles.timeContainer}>
-                <Text style={styles.time}>{Details.time}</Text>
+                <Text allowFontScaling={false} style={styles.time}>{Details.time}</Text>
             </View>
         </View>
     );

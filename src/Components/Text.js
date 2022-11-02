@@ -21,7 +21,7 @@ const MText =
         
         return (
 
-            <Text style={
+            <Text allowFontScaling={false} style={
                 [styles, {
                     fontFamily: isTitle ? Fonts.SemiBold : Fonts.Regular,
                     fontSize: isTitle ? 14 : 11,

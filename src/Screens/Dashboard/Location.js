@@ -52,7 +52,7 @@ const Location = ({ navigation }) => {
         <SafeAreaView style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
             <View style={[AppStyles.HorizontalStyle, {paddingTop:16}]}>
-            <Text style={styles.screenTitle}>{'Location'}</Text>
+            <Text allowFontScaling={false} style={styles.screenTitle}>{'Location'}</Text>
             <KeyboardAwareScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: '40%' }}>
@@ -96,7 +96,7 @@ const Location = ({ navigation }) => {
                         />
                     </View>
 
-                    <Text style={styles.travel}>{'Wiling to travel:'}</Text>
+                    <Text allowFontScaling={false} style={styles.travel}>{'Wiling to travel:'}</Text>
                     <RangeSlider from={4} to={3000} />
 
                     <ContainedButton

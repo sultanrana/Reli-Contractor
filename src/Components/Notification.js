@@ -47,7 +47,7 @@ const Notification = ({ style, title, onPress, labelStyle, radioBtnState = () =>
 
         <View
             style={[styles.mainContainer, style]} >
-            <Text style={[styles.titleText, labelStyle]}>{title}</Text>
+            <Text allowFontScaling={false} style={[styles.titleText, labelStyle]}>{title}</Text>
             <TouchableOpacity
                 style={styles.radioBtnContainer}
                 activeOpacity={0.8}

@@ -100,7 +100,7 @@ const ProjectBoxWithDate =
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                <Text style={{
+                                <Text allowFontScaling={false} style={{
                                     fontFamily: Fonts.Regular,
                                     fontSize: FontSize.small,
                                     color: AppColors.Background,
@@ -109,7 +109,7 @@ const ProjectBoxWithDate =
                                     {'Wed'}
                                 </Text>
                             </View>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontFamily: Fonts.Medium,
                                 fontSize: FontSize.large,
                                 color: AppColors.TextTitle,
@@ -119,7 +119,7 @@ const ProjectBoxWithDate =
                                 {'06'}
                             </Text>
                         </View>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Medium,
                             fontSize: FontSize.small,
                             color: AppColors.TextTitle,
@@ -144,7 +144,7 @@ const ProjectBoxWithDate =
                         marginHorizontal: 8,
                         flexDirection: 'column'
                     }}>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.SemiBold,
                             fontSize: FontSize.xlarge,
                             color: AppColors.TextTitle,
@@ -152,7 +152,7 @@ const ProjectBoxWithDate =
                         }}>
                             {title}
                         </Text>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,
                             fontSize: FontSize.small,
                             color: AppColors.Text,
@@ -163,7 +163,7 @@ const ProjectBoxWithDate =
                         {
                             staff ? 
                             <>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontFamily: Fonts.Light,
                                 fontSize: FontSize.small,
                                 color: AppColors.Text,
@@ -172,7 +172,7 @@ const ProjectBoxWithDate =
                             }}>
                                 {'Project Status: Materials Ordered'}
                             </Text>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontFamily: Fonts.Light,
                                 fontSize: FontSize.small,
                                 color: AppColors.Text,
@@ -183,7 +183,7 @@ const ProjectBoxWithDate =
                             </Text>
                             </>
                             :
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontFamily: Fonts.Light,
                                 fontSize: FontSize.small,
                                 color: AppColors.Text,

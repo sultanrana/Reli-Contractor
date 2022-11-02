@@ -35,7 +35,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
         <KeyboardAwareScrollView contentContainerStyle={{ height: '100%', justifyContent:'center'}} showsVerticalScrollIndicator={false} >
 
 
-        <Text style={{
+        <Text allowFontScaling={false} style={{
           color: AppColors.Primary,
           fontSize: FontSize.xxxlarge + 2,
           fontFamily: Fonts.Bold,
@@ -43,7 +43,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
           textAlignVertical: 'center'
         }}>{'Thank you!'}</Text>
 
-        <Text style={{
+        <Text allowFontScaling={false} style={{
           color: AppColors.TextTitle,
           fontSize: FontSize.xxlarge,
           fontFamily: Fonts.SemiBold,
@@ -66,8 +66,8 @@ const ThankyouForSignup = ({ navigation, route }) => {
               routes: [{ name: References.AuthenticationStack }],
             })
           }} style={{ alignSelf: 'center' }}>
-            <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-              <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}>Sign Out</Text>
+            <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+              <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}>Sign Out</Text>
             </Text>
           </TouchableOpacity>
         </View>

@@ -36,11 +36,11 @@ const Message = ({ navigation }) => {
       shadowOpacity: 0.16,
       position: 'absolute',
       bottom: 0,
+      right:0,
+      left:0,
       shadowRadius: 6,
       paddingVertical: 14,
       paddingHorizontal: 18,
-      borderTopWidth: 0.2,
-      borderTopColor: AppColors.Border
     },
     mainTitle: {
       fontFamily: Fonts.SemiBold,
@@ -55,7 +55,7 @@ const Message = ({ navigation }) => {
       backgroundColor: AppColors.Background
     },
     input: {
-      paddingVertical: 10,
+      // paddingVertical: 10,
       maxHeight: 150,
       width: '85%',
       paddingHorizontal: 20,
@@ -77,12 +77,12 @@ const Message = ({ navigation }) => {
   })
 
   return (
-    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
+    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, }]}>
 
       <KeyboardAvoidingView
         style={styles.bottomContainer}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-      // keyboardVerticalOffset={200}
+        keyboardVerticalOffset={0}
       >
 
           <View style={styles.inputContainer}>

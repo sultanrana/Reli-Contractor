@@ -42,7 +42,7 @@ const StaffItemBox = ({ navigation, image, name }) => {
 
             }} resizeMode='contain' resizeMethod='resize' />
 
-            <Text style={{
+            <Text allowFontScaling={false} style={{
                 fontSize: FontSize.large,
                 fontFamily: Fonts.SemiBold,
                 color: AppColors.TextTitle,
