@@ -58,8 +58,9 @@ const SignupPrimary = ({ navigation }) => {
   return (
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView
+          enableOnAndroid={true}
           contentContainerStyle={{ paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
         >

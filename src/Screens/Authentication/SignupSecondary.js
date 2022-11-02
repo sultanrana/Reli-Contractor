@@ -17,7 +17,7 @@ import { GetStyles } from '../../Theme/AppStyles';
 const screenHeight = Dimensions.get('window').height
 
 const SignupSecondary = ({ navigation, route }) => {
- 
+
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
   const [travel, setTravel] = useState(0.2);
@@ -45,7 +45,11 @@ const SignupSecondary = ({ navigation, route }) => {
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
 
-        <KeyboardAwareScrollView contentContainerStyle={{height:'100%', paddingBottom:100,}} showsVerticalScrollIndicator={false} >
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          // extraHeight={130} extraScrollHeight={130}
+          contentContainerStyle={{ height: '100%', paddingBottom: 100, }}
+          showsVerticalScrollIndicator={false} >
           <>
             <Text style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
@@ -81,7 +85,7 @@ const SignupSecondary = ({ navigation, route }) => {
 
           </>
 
-          <View style={{ width: '100%', position:'absolute', bottom:100, alignSelf: 'center' }}>
+          <View style={{ width: '100%', position: 'absolute', bottom: 100, alignSelf: 'center' }}>
             <ContainedButton
               onPress={onSubmit}
               label="Continue"
