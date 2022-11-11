@@ -43,7 +43,7 @@ const get = async (url, request) => {
  */
 
 
-const post = async (url, dataStr, request='', bearer, contentType = ContentTypes.Raw, method = 'POST' ) => {
+const post = async (url, dataStr, request='', bearer, contentType = ContentTypes.Raw, method = 'POST', isJson=true ) => {
   let authHeader = bearer
 
   return new Promise((resolve, reject) => {
@@ -55,7 +55,8 @@ const post = async (url, dataStr, request='', bearer, contentType = ContentTypes
         Authorization: authHeader ? `Bearer ${authHeader}` : "",
         'Content-Type': contentType,
       },
-      body: dataStr
+      body: dataStr,
+      json: isJson
     }).then((res) => res.json())
       .then((result) => {
         console.log(`${request} response:`, result)
