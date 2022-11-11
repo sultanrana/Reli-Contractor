@@ -1,3 +1,4 @@
+import { ContentTypes } from "./Constants";
 
 /**
  * Get method
@@ -42,8 +43,8 @@ const get = async (url, request) => {
  */
 
 
-const post = async (url, data, request, method = 'POST') => {
-  let authHeader = 'token'
+const post = async (url, dataStr, request='', bearer, contentType = ContentTypes.Raw, method = 'POST' ) => {
+  let authHeader = bearer
 
   return new Promise((resolve, reject) => {
 
@@ -52,9 +53,9 @@ const post = async (url, data, request, method = 'POST') => {
       headers: {
         Accept: 'application/json',
         Authorization: authHeader ? `Bearer ${authHeader}` : "",
-        'Content-Type': 'application/json',
+        'Content-Type': contentType,
       },
-      body: JSON.stringify(data)
+      body: dataStr
     }).then((res) => res.json())
       .then((result) => {
         console.log(`${request} response:`, result)

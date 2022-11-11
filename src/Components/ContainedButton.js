@@ -1,40 +1,49 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, Image, View, ActivityIndicator } from 'react-native'
 import Fonts from '../Assets/Fonts/Index'
 import colors from '../Theme/Colors'
 
-const ContainedButton = ({ style, onPress, labelStyle, label, scheme='light' }) => {
-    
-const styles = StyleSheet.create({
-    mainContainer: {
-        height: 56,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors(scheme).Primary,
-        flexDirection: 'row',
-        borderRadius:10,
-        elevation: 2
-    },
-    btnText: {
-        color: colors(scheme).White,
-        fontSize: 15,
-        fontFamily: Fonts.SemiBold
-    },
-    btnImage: {
-        height: 35,
-        width: 35,
-        resizeMode: 'contain',
-        tintColor: colors(scheme).White,
-        marginRight: 12
-    }
-})
+const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', disabled = false, loading = false }) => {
+
+    const styles = StyleSheet.create({
+        mainContainer: {
+            height: 56,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: colors(scheme).Primary,
+            flexDirection: 'row',
+            borderRadius: 10,
+            elevation: 2
+        },
+        btnText: {
+            color: colors(scheme).White,
+            fontSize: 15,
+            fontFamily: Fonts.SemiBold
+        },
+        btnImage: {
+            height: 35,
+            width: 35,
+            resizeMode: 'contain',
+            tintColor: colors(scheme).White,
+            marginRight: 12
+        }
+    })
     return (
 
         <TouchableOpacity
             onPress={onPress}
             activeOpacity={0.8}
-            style={[styles.mainContainer, style]} >
-            <Text allowFontScaling={false} style={[styles.btnText, labelStyle]}>{label}</Text>
+            style={[styles.mainContainer, style]}
+            disabled={disabled || loading}>
+
+            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            {loading && <ActivityIndicator size={'small'} color={'white'} style={{ marginRight: 16, marginLeft: 8 }} />}
+
+            </View>
+            <Text allowFontScaling={false} style={[styles.btnText, labelStyle, { flex: 1, textAlign: 'center' }]}>{label}</Text>
+            <View style={{ flex: 1 }}>
+                
+            </View>
         </TouchableOpacity>
 
     )
