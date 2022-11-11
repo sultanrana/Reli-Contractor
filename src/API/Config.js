@@ -1,6 +1,6 @@
 
 import fetch from './fetch'
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
     API_URL,
@@ -16,22 +16,23 @@ export const handleLogin = async (email, password) => {
 
     try { 
         const response = await fetch.post(
-            Endpoints.AuthProfile.Login,
+            API_URL+'/'+Endpoints.AuthProfile.Login,
             formData.toString(),
             'Login Request',
             null,
-            ContentTypes.XUrlEncodedFormData
+            ContentTypes.XUrlEncodedFormData,
         )
     
         if (response?.code === 200) {
-            AsyncStorage.setItem('token', response?.token).then(()=> {
-                return response?.data
-            })
+            AsyncStorage.setItem('token', ''+response?.token)
+            return response?.data
         } else if (response?.code === 400) {
             SimpleToast.show(response?.message)
             return null
         }
     } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
         throw e
     }
 
