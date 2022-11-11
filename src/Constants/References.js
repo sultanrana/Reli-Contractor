@@ -55,11 +55,6 @@ const References = {
     EditStaff: 'Edit Staff',
     
 
-    StaffTabs: 'Staff Details',
-    ScheduleStaff: 'Schedule Staff',
-    EditStaff: 'Edit Staff',
-    
-
 }
 
 export { References }
