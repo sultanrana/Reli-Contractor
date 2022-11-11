@@ -41,8 +41,8 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
                     label === 'Location' ?
                         navigation.navigate(References.Location)
                         :
-                        label === 'Email' ?
-                            navigation.navigate(References.Email)
+                        label === 'Account Details' ?
+                            navigation.navigate(References.AccountDetails)
                             :
                             label === 'Change Password' ?
                                 navigation.navigate(References.NewPassword)
@@ -52,7 +52,7 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
             }}
             activeOpacity={0.8}
             style={[styles.mainContainer, style]} >
-            <Text style={[styles.btnText, labelStyle]}>{label}</Text>
+            <Text allowFontScaling={false} style={[styles.btnText, labelStyle]}>{label}</Text>
             {
                 rightIcon &&
                 <Image source={Icons.Forward} style={styles.btnImage} />

@@ -45,14 +45,14 @@ const References = {
     Notification: 'Notification',
     Transaction: 'Transaction',
     Location: 'Location',
-    Email: 'Email',
+    AccountDetails: 'AccountDetails',
     NewNumber: 'NewNumber',
     NewPassword: 'NewPassword',
     ContactUs: 'ContactUs',
 
     StaffTabs: 'Staff Details',
-    ScheduleStaff: 'Schedule Staff',
-    EditStaff: 'Edit Staff',
+    ScheduleStaff: 'Schedule',
+    EditStaff: 'Edit',
     
 
 }

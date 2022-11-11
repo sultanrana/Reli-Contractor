@@ -71,7 +71,7 @@ const Finances = ({ navigation }) => {
         )}
         keyExtractor={(item, index) => 'ser' + index}
 
-        contentContainerStyle={{ paddingBottom: '10%', padding: 2, height: '100%' }}
+        contentContainerStyle={{ paddingBottom: 80, }}
         style={{
           flexGrow: 0,
         }}
@@ -83,7 +83,7 @@ const Finances = ({ navigation }) => {
         paddingHorizontal: 8,
         position: 'absolute',
         right: 8,
-        bottom: 8,
+        bottom: 10,
         width: '30%'
       }}>
         <ContainedButton

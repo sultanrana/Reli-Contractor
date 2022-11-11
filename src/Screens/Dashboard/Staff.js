@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -13,18 +13,19 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import StaffItemBox from '../../Components/StaffItemBox'
+import { Images } from '../../Assets/Images/Index';
 
 const Tabs = createMaterialTopTabNavigator()
 
 const STAFF_MEMBERS_DATA = [
-  { image: '', name: 'John Doe' },
-  { image: '', name: 'John Cooper' },
-  { image: '', name: 'Esther Howard' },
-  { image: '', name: 'Leslie Alaxander' },
-  { image: '', name: 'Kristan Watson' },
-  { image: '', name: 'Robert Fox' },
-  { image: '', name: 'Codie Fixer' },
-  { image: '', name: 'Cameron Sasy' },
+  { image: Images.Dummy1, name: 'John Doe' },
+  { image: Images.Dummy2, name: 'Jane Cooper' },
+  { image: Images.Dummy3, name: 'Esther Howard' },
+  { image: Images.Dummy4, name: 'Leslie Alexander' },
+  { image: Images.Dummy5, name: 'Kristin Watson' },
+  { image: Images.Dummy7, name: 'Cameron Williamson' },
+  { image: Images.Dummy6, name: 'Robert Fox' },
+  { image: Images.Dummy8, name: 'Cody Fisher' },
 ]
 
 const Staff = ({ navigation }) => {
@@ -34,27 +35,28 @@ const Staff = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} bgWhite/>
+    <SafeAreaView style={[AppStyles.Screen, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
+      <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
+      <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={STAFF_MEMBERS_DATA}
-        renderItem={({ item }) => (
-          <StaffItemBox navigation={navigation} name={item?.name} image={item?.image}/>
-        )}
-        keyExtractor={(item, index) => 'stf' + index}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={STAFF_MEMBERS_DATA}
+          renderItem={({ item }) => (
+            <StaffItemBox navigation={navigation} name={item?.name} image={item?.image} />
+          )}
+          keyExtractor={(item, index) => 'stf' + index}
 
-        contentContainerStyle={{ paddingBottom: '10%', padding: 8 }}
-        style={{
-          flexGrow: 0,
-        }}
-        ItemSeparatorComponent={()=> (
-          <View style={{marginVertical: 4}}/>
-        )}
-      />
-      
-    </View>
+          contentContainerStyle={{ paddingBottom: '30%' }}
+          style={{
+            flexGrow: 0,
+          }}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginVertical: 4 }} />
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 
 }

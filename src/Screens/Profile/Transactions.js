@@ -21,23 +21,23 @@ const Transactions = ({ navigation }) => {
       title: 'Unpaid',
       data: [
         {
-          title: 'Order # 1',
-          assigned: 'Oct 01, 2022',
-          completed: 'Oct 06, 2022',
+          title: 'Order # 01',
+          assigned: '01/10/2022',
+          completed: '06/10/2022',
           amount: '$1249.00',
           status: 'Finished'
         },
         {
-          title: 'Order # 2',
-          assigned: 'Oct 01, 2022',
-          completed: 'Oct 06, 2022',
+          title: 'Order # 02',
+          assigned: '01/10/2022',
+          completed: '07/10/2022',
           amount: '$1249.00',
           status: 'In Progress'
         },
         {
-          title: 'Order # 3',
-          assigned: 'Oct 01, 2022',
-          completed: 'Oct 06, 2022',
+          title: 'Order # 03',
+          assigned: '01/10/2022',
+          completed: '09/10/2022',
           amount: '$1249.00',
           status: 'Finished'
         },
@@ -47,23 +47,23 @@ const Transactions = ({ navigation }) => {
       title: 'Paid',
       data: [
         {
-          title: 'Order # 1',
-          assigned: 'Oct 01, 2022',
-          completed: 'Oct 06, 2022',
+          title: 'Order # 01',
+          assigned: '01/10/2022',
+          completed: '03/10/2022',
           amount: '$1249.00',
           status: 'Finished'
         },
         {
-          title: 'Order # 2',
-          assigned: 'Oct 01, 2022',
-          completed: 'Oct 06, 2022',
+          title: 'Order # 02',
+          assigned: '01/10/2022',
+          completed: '03/10/2022',
           amount: '$1249.00',
           status: 'Finished'
         },
         {
-          title: 'Order # 3',
-          assigned: 'Oct 01, 2022',
-          completed: 'Oct 06, 2022',
+          title: 'Order # 03',
+          assigned: '01/10/2022',
+          completed: '03/10/2022',
           amount: '$1249.00',
           status: 'Finished'
         },
@@ -72,9 +72,10 @@ const Transactions = ({ navigation }) => {
   ]
 
   return (
-    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, {backgroundColor: AppColors.White,paddingTop:10}]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
 
       <SectionList
+        stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
         keyExtractor={(item, index) => 'ci' + index}
@@ -86,7 +87,7 @@ const Transactions = ({ navigation }) => {
           )
         }}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             fontFamily: Fonts.SemiBold,
             fontSize: FontSize.xxlarge,
             color: AppColors.TextTitle,

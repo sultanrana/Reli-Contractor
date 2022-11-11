@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
-import Slider from "react-native-slider";
+import RangeSlider from '../../Components/Slider/Index';
 import { FontSize } from '../../Theme/FontSize';
 import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
@@ -14,8 +14,10 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 
-const SignupSecondary = ({ navigation, route }) => {
+const screenHeight = Dimensions.get('window').height
 
+const SignupSecondary = ({ navigation, route }) => {
+ 
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
   const [travel, setTravel] = useState(0.2);
@@ -39,16 +41,15 @@ const SignupSecondary = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Where do you work?
-      </Text>
-      <KeyboardAwareScrollView>
-        <>
-          <View style={{
-            padding: 8
-          }}>
+      <View style={[AppStyles.HorizontalStyle]}>
+
+        <KeyboardAwareScrollView contentContainerStyle={{height:'100%', paddingBottom:100,}} showsVerticalScrollIndicator={false} >
+          <>
+            <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
+              Where do you work?
+            </Text>
 
             <InputField
               title="Address"
@@ -69,37 +70,35 @@ const SignupSecondary = ({ navigation, route }) => {
 
             <View style={{ marginVertical: 8 }} />
 
-            <Text style={{ textAlign: 'left', width: '90%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish }}>
+            <Text allowFontScaling={false} style={{ textAlign: 'left', width: '90%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish }}>
               Wiling to travel
             </Text>
 
             <View style={{ marginVertical: 4 }} />
-
-            <View style={{ paddingHorizontal: 10 }}>
-              <Slider
-                value={travel}
-                onValueChange={value => setTravel(value)}
-                minimumTrackTintColor={Colors(scheme).Primary}
-                maximumTrackTintColor={'#FDECDF'}
-                thumbTintColor={Colors(scheme).Primary}
-              />
-            </View>
+            <RangeSlider from={4} to={3000} />
             <View style={{ marginVertical: 16 }} />
 
+
+          </>
+
+          <View style={{ width: '100%', position:'absolute', bottom:100, alignSelf: 'center' }}>
             <ContainedButton
               onPress={onSubmit}
               label="Continue"
             />
+
+            <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+              <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                Already have an account?
+                <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-            <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-              Already have an account?
-              <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-            </Text>
-          </TouchableOpacity>
-        </>
-      </KeyboardAwareScrollView>
-    </View>
+        </KeyboardAwareScrollView>
+
+      </View>
+
+    </SafeAreaView>
   );
 
 }

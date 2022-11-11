@@ -8,6 +8,7 @@ import Colors, { colors } from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
+import { Images } from '../../Assets/Images/Index';
 
 const CompletedProjects = ({ navigation }) => {
 
@@ -37,21 +38,21 @@ const CompletedProjects = ({ navigation }) => {
           title: "2x Sliding Glass Doors",
           subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
           subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: 'https://i.pinimg.com/originals/12/67/53/1267531a1311c4cee2f2dccf3c1e859f.jpg',
+          image1: Images.House,
           image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
         },
         {
           title: "2x Sliding Glass Doors",
           subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
           subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: 'https://i.pinimg.com/originals/12/67/53/1267531a1311c4cee2f2dccf3c1e859f.jpg',
+          image1: Images.House,
           image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
         },
         {
           title: "2x Sliding Glass Doors",
           subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
           subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: 'https://i.pinimg.com/originals/12/67/53/1267531a1311c4cee2f2dccf3c1e859f.jpg',
+          image1: Images.House,
           image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
         },
       ]
@@ -61,12 +62,13 @@ const CompletedProjects = ({ navigation }) => {
   return (
     <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background, paddingTop: 10 }]}>
       <SectionList
+        stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
         keyExtractor={(item, index) => 'ci' + index}
         renderItem={({ section: { renderItem } }) => { renderItem }}
         // renderSectionHeader={({ section: { title } }) => (
-        //   <Text style={{
+        //   <Text allowFontScaling={false} style={{
         //     fontFamily: Fonts.SemiBold,
         //     fontSize: FontSize.xxlarge,
         //     color: AppColors.TextTitle,

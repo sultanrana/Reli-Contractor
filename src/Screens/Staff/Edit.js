@@ -6,7 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
-import LogoOver from '../../Components/LogoOver';
+import Popup from '../../Components/Popup';
 
 import { FontSize } from '../../Theme/FontSize';
 import { LayoutStyles } from '../../Theme/Layout';
@@ -25,6 +25,7 @@ const Edit = ({ navigation }) => {
   const [openStatus, setOpenStatus] = useState(false);
   const [role, setRole] = useState(false);
   const [status, setStatus] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
   const [roleLsist, setRolesList] = useState([
     { label: 'Contractor', value: 'Contractor' },
     { label: 'Client', value: 'Client' }
@@ -66,13 +67,14 @@ const Edit = ({ navigation }) => {
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
       <KeyboardAwareScrollView
         contentContainerStyle={{ paddingVertical: 35 }}
+        showsVerticalScrollIndicator={false}
       >
 
         <View style={{ alignSelf: 'center', alignItems: 'center' }}>
           <View style={styles.addImage}>
             <Image source={Icons.Add} style={styles.addIcon} resizeMode={'contain'} />
           </View>
-          <Text style={styles.title}>{'Add Image'}</Text>
+          <Text allowFontScaling={false} style={styles.title}>{'Add Image'}</Text>
         </View>
 
         <InputField
@@ -104,7 +106,7 @@ const Edit = ({ navigation }) => {
         />
 
         <View style={{ marginVertical: 12 }} />
-        <Text style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Role'}</Text>
+        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Role'}</Text>
         <DropDownPicker
           closeAfterSelecting={true}
           open={openRole}
@@ -161,7 +163,7 @@ const Edit = ({ navigation }) => {
         />
 
         <View style={{ marginVertical: 12 }} />
-        <Text style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
+        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
         <DropDownPicker
           closeAfterSelecting={true}
           open={openStatus}
@@ -218,10 +220,19 @@ const Edit = ({ navigation }) => {
 
         <View style={{ marginVertical: 12 }} />
         <ContainedButton
-          // onPress={onSubmit}
+          onPress={() => { setPopupVisible(true) }}
           label="Save Changes"
         />
       </KeyboardAwareScrollView>
+
+      <Popup
+        visible={popupVisible}
+        onRequestClose={() => setPopupVisible(false)}
+        Icon={Icons.Confirm}
+        IconBackground={'#FDECDF'}
+        Title={'Confirmation'}
+        TitleStyle={{color:AppColors.Primary}}
+      />
     </View>
   );
 

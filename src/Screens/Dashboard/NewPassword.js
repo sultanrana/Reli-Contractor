@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -47,43 +47,44 @@ const NewPassword = ({ navigation }) => {
         },
     })
     return (
-        <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
+        <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
-            {/* <Text style={[AppStyles.AuthScreenTitle]}>
+            {/* <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
                 Contractor Sign In
             </Text> */}
+            <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
 
-            <InputField
-                title="New Password"
-                value={password}
-                onChangeText={setPassword}
-                placeholder="New Password"
-                keyboardType='default'
-            />
+                <InputField
+                    title="New Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="New Password"
+                    keyboardType='default'
+                />
 
-            <Text style={styles.Hint}>{'Requirements:'}</Text>
+                <Text allowFontScaling={false} style={styles.Hint}>{'Requirements:'}</Text>
 
-            <View style={{ marginTop: 16 }}>
-                <View style={styles.requirementSection}>
-                    <View style={styles.requirementNumber}></View>
-                    <Text style={styles.requirementTitle}>{'Uppercase Letters'}</Text>
+                <View style={{ marginTop: 16 }}>
+                    <View style={styles.requirementSection}>
+                        <View style={styles.requirementNumber}></View>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Uppercase Letters'}</Text>
+                    </View>
+                    <View style={styles.requirementSection}>
+                        <View style={styles.requirementNumber}></View>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Lowercase Letters'}</Text>
+                    </View>
+                    <View style={styles.requirementSection}>
+                        <View style={styles.requirementNumber}></View>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Symbols'}</Text>
+                    </View>
                 </View>
-                <View style={styles.requirementSection}>
-                    <View style={styles.requirementNumber}></View>
-                    <Text style={styles.requirementTitle}>{'Lowercase Letters'}</Text>
-                </View>
-                <View style={styles.requirementSection}>
-                    <View style={styles.requirementNumber}></View>
-                    <Text style={styles.requirementTitle}>{'Symbols'}</Text>
-                </View>
+                <ContainedButton
+                    // onPress={onSubmit}
+                    label="Confirm Changes"
+                    style={{ marginTop: 22 }}
+                />
             </View>
-            <ContainedButton
-                // onPress={onSubmit}
-                label="Confirm Changes"
-                style={{ marginTop: 22 }}
-            />
-
-        </View>
+        </SafeAreaView>
 
     );
 

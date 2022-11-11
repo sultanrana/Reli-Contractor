@@ -24,8 +24,8 @@ const InputField =
     autoCapitalize,
     isRightIcon,
     labelStyle,
-    keyboardType = 'default',
-    returnKeyType = 'next',
+    keyboardType,
+    returnKeyType,
     onSubmitEditing,
     fieldRef,
     customStyle,
@@ -96,7 +96,7 @@ const InputField =
             margin: 4,
 
           }}>
-            <Text style={{fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold}}>{title}</Text>
+            <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{title}</Text>
           </View>
         }
         <View style={[styles.mainContainer, customStyle]}>
@@ -109,13 +109,14 @@ const InputField =
           }
           {
             label &&
-            <Text>{label}</Text>
+            <Text allowFontScaling={false}>{label}</Text>
           }
           <View style={[styles.input, {
             width: isRightIcon ? '88%' : '100%',
             justifyContent: multiline ? 'flex-start' : 'center'
           }]}>
             <TextInput
+              allowFontScaling={false}
               style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
               placeholder={placeholder}
               value={value}

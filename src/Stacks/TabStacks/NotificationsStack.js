@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
-import { StatusBar } from 'react-native'
 
 import { References } from '../../Constants/References'
 

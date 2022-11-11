@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Text, View, Image, useColorScheme } from 'react-native'
+import NetInfo from "@react-native-community/netinfo";
 
 import { Images } from '../Assets/Images/Index'
 import Colors from '../Theme/Colors'
@@ -12,8 +13,14 @@ const Splash = ({ navigation }) => {
 
     const scheme = useColorScheme()
 
-    useEffect(()=> {
-        setTimeout(()=> {
+    useEffect(() => {
+
+        const checkConnectivity = NetInfo.addEventListener(state => {
+            console.log("Connection type", state.type);
+            console.log("Is connected ? ", state.isConnected);
+        });
+
+        setTimeout(() => {
             navigation.reset({
                 index: 0,
                 routes: [{ name: References.AuthenticationStack }],
@@ -32,7 +39,7 @@ const Splash = ({ navigation }) => {
 
                 <Image source={Images.Logo} style={{
                     width: 200, height: 200, tintColor: 'white'
-                }} resizeMode='contain' resizeMethod='resize'/>
+                }} resizeMode='contain' resizeMethod='resize' />
 
             </View>
 
@@ -41,7 +48,7 @@ const Splash = ({ navigation }) => {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 
-                    <Text style={{
+                    <Text allowFontScaling={false} style={{
                         fontFamily: Fonts.SemiBold,
                         textAlignVertical: 'center',
                         marginHorizontal: 2,

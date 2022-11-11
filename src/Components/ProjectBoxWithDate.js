@@ -26,7 +26,8 @@ const ProjectBoxWithDate =
         subtitle2,
         imageURL1,
         imageURL2,
-        clickable = true
+        clickable = true,
+        staff
 
     }) => {
 
@@ -38,16 +39,19 @@ const ProjectBoxWithDate =
             mainContainer: {
                 width: '99.5%',
                 flexDirection: 'row',
-                // backgroundColor: 'pink',
-                backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
+                // backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
+                backgroundColor: AppColors.White,
                 borderRadius: 16,
                 zIndex: 0,
-                elevation: 1,
-                // height:90,
+                elevation: 2,
+                shadowColor: AppColors.BlackGreyish,
+                shadowOffset: { width: 0, height:1 },
+                shadowOpacity: 0.16,
+                // shadowRadius: 6
             },
             image: {
                 width: 90,
-                height: 88,
+                height: 90,
                 zIndex: 0,
                 borderRadius: 16
             },
@@ -72,7 +76,7 @@ const ProjectBoxWithDate =
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
-                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMode='contain' resizeMethod='resize' />
+                    <Image source={imageURL1} style={styles.image} resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -96,7 +100,7 @@ const ProjectBoxWithDate =
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                <Text style={{
+                                <Text allowFontScaling={false} style={{
                                     fontFamily: Fonts.Regular,
                                     fontSize: FontSize.small,
                                     color: AppColors.Background,
@@ -105,7 +109,7 @@ const ProjectBoxWithDate =
                                     {'Wed'}
                                 </Text>
                             </View>
-                            <Text style={{
+                            <Text allowFontScaling={false} style={{
                                 fontFamily: Fonts.Medium,
                                 fontSize: FontSize.large,
                                 color: AppColors.TextTitle,
@@ -115,7 +119,7 @@ const ProjectBoxWithDate =
                                 {'06'}
                             </Text>
                         </View>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Medium,
                             fontSize: FontSize.small,
                             color: AppColors.TextTitle,
@@ -140,7 +144,7 @@ const ProjectBoxWithDate =
                         marginHorizontal: 8,
                         flexDirection: 'column'
                     }}>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.SemiBold,
                             fontSize: FontSize.xlarge,
                             color: AppColors.TextTitle,
@@ -148,7 +152,7 @@ const ProjectBoxWithDate =
                         }}>
                             {title}
                         </Text>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,
                             fontSize: FontSize.small,
                             color: AppColors.Text,
@@ -156,15 +160,40 @@ const ProjectBoxWithDate =
                         }}>
                             {subtitle1}
                         </Text>
-                        <Text style={{
-                            fontFamily: Fonts.Light,
-                            fontSize: FontSize.small,
-                            color: AppColors.Text,
-                            marginVertical: 1,
-                            textAlignVertical: 'center'
-                        }}>
-                            {subtitle2}
-                        </Text>
+                        {
+                            staff ? 
+                            <>
+                            <Text allowFontScaling={false} style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                marginVertical: 1,
+                                textAlignVertical: 'center'
+                            }}>
+                                {'Project Status: Materials Ordered'}
+                            </Text>
+                            <Text allowFontScaling={false} style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                marginVertical: 1,
+                                textAlignVertical: 'center'
+                            }}>
+                                {'Staff Assigned: Robert Fox'}
+                            </Text>
+                            </>
+                            :
+                            <Text allowFontScaling={false} style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                marginVertical: 1,
+                                textAlignVertical: 'center'
+                            }}>
+                                {subtitle2}
+                            </Text>
+                        }
+                       
                     </View>
 
                 </View>

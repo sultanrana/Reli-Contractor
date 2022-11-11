@@ -53,22 +53,25 @@ const lightColors = new ColorsTemplate({
 
 })
 
-const darkColors = new ColorsTemplate({
-    background: 'black',
-    backgroundInverse: 'white',
-    primary: '#FDAA63',
-    primaryOutline: 'grey',
-    secondary: '#4C4F4D',
-    text: '#212529',
-    textTitle: '#ffffff',
-    variation: '#FF685F',
-    dateBackground: '#E0E0E0',
-    border: '#5F6368',
-    red: '#BA1A1A',
-    darkGrey: '#979797'
+const darkColors = lightColors
 
 
-})
+// const darkColors = new ColorsTemplate({
+//     background: 'black',
+//     backgroundInverse: 'white',
+//     primary: '#FDAA63',
+//     primaryOutline: 'grey',
+//     secondary: '#4C4F4D',
+//     text: '#212529',
+//     textTitle: '#ffffff',
+//     variation: '#FF685F',
+//     dateBackground: '#E0E0E0',
+//     border: '#5F6368',
+//     red: '#BA1A1A',
+//     darkGrey: '#979797'
+
+
+// })
 
 const Colors = (scheme) => {
     //console.log('Color Scheme ', scheme);

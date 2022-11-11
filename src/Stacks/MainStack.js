@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
-import { useColorScheme } from 'react-native';
+import { useColorScheme,StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { References } from '../Constants/References';
@@ -9,23 +9,25 @@ import AuthStack from './AuthStack';
 import DashboardStack from './DashboardStack';
 import ProjectDetails from '../Screens/Dashboard/ProjectDetails';
 import Location from '../Screens/Dashboard/Location';
-import Email from '../Screens/Dashboard/Email';
+import AccountDetails from '../Screens/Dashboard/AccountDetails';
 import NewNumber from '../Screens/Dashboard/NewNumber';
 import NewPassword from '../Screens/Dashboard/NewPassword';
 import ContactUs from '../Screens/Dashboard/ContactUs';
+import Colors from '../Theme/Colors';
 
 const Stack = createStackNavigator()
 
 const MainStack = () => {
 
-    const currentScheme = useColorScheme()
-
+    const scheme = useColorScheme()
+    const AppColors = Colors(scheme)
     return (
         <NavigationContainer>
+            {/* <StatusBar barStyle='light-content' translucent backgroundColor={AppColors.Background} /> */}
             <Stack.Navigator
                 screenOptions={{
                     headerShown: false,
-                    // gestureEnabled: true,
+                    gestureEnabled: false,
                     gestureDirection: 'horizontal',
                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 }} initialRouteName={References.Splash}>
@@ -51,8 +53,8 @@ const MainStack = () => {
                     component={Location} />
 
                 <Stack.Screen
-                    name={References.Email}
-                    component={Email} />
+                    name={References.AccountDetails}
+                    component={AccountDetails} />
 
                 <Stack.Screen
                     name={References.NewNumber}

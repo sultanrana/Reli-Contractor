@@ -37,11 +37,14 @@ const ProjectBoxWithService =
             mainContainer: {
                 width: '99.5%',
                 flexDirection: 'row',
-                // backgroundColor: 'pink',
-                backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
+                // backgroundColor: (scheme === 'light') ? AppColors.White : AppColors.BlackGreyish,
+                backgroundColor: AppColors.White,
                 borderRadius: 16,
                 zIndex: 0,
-                elevation:1,
+                shadowColor: AppColors.BlackGreyish,
+                shadowOffset: { width: 0, height:1 },
+                shadowOpacity: 0.16,
+                // shadowRadius: 6
                 // height:90,
             },
             image: {
@@ -57,11 +60,11 @@ const ProjectBoxWithService =
 
             <TouchableOpacity
                 activeOpacity={1}
-                onPress={()=>navigation.navigate(References.ProjectDetails)}
+                onPress={() => navigation.navigate(References.ProjectDetails)}
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
-                    <Image source={{ uri: imageURL1 }} style={styles.image} resizeMode='contain' resizeMethod='resize' />
+                    <Image source={imageURL1} style={styles.image} resizeMethod='resize' />
                     <View style={{
                         justifyContent: 'center',
                         width: 60,
@@ -74,7 +77,7 @@ const ProjectBoxWithService =
                         position: 'absolute',
                         right: 0
                     }}>
-                        <Image source={{ uri: imageURL2 }} style={{
+                        <Image source={Images.SlidingDoor} style={{
                             zIndex: 2,
                             height: 40,
                             width: 40,
@@ -94,7 +97,7 @@ const ProjectBoxWithService =
                         marginHorizontal: 8,
                         flexDirection: 'column'
                     }}>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.SemiBold,
                             fontSize: FontSize.xlarge,
                             color: AppColors.TextTitle,
@@ -102,7 +105,7 @@ const ProjectBoxWithService =
                         }}>
                             {title}
                         </Text>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,
                             fontSize: FontSize.small,
                             color: AppColors.Text,
@@ -110,7 +113,7 @@ const ProjectBoxWithService =
                         }}>
                             {subtitle1}
                         </Text>
-                        <Text style={{
+                        <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,
                             fontSize: FontSize.small,
                             color: AppColors.Text,

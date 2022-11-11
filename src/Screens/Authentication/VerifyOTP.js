@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -34,15 +34,14 @@ const VerifyOTP = ({ navigation, route }) => {
 
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        Enter Verification Code
-      </Text>
-      <View style={{
-        padding: 8
-      }}>
-        
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,]}>
+        <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
+          Enter Verification Code
+        </Text>
+
+
         <InputField
           title="Verification Code"
           value={code}
@@ -51,7 +50,7 @@ const VerifyOTP = ({ navigation, route }) => {
           maxLength={MAX_CODE_LENGTH}
         />
         <View style={{ marginVertical: 2 }} />
-        <Text style={{
+        <Text allowFontScaling={false} style={{
           fontSize: FontSize.medium,
           fontFamily: Fonts.Light,
           color: Colors(scheme).Grey
@@ -62,10 +61,10 @@ const VerifyOTP = ({ navigation, route }) => {
         <View style={{ marginVertical: 10 }} />
         <ContainedButton
           onPress={onSubmit}
-          label="Continue"  
+          label="Continue"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 
 }

@@ -20,7 +20,7 @@ const Notifications = ({ navigation }) => {
       title: 'Push Notifications',
       data: [
         {
-          title: 'New msg from customer',
+          title: 'New message from customer',
         },
         {
           title: 'New Order',
@@ -31,10 +31,10 @@ const Notifications = ({ navigation }) => {
       ]
     },
     {
-      title: 'Email',
+      title: 'Emails',
       data: [
         {
-          title: 'New msg from customer',
+          title: 'New message from customer',
         },
         {
           title: 'Project Updates',
@@ -53,9 +53,10 @@ const Notifications = ({ navigation }) => {
   ]
 
   return (
-    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, {backgroundColor: AppColors.White,paddingTop:10}]}>
+    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
 
       <SectionList
+        stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
         keyExtractor={(item, index) => 'ci' + index}
@@ -70,7 +71,7 @@ const Notifications = ({ navigation }) => {
           )
         }}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             fontFamily: Fonts.SemiBold,
             fontSize: FontSize.xxlarge,
             color: AppColors.TextTitle,
@@ -79,8 +80,8 @@ const Notifications = ({ navigation }) => {
             {title}
           </Text>
         )}
-       
-     
+
+
         contentContainerStyle={{ paddingBottom: 10 }}
       />
     </View>

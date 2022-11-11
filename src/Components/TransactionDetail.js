@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native'
 import Fonts from '../Assets/Fonts/Index'
 import colors from '../Theme/Colors'
+import { Images } from '../Assets/Images/Index'
 
 const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => {
 
@@ -17,7 +18,7 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
             borderRadius: 10,
             elevation: 1,
             alignSelf: 'center',
-            paddingHorizontal: 15,
+            paddingHorizontal: 10,
             paddingVertical: 15
         },
         detailContainer: {
@@ -54,7 +55,8 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
         titleText: {
             color: colors(scheme).Black,
             fontSize: 14,
-            fontFamily: Fonts.SemiBold
+            fontFamily: Fonts.SemiBold,
+            marginTop:10
         },
         statusText: {
             color: colors(scheme).White,
@@ -114,22 +116,22 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
             </TouchableOpacity> */}
             <View style={styles.detailContainer}>
 
-                <Text style={styles.order}>{Details.title}</Text>
-                <Text style={styles.generalTitles}>{'Date Assigned: '}
-                    <Text style={styles.generalDesc}>{Details.assigned}</Text>
+                <Text allowFontScaling={false} style={styles.order}>{Details.title}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Assigned: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.assigned}</Text>
                 </Text>
-                <Text style={styles.generalTitles}>{'Date Completed: '}
-                    <Text style={styles.generalDesc}>{Details.completed}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Completed: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.completed}</Text>
                 </Text>
-                <Text style={styles.generalTitles}>{'Amount: '}
-                    <Text style={styles.generalDesc}>{Details.amount}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Amount: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.amount}</Text>
                 </Text>
 
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.detailsBtn}
                 >
-                    <Text style={styles.detailBtnTitle}>{'More Details'}</Text>
+                    <Text allowFontScaling={false} style={styles.detailBtnTitle}>{'More Details'}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.imageContainer}>
@@ -138,11 +140,11 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
                         <Image
                             style={styles.image}
                             resizeMode='contain'
-                            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU' }} />
-                        <Text style={[styles.titleText, labelStyle]}>{'Status'}</Text>
+                            source={Images.Window} />
+                        <Text allowFontScaling={false} style={[styles.titleText, labelStyle]}>{'Status'}</Text>
                     </View>
                     <View style={styles.statusContainer}>
-                        <Text style={[styles.statusText]}>{Details.status}</Text>
+                        <Text allowFontScaling={false} style={[styles.statusText]}>{Details.status}</Text>
                     </View>
                 </View>
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions, SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import About from '../Profile/About';
@@ -24,13 +24,13 @@ const Account = ({ navigation }) => {
 
 
   return (
-    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator pageMargin={2}
         screenOptions={{
           tabBarItemStyle: { width: screenWidth / 3 },
-          tabBarScrollEnabled:true,
+          tabBarScrollEnabled: true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
@@ -38,8 +38,10 @@ const Account = ({ navigation }) => {
           },
           tabBarIndicatorStyle: {
             backgroundColor: AppColors.Primary,
-
           },
+          tabBarLabelStyle: {
+            textTransform: 'none'
+          }
         }}>
         <Tabs.Screen name={References.About} component={About} />
         <Tabs.Screen name={References.Notification} component={Notifications} />
@@ -47,7 +49,7 @@ const Account = ({ navigation }) => {
 
       </Tabs.Navigator>
 
-    </View>
+    </SafeAreaView>
   );
 
 }

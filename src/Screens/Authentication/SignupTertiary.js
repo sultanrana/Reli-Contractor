@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
 
 import { FontSize } from '../../Theme/FontSize';
-import { LayoutStyles } from '../../Theme/Layout';
+import { Images } from '../../Assets/Images/Index';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const servicesList = [
   {
@@ -22,7 +21,7 @@ const servicesList = [
   },
   {
     key: '2',
-    title: 'Glass Doors',
+    title: 'Sliding Glass Doors',
     image: 'https://cdn3.vectorstock.com/i/1000x1000/82/97/glass-door-icon-image-vector-19068297.jpg'
   },
   {
@@ -30,8 +29,10 @@ const servicesList = [
     title: 'Interior Doors',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
   },
-  
+
 ];
+const screenHeight = Dimensions.get('window').height
+const screenWidth = Dimensions.get('window').width
 
 const SignupTertiary = ({ navigation, route }) => {
 
@@ -42,25 +43,26 @@ const SignupTertiary = ({ navigation, route }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
-  const screenWidth = Dimensions.get('window').width
 
 
 
   const ServiceBox = ({
     imageURL,
     title,
+    Index
   }) => {
     return (
       <View style={{
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: '2%',
+        margin: '1.9%',
         backgroundColor: '#E0E0E0',
-        padding: 4,
-        width: screenWidth/2.3,
-        height: 164,
-        borderRadius: 16
+        width: screenWidth / 2.3,
+        borderRadius: 16,
+        height: 200,
+        paddingHorizontal: 8,
+        paddingVertical: 8
       }}>
 
         <View style={{
@@ -68,9 +70,11 @@ const SignupTertiary = ({ navigation, route }) => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: AppColors.White,
-          padding: 1
+          height: '65%',
+          width: '100%',
+          borderRadius: 12
         }}>
-          <Image source={{ uri: imageURL }} resizeMode='contain' resizeMethod='resize' style={{
+          <Image source={Index == 0 ? Images.Window : Index == 1 ? Images.SlidingDoor : Images.InteriorDoor} resizeMode='contain' resizeMethod='resize' style={{
             height: 96,
             width: 96
           }} />
@@ -80,11 +84,12 @@ const SignupTertiary = ({ navigation, route }) => {
           alignSelf: 'center',
           justifyContent: 'center',
           alignItems: 'center',
-          paddingVertical: 2
+          height: '35%',
+          width: '100%',
         }}>
-          <Text style={{
+          <Text allowFontScaling={false} style={{
             color: AppColors.TextTitle,
-            fontSize: FontSize.xxlarge,
+            fontSize: FontSize.xlarge,
             fontFamily: Fonts.Bold,
             textAlign: 'center',
             textAlignVertical: 'center'
@@ -102,51 +107,55 @@ const SignupTertiary = ({ navigation, route }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.AuthScreens, AppStyles.HorizontalStyle]}>
+    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <Text style={[AppStyles.AuthScreenTitle]}>
-        What services can you offer?
-      </Text>
+      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
 
-      <FlatList
-            scrollEnabled={true}
-            showsVerticalScrollIndicator={false}
-            data={servicesList}
-            style={{
-              width:'100%',
-              alignSelf: 'center',
-            }}
-            renderItem={({ item }) => (
-              <ServiceBox title={item?.title} imageURL={item?.image} />
-            )}
-            // contentContainerStyle={{justifyContent:'space-around'}}
-            // ItemSeparatorComponent={()=>{
-            //   return <View style={{height:24, width:24}}></View>
-            // }}
-            numColumns={'2'}
-            ListFooterComponent={
-              () => {
-                return (
-                  <View style={{
-                    marginVertical: 16
-                  }}>
-                    <ContainedButton
-                      onPress={onSubmit}
-                      label="Continue"
-                    />
-                    <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-                      <Text style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-                        Already have an account?
-                        <Text style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )
-              }
+        <FlatList
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          data={servicesList}
+          style={{
+            width: '100%',
+            alignSelf: 'center',
+          }}
+          renderItem={({ item, index }) => (
+            <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
+          )}
+          contentContainerStyle={{ paddingBottom: 50 }}
+          // ItemSeparatorComponent={()=>{
+          //   return <View style={{height:24, width:24}}></View>
+          // }}
+          numColumns={2}
+          ListHeaderComponent={() => {
+            return (
+              <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
+                What services can you offer?
+              </Text>
+            )
+          }}
+          ListFooterComponent={
+            () => {
+              return (
+                <View style={{ width: '100%', marginTop:12, alignSelf: 'center' }}>
+
+                  <ContainedButton
+                    onPress={onSubmit}
+                    label="Continue"
+                  />
+                  <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+                    <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                      Already have an account?
+                      <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )
             }
-          />
-
-    </View>
+          }
+        />
+      </View>
+    </SafeAreaView>
   );
 
 }

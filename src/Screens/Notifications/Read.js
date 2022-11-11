@@ -48,7 +48,7 @@ const Read = ({ navigation }) => {
   }
 
   return (
-    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,{backgroundColor:AppColors.White}]}>
+    <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,{backgroundColor:AppColors.White}]}>
 
 
       <FlatList

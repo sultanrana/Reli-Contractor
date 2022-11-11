@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
             onPress={onPress}
             activeOpacity={0.8}
             style={[styles.mainContainer, style]} >
-            <Text style={[styles.btnText, labelStyle]}>{label}</Text>
+            <Text allowFontScaling={false} style={[styles.btnText, labelStyle]}>{label}</Text>
         </TouchableOpacity>
 
     )
