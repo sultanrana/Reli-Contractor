@@ -43,7 +43,7 @@ const LoginSecondary = ({ navigation, route }) => {
         handleLogin(email, password).then((data) => {
           if (data) {
             dispatch(setUserData(data.userData))
-            dispatch(setAuthToken(data.userData))
+            dispatch(setAuthToken(data.token))
             navigation.reset({
               index: 0,
               routes: [{ name: References.DashboardStack }],
