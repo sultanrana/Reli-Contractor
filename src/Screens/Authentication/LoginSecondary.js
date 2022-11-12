@@ -15,6 +15,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { handleLogin } from '../../API/Config';
 import { setAuthToken, setUserData } from '../../Redux/Actions';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginSecondary = ({ navigation, route }) => {
   const [password, setPassword] = useState('');
@@ -40,13 +41,15 @@ const LoginSecondary = ({ navigation, route }) => {
         return;
       } else {
         setLoading(true)
-        handleLogin(email, password).then((data) => {
+        handleLogin(email, password).then(async (data) => {
           if (data) {
-            dispatch(setUserData(data.userData))
-            dispatch(setAuthToken(data.token))
-            navigation.reset({
-              index: 0,
-              routes: [{ name: References.DashboardStack }],
+            await AsyncStorage.setItem('token', '' + data?.token).then(() => {
+              dispatch(setUserData(data.userData))
+              dispatch(setAuthToken(data.token))
+              navigation.reset({
+                index: 0,
+                routes: [{ name: References.DashboardStack }],
+              })
             })
           }
 
