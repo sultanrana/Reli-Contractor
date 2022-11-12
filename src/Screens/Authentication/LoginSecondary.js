@@ -12,29 +12,53 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Icons } from '../../Assets/Images/Index';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { handleLogin } from '../../API/Config';
+import { setAuthToken, setUserData } from '../../Redux/Actions';
+import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginSecondary = ({ navigation, route }) => {
   const [password, setPassword] = useState('');
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
+
+  const dispatch = useDispatch()
 
   const { email } = route?.params
 
   const onSubmit = () => {
-    if (password === '') {
-      SimpleToast.show('Please enter your password');
-      return;
-    } else if (email != 't1@tepia.co' || password != '12345678') {
-      SimpleToast.show('Invalid Credentials')
-    } else {
+    if (email === 't1@tepia.co' && password === '12345678') {
+      console.log('~ TEST USER ~');
       navigation.reset({
         index: 0,
         routes: [{ name: References.DashboardStack }],
       })
+    } else {
+      if (password === '') {
+        SimpleToast.show('Please enter your password');
+        return;
+      } else {
+        setLoading(true)
+        handleLogin(email, password).then(async (data) => {
+          if (data) {
+            await AsyncStorage.setItem('token', '' + data?.token).then(() => {
+              dispatch(setUserData(data.userData))
+              dispatch(setAuthToken(data.token))
+              navigation.reset({
+                index: 0,
+                routes: [{ name: References.DashboardStack }],
+              })
+            })
+          }
+
+        }).finally(() => {
+          setLoading(false)
+        })
+      }
     }
+
   }
 
   const styles = StyleSheet.create({
@@ -63,10 +87,10 @@ const LoginSecondary = ({ navigation, route }) => {
   return (
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
 
         <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
             Contractor Sign In
@@ -94,7 +118,6 @@ const LoginSecondary = ({ navigation, route }) => {
           <ContainedButton
             onPress={onSubmit}
             label="Continue"
-            disabled={buttonDisabled}
             loading={loading}
           />
 

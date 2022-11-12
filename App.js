@@ -1,19 +1,21 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { LogBox} from 'react-native';
-import SimpleToast from 'react-native-simple-toast';
 import MainStack from './src/Stacks/MainStack'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/lib/integration/react'
+import { store, persistor } from './src/Redux/Store/Index'
 
-LogBox.ignoreAllLogs(true)
-import {
-  View,
-  Text
-} from 'react-native';
-
+LogBox.ignoreAllLogs()
 const App = () => {
-
+  
   return (
-    <MainStack />
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <MainStack />
+      </PersistGate>
+    </Provider>
+
   );
 };
 
