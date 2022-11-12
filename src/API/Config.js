@@ -24,7 +24,7 @@ export const handleLogin = async (email, password) => {
         )
     
         if (response?.code === 200) {
-            AsyncStorage.setItem('token', ''+response?.token)
+            
             return response?.data
         } else if (response?.code === 400) {
             SimpleToast.show(response?.message)
@@ -39,6 +39,6 @@ export const handleLogin = async (email, password) => {
 }
 
 
-export const handleSignup = (email, password) => {
+export const handleSignup = () => {
 
 }
