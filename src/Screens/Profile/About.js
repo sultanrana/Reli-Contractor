@@ -10,12 +10,30 @@ import { GetStyles } from '../../Theme/AppStyles';
 import OutlinedButton from '../../Components/OutlinedButton';
 import ContainedButton from '../../Components/ContainedButton';
 import { FontSize } from '../../Theme/FontSize';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../Redux/Actions';
 
 const About = ({ navigation }) => {
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+  const dispatch = useDispatch()
+
+  const onLogout = async () => {
+    await AsyncStorage.removeItem('token').then(() => {
+      dispatch(logout())
+      navigation.reset({
+        index: 0,
+        routes: [{ name: References.AuthenticationStack }],
+      })
+    })
+  }
+
+  const onDeleteAccount = () => {
+
+  }
 
   const styles = StyleSheet.create({
     DeleteBtn: {
@@ -76,7 +94,16 @@ const About = ({ navigation }) => {
           label={'Terms'}
           style={{ marginTop: 16, }}
         />
-        <Text allowFontScaling={false} style={styles.DeleteBtn}>{'Delete Account'}</Text>
+        <TouchableOpacity onPress={onLogout}>
+          <Text allowFontScaling={false} style={[styles.DeleteBtn, {
+            color: AppColors.Primary
+          }]}>
+            {'Logout'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onDeleteAccount}>
+          <Text allowFontScaling={false} style={styles.DeleteBtn}>{'Delete Account'}</Text>
+        </TouchableOpacity>
       </>
     )
   }
