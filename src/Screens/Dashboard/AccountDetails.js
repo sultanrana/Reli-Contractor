@@ -13,9 +13,15 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { handleUpdateUserDetails } from '../../API/Config';
+import { useSelector } from 'react-redux';
 
 const AccountDetails = ({ navigation }) => {
 
+    const { userData } = useSelector(state => state.Index)
+
+    const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    const [isLoading, setIsLoading] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -26,25 +32,54 @@ const AccountDetails = ({ navigation }) => {
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
-    const onSubmit = () => {
-        // if (email === '') {
-        //   SimpleToast.show('Email cannot be empty');
-        //   return;
-        // } else {
-        navigation.navigate(References.LoginSecondary, {
-            email: email
-        });
-        // }
+
+    const updateUserDetails = () => {
+        if (firstName === '') {
+            SimpleToast.show(`First Name cann't be empty`);
+            return;
+        }
+        if (lastName === '') {
+            SimpleToast.show(`Last Name cann't be empty`);
+            return;
+        }
+        if (email === '') {
+            SimpleToast.show(`Email cann't be empty`);
+            return;
+        }
+        if (EMAIL_REG.test(email) == false) {
+            SimpleToast.show('Invalid email')
+            return;
+        } else {
+            setIsLoading(true)
+            handleUpdateUserDetails(userData?._id, firstName, lastName, email).then((res) => {
+                if (res.code === 200) {
+                    SimpleToast.show('Details updated successfully')
+                    setTimeout(() => {
+                        navigation.pop()
+                    }, 250);
+                }
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false)
+            })
+        }
+
     }
 
     return (
-        <SafeAreaView style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
+        <SafeAreaView
+            pointerEvents={isLoading ? 'none' : 'auto'}
+            style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
             {/* <Text style={[AppStyles.AuthScreenTitle]}>
                 Contractor Sign In
             </Text> */}
             <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
-                <KeyboardAwareScrollView>
+                <KeyboardAwareScrollView
+                    enableOnAndroid={true}
+                    contentContainerStyle={{ paddingBottom: 50 }}
+                    showsVerticalScrollIndicator={false}>
 
                     <InputField
                         title="First Name"
@@ -52,7 +87,8 @@ const AccountDetails = ({ navigation }) => {
                         onChangeText={(val) => setFirstName(val)}
                         placeholder="First Name"
                         keyboardType='default'
-                        ref={fNameRef}
+                        returnKeyType={'next'}
+                        fieldRef={fNameRef}
                         onSubmitEditing={() => {
                             lNameRef?.current?.focus()
                         }}
@@ -64,7 +100,8 @@ const AccountDetails = ({ navigation }) => {
                         onChangeText={(val) => setLastName(val)}
                         placeholder="Last Name"
                         keyboardType='default'
-                        ref={lNameRef}
+                        returnKeyType={'next'}
+                        fieldRef={lNameRef}
                         onSubmitEditing={() => {
                             emailRef?.current?.focus()
                         }}
@@ -76,15 +113,18 @@ const AccountDetails = ({ navigation }) => {
                         onChangeText={setEmail}
                         placeholder="yourname@email.com"
                         keyboardType='email-address'
-                        ref={emailRef}
+                        autoCapitalize={'none'}
+                        returnKeyType={'done'}
+                        fieldRef={emailRef}
                         onSubmitEditing={() => {
                             Keyboard.dismiss()
                         }}
                     />
                     <ContainedButton
-                        // onPress={onSubmit}
+                        onPress={updateUserDetails}
                         label="Confirm Changes"
                         style={{ marginTop: 22 }}
+                        loading={isLoading}
                     />
                 </KeyboardAwareScrollView>
             </View>

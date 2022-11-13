@@ -115,7 +115,7 @@ const InputField =
             width: isRightIcon ? '88%' : '100%',
             justifyContent: multiline ? 'flex-start' : 'center'
           }]}>
-            <TextInput
+            <TextInput 
               allowFontScaling={false}
               style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
               placeholder={placeholder}

@@ -16,50 +16,47 @@ import { handleLogin } from '../../API/Config';
 import { setAuthToken, setUserData } from '../../Redux/Actions';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Keyboard } from 'react-native';
 
 const LoginSecondary = ({ navigation, route }) => {
   const [password, setPassword] = useState('');
   const [isPassVisible, setIsPassVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
 
   const dispatch = useDispatch()
 
-  const { email } = route?.params
+  const { email } = route?.params || ''
 
   const onSubmit = () => {
-    if (email === 't1@tepia.co' && password === '12345678') {
-      console.log('~ TEST USER ~');
-      navigation.reset({
-        index: 0,
-        routes: [{ name: References.DashboardStack }],
-      })
+    if (password === '') {
+      SimpleToast.show(`Password can't be empty`)
+      return
+    } else if (password.length < 6) {
+      SimpleToast.show('Password should be at least 6 characters');
+      return
     } else {
-      if (password === '') {
-        SimpleToast.show('Please enter your password');
-        return;
-      } else {
-        setLoading(true)
-        handleLogin(email, password).then(async (data) => {
-          if (data) {
-            await AsyncStorage.setItem('token', '' + data?.token).then(() => {
-              dispatch(setUserData(data.userData))
-              dispatch(setAuthToken(data.token))
-              navigation.reset({
-                index: 0,
-                routes: [{ name: References.DashboardStack }],
-              })
+      setIsLoading(true)
+      handleLogin(email, password).then(async (data) => {
+        if (data) {
+          await AsyncStorage.setItem('token', '' + data?.token).then(() => {
+            dispatch(setUserData(data.userData))
+            dispatch(setAuthToken(data.token))
+            navigation.reset({
+              index: 0,
+              routes: [{ name: References.DashboardStack }],
             })
-          }
+          })
+        }
 
-        }).finally(() => {
-          setLoading(false)
-        })
-      }
+      }).finally(() => {
+        setIsLoading(false)
+      })
     }
-
   }
+
+
 
   const styles = StyleSheet.create({
     emailTextView: {
@@ -85,12 +82,13 @@ const LoginSecondary = ({ navigation, route }) => {
   });
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <SafeAreaView pointerEvents={isLoading ? 'none' : 'auto'} style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
 
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps={'handled'}
         >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
             Contractor Sign In
@@ -112,13 +110,18 @@ const LoginSecondary = ({ navigation, route }) => {
             isRightIcon
             rightIcon={(isPassVisible) ? Icons.ShowPassword : Icons.HidePassword}
             rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }}
+            autoCapitalize={'none'}
+            returnKeyType={'done'}
+            onSubmitEditing={() => {
+              Keyboard.dismiss()
+            }}
 
           />
           <View style={{ marginVertical: 10 }} />
           <ContainedButton
             onPress={onSubmit}
             label="Continue"
-            loading={loading}
+            loading={isLoading}
           />
 
 

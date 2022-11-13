@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -13,6 +13,7 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { Keyboard } from 'react-native';
 
 const screenHeight = Dimensions.get('window').height
 
@@ -20,24 +21,39 @@ const SignupSecondary = ({ navigation, route }) => {
 
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
-  const [travel, setTravel] = useState(0.2);
+  const [travel, setTravel] = useState(0);
+  const addressRef = useRef()
+  const unitRef = useRef()
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const { email, password, firstname, lastname } = route?.params
+  const { email, password, firstname, lastname } = route?.params || ''
 
   const onSubmit = () => {
-    navigation.navigate(References.SignupTertiary, {
-      email: email,
-      password: password,
-      firstname: firstname,
-      lastname: lastname,
-      address: address,
-      apartment: apartment,
-      travel: travel
-    });
+    if (address === '') {
+      SimpleToast.show(`Address cann't be empty`);
+      return;
+    }
+    if (apartment === '') {
+      SimpleToast.show(`Apartment cann't be empty`);
+      return;
+    }
+    if (travel === 0) {
+      SimpleToast.show(`Please choose a distance`);
+      return;
+    } else {
+      navigation.navigate(References.SignupTertiary, {
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+        address: address,
+        apartment: apartment,
+        travel: travel
+      });
+    }
   }
 
   return (
@@ -56,20 +72,30 @@ const SignupSecondary = ({ navigation, route }) => {
             </Text>
 
             <InputField
+              fieldRef={addressRef}
               title="Address"
               value={address}
               onChangeText={setAddress}
               placeholder="Address"
+              returnKeyType={'next'}
+              onSubmitEditing={() => {
+                unitRef.current.focus()
+              }}
             />
 
 
             <View style={{ marginVertical: 8 }} />
 
             <InputField
+              fieldRef={unitRef}
               title="Apartment / Unit"
               value={apartment}
               onChangeText={setApartment}
               placeholder="Apartment"
+              returnKeyType={'done'}
+              onSubmitEditing={() => {
+                Keyboard.dismiss()
+              }}
             />
 
             <View style={{ marginVertical: 8 }} />
@@ -79,7 +105,13 @@ const SignupSecondary = ({ navigation, route }) => {
             </Text>
 
             <View style={{ marginVertical: 4 }} />
-            <RangeSlider from={4} to={3000} />
+            <RangeSlider
+              from={0}
+              to={3000}
+              distance={(val) => {
+                setTravel(val)
+              }}
+            />
             <View style={{ marginVertical: 16 }} />
 
 

@@ -8,7 +8,7 @@ import Rail from "./Rail";
 import RailSelected from "./RailSelected";
 import Thumb from "./Thumb";
 
-const RangeSlider = ({ from, to }) => {
+const RangeSlider = ({ from, to, distance = () => { } }) => {
   // const RangeSlider = () => {
   const [low, setLow] = useState(from);
   const [high, setHigh] = useState(to);
@@ -21,8 +21,10 @@ const RangeSlider = ({ from, to }) => {
 
   const handleValueChange = useCallback(
     (newLow, newHigh) => {
+      // console.log({newLow});
       setLow(newLow);
       setHigh(newHigh);
+      distance(newLow)
     },
     [setLow, setHigh]
   );

@@ -67,7 +67,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
             })
           }} style={{ alignSelf: 'center' }}>
             <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-              <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}>Sign Out</Text>
+              <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}>Sign In</Text>
             </Text>
           </TouchableOpacity>
         </View>

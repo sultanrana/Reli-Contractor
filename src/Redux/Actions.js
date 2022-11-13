@@ -19,4 +19,4 @@ const logout = () => ({
     payload: null
 })
 
-export { setAuthToken, setUserData, logout }
+export {setAuthToken, setUserData, logout }

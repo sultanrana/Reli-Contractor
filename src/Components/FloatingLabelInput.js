@@ -6,7 +6,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import colors from '../Theme/Colors';
+import Colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { FontSize } from '../Theme/FontSize';
 import { TextInput } from 'react-native-paper';
@@ -30,14 +30,14 @@ const FloatingLabelInput =
     errorText,
   }) => {
     const scheme = useColorScheme()
-    const AppColors = colors(scheme)
+    const AppColors = Colors(scheme)
 
 
     const styles = StyleSheet.create({
 
       input: {
         width: '100%',
-        backgroundColor: colors(scheme).White,
+        backgroundColor: AppColors.White,
         elevation: 0,
         borderRadius: 8,
         height: 56,
@@ -57,11 +57,15 @@ const FloatingLabelInput =
       // <View style={[styles.mainContainer, customStyle]}>
 
       <TextInput
+        // style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
+        ref={fieldRef}
         allowFontScaling={false}
         label={placeholder}
         // placeholder={placeholder}
+        returnKeyType={returnKeyType}
         value={value}
         onChangeText={onChangeText}
+        onSubmitEditing={onSubmitEditing}
         type='outlined'
         mode="outlined"
         outlineColor={AppColors.Black}

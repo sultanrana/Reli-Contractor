@@ -65,7 +65,7 @@ const Notifications = ({ navigation }) => {
             <Notification
               title={item.title}
               radioBtnState={(state) => {
-                console.log(item.title + 'is:  ' + state);
+                console.log(item.title + ' is:  ' + state);
               }}
             />
           )

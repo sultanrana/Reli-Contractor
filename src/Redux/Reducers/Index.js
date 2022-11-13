@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import { UserSessionReducer } from './UserSessionReducer';
+import { Reducers } from './Reducers';
+import { LocationReducer } from './LocationReducer';
 
 const rootReducer = combineReducers({
-  session: UserSessionReducer
+  Index: Reducers,
+  Location: LocationReducer,
 });
 
 export default rootReducer;

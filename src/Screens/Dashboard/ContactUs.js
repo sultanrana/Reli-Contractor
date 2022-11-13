@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
+import { Text, View, Image, Keyboard, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
 
 import { FontSize } from '../../Theme/FontSize';
-import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
-import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { handleContactUs } from '../../API/Config';
 
 const ContactUs = ({ navigation }) => {
 
-    const [email, setEmail] = useState('');
+    const [msg, setMsg] = useState('');
     const [openSubject, setOpenSubject] = useState(false);
-    const [subject, setSubject] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [subject, setSubject] = useState('');
     const [subjectList, setSubjectList] = useState([
         { label: 'Subject 1', value: 'Subject 1' },
         { label: 'Subject 2', value: 'Subject 2' }
@@ -27,21 +27,37 @@ const ContactUs = ({ navigation }) => {
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
-    const onSubmit = () => {
-        // if (email === '') {
-        //   SimpleToast.show('Email cannot be empty');
-        //   return;
-        // } else {
-        navigation.navigate(References.LoginSecondary, {
-            email: email
-        });
-        // }
+    const contactUs = () => {
+        if (subject === '') {
+            SimpleToast.show(`Please choose a subject`);
+            return;
+        } if (msg === '') {
+            SimpleToast.show(`Please write a message`);
+            return;
+        } else {
+            setIsLoading(true)
+            handleContactUs(subject, msg).then((res) => {
+                if (res.code === 200) {
+                    SimpleToast.show(res?.message)
+                    setTimeout(() => {
+                        navigation.pop()
+                    }, 250);
+                }
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false)
+            })
+        }
+
     }
 
     return (
-        <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
+        <SafeAreaView
+            pointerEvents={isLoading ? 'none' : 'auto'}
+            style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
-            <View style={[AppStyles.HorizontalStyle,{paddingTop:16}]}>
+            <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
                 <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Subject'}</Text>
                 <DropDownPicker
                     closeAfterSelecting={true}
@@ -100,17 +116,22 @@ const ContactUs = ({ navigation }) => {
                 <View style={{ marginVertical: 8 }} />
                 <InputField
                     title="Message"
-                    value={email}
-                    onChangeText={setEmail}
+                    value={msg}
+                    onChangeText={setMsg}
                     placeholder="Type your message here..."
                     keyboardType='default'
                     multiline={true}
                     customStyle={{ height: 124 }}
+                    returnKeyType={'done'}
+                    onSubmitEditing={() => {
+                        Keyboard.dismiss()
+                    }}
                 />
                 <ContainedButton
-                    onPress={onSubmit}
+                    onPress={contactUs}
                     label="Submit"
                     style={{ marginTop: 22 }}
+                    loading={isLoading}
                 />
             </View>
         </SafeAreaView>

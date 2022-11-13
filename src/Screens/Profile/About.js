@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 import Colors, { colors } from '../../Theme/Colors';
@@ -11,28 +12,74 @@ import OutlinedButton from '../../Components/OutlinedButton';
 import ContainedButton from '../../Components/ContainedButton';
 import { FontSize } from '../../Theme/FontSize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
 import { logout } from '../../Redux/Actions';
+import { handleDeleteAccount } from '../../API/Config';
+import { Alert } from 'react-native';
 
 const About = ({ navigation }) => {
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+
+  const { userData } = useSelector(state => state.Index)
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
+
+  // useEffect(() => {
+  //   console.log({userData});
+  // }, [])
 
   const onLogout = async () => {
+    setIsLoading(true)
     await AsyncStorage.removeItem('token').then(() => {
       dispatch(logout())
-      navigation.reset({
-        index: 0,
-        routes: [{ name: References.AuthenticationStack }],
-      })
+      setTimeout(() => {
+        setIsLoading(false)
+        navigation.reset({
+          index: 0,
+          routes: [{ name: References.AuthenticationStack }],
+        })
+      }, 1000);
     })
   }
 
-  const onDeleteAccount = () => {
+  const showDeleteDialog = () => {
+    Alert.alert(
+      "Delete Account!",
+      'Are you sure you want to delete your account?',
+      [
+        {
+          text: 'NO',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'YES',
+          onPress: () => {
+            onDeleteAccount()
+          },
+        },
+      ],
+      { cancelable: false },
+    )
+  }
 
+  const onDeleteAccount = () => {
+    handleDeleteAccount(userData?._id).then((res) => {
+      SimpleToast.show(res?.message)
+      setTimeout(() => {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: References.AuthenticationStack }],
+        })
+      }, 250);
+    }).catch((err) => {
+      SimpleToast.show('Something went wrong')
+      console.log(err);
+    }).finally(() => {
+      setIsLoading(false)
+    })
   }
 
   const styles = StyleSheet.create({
@@ -94,14 +141,20 @@ const About = ({ navigation }) => {
           label={'Terms'}
           style={{ marginTop: 16, }}
         />
-        <TouchableOpacity onPress={onLogout}>
+        {/* <TouchableOpacity onPress={onLogout}>
           <Text allowFontScaling={false} style={[styles.DeleteBtn, {
             color: AppColors.Primary
           }]}>
             {'Logout'}
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onDeleteAccount}>
+        </TouchableOpacity> */}
+        <ContainedButton
+          label="Logout"
+          style={{ marginTop: 16 }}
+          onPress={onLogout}
+          loading={isLoading}
+        />
+        <TouchableOpacity onPress={showDeleteDialog}>
           <Text allowFontScaling={false} style={styles.DeleteBtn}>{'Delete Account'}</Text>
         </TouchableOpacity>
       </>
@@ -109,7 +162,9 @@ const About = ({ navigation }) => {
   }
 
   return (
-    <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
+    <View
+      pointerEvents={isLoading ? 'none' : 'auto'}
+      style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
 
       <FlatList
         showsVerticalScrollIndicator={false}

@@ -36,14 +36,14 @@ const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', 
             style={[styles.mainContainer, style]}
             disabled={disabled || loading}>
 
-            <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            {loading && <ActivityIndicator size={'small'} color={'white'} style={{ marginRight: 16, marginLeft: 8 }} />}
+            {loading ?
+                <ActivityIndicator size={'small'} color={'white'} style={{ marginRight: 16, marginLeft: 8 }} />
+                :
+                <Text allowFontScaling={false} style={[styles.btnText, labelStyle]}>{label}</Text>
 
-            </View>
-            <Text allowFontScaling={false} style={[styles.btnText, labelStyle, { flex: 1, textAlign: 'center' }]}>{label}</Text>
-            <View style={{ flex: 1 }}>
-                
-            </View>
+            }
+
+
         </TouchableOpacity>
 
     )

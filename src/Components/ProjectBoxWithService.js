@@ -41,8 +41,9 @@ const ProjectBoxWithService =
                 backgroundColor: AppColors.White,
                 borderRadius: 16,
                 zIndex: 0,
+                elevation: 2,
                 shadowColor: AppColors.BlackGreyish,
-                shadowOffset: { width: 0, height:1 },
+                shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.16,
                 // shadowRadius: 6
                 // height:90,

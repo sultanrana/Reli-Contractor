@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Keyboard, Platform } from 'react-native';
 import SimpleToast from 'react-native-simple-toast';
+import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useDispatch } from 'react-redux';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Keyboard } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -12,20 +16,94 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { setUserLocation } from '../../Redux/UserLocation';
 
 const LoginPrimary = ({ navigation }) => {
   const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   const [email, setEmail] = useState('');
+  const dispatch = useDispatch()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
 
+  useEffect(() => {
+    setTimeout(() => {
+      checkIsPermission()
+    }, 1500);
+  }, [])
+
+  const checkIsPermission = () => {
+    check(Platform.OS === 'ios' ? PERMISSIONS.IOS.ACCESS_FINE_LOCATION : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            requestPermission()
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
+      })
+      .catch((error) => {
+        // …
+      });
+  }
+
+  const requestPermission = () => {
+    request(Platform.OS === 'ios' ? PERMISSIONS.IOS.ACCESS_FINE_LOCATION : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            getCurrentLocation()
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
+      })
+      .catch((error) => {
+        console.log("locationPermission-error", error);
+      });
+  }
+  const getCurrentLocation = async () => {
+
+    try {
+      Geolocation.getCurrentPosition(info => {
+        console.log('current location lat,long', info)
+        dispatch(setUserLocation(info))
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
   const onSubmit = () => {
     if (email === '') {
-      SimpleToast.show('Email cannot be empty');
+      SimpleToast.show(`Email cann't be empty`);
       return;
-    } else if (EMAIL_REG.test(email) == false) {
+    } if (EMAIL_REG.test(email) == false) {
       SimpleToast.show('Invalid email')
+      return;
     } else {
       navigation.navigate(References.LoginSecondary, {
         email: email
@@ -37,7 +115,7 @@ const LoginPrimary = ({ navigation }) => {
     <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'} >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
             Contractor Sign In
           </Text>

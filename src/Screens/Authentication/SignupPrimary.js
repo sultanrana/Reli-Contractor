@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions, Keyboard } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -19,11 +19,16 @@ const screenHeight = Dimensions.get('window').height
 
 const SignupPrimary = ({ navigation }) => {
 
+  const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPassVisible, setIsPassVisible] = useState(false);
+  const fNameRef = useRef()
+  const lNameRef = useRef()
+  const emailRef = useRef()
+  const passRef = useRef()
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
@@ -31,27 +36,38 @@ const SignupPrimary = ({ navigation }) => {
 
   const onSubmit = () => {
     if (firstname === '') {
-      SimpleToast.show('First Name cannot be empty');
+      SimpleToast.show(`First Name cann't be empty`);
       return;
     }
     if (lastname === '') {
-      SimpleToast.show('Last Name cannot be empty');
+      SimpleToast.show(`Last Name cann't be empty`);
       return;
     }
     if (email === '') {
-      SimpleToast.show('Email cannot be empty');
+      SimpleToast.show(`Email cann't be empty`);
+      return;
+    }
+    if (EMAIL_REG.test(email) == false) {
+      SimpleToast.show('Invalid email')
       return;
     }
     if (password === '') {
-      SimpleToast.show('Password cannot be empty');
+      SimpleToast.show(`Password cann't be empty`);
       return;
+    }
+    if (password.length < 6) {
+      SimpleToast.show('Password should be at least 6 characters');
+      return
     } else {
-      navigation.navigate(References.SignupSecondary, {
-        email: email,
-        password: password,
-        firstname: firstname,
-        lastname: lastname
-      });
+      Keyboard.dismiss()
+      setTimeout(() => {
+        navigation.navigate(References.SignupSecondary, {
+          email: email,
+          password: password,
+          firstname: firstname,
+          lastname: lastname
+        });
+      }, 250);
     }
   }
 
@@ -61,8 +77,9 @@ const SignupPrimary = ({ navigation }) => {
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView
           enableOnAndroid={true}
-          contentContainerStyle={{ paddingBottom: 100 }}
+          contentContainerStyle={{ paddingBottom: 50 }}
           showsVerticalScrollIndicator={false}
+        // keyboardShouldPersistTaps={'always'}
         >
           <>
             <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
@@ -70,36 +87,53 @@ const SignupPrimary = ({ navigation }) => {
             </Text>
 
             <InputField
+              fieldRef={fNameRef}
               title="First Name"
               value={firstname}
               onChangeText={setFirstname}
               placeholder="First Name"
               keyboardType='default'
               maxLength={16}
+              returnKeyType={'next'}
+              onSubmitEditing={() => {
+                lNameRef.current.focus()
+              }}
             />
             <View style={{ marginVertical: 8 }} />
 
             <InputField
+              fieldRef={lNameRef}
               title="Last Name"
               value={lastname}
               onChangeText={setLastname}
               placeholder="Last Name"
               keyboardType='default'
               maxLength={16}
+              returnKeyType={'next'}
+              onSubmitEditing={() => {
+                emailRef.current.focus()
+              }}
             />
 
             <View style={{ marginVertical: 8 }} />
 
             <InputField
+              fieldRef={emailRef}
               title="Email"
               value={email}
               onChangeText={setEmail}
               placeholder="yourname@email.com"
               keyboardType='email-address'
+              autoCapitalize={'none'}
+              returnKeyType={'next'}
+              onSubmitEditing={() => {
+                passRef.current.focus()
+              }}
             />
             <View style={{ marginVertical: 8 }} />
 
             <InputField
+              fieldRef={passRef}
               title="Password"
               value={password}
               onChangeText={setPassword}
@@ -107,7 +141,12 @@ const SignupPrimary = ({ navigation }) => {
               password={isPassVisible ? false : true}
               isRightIcon
               rightIcon={(isPassVisible) ? Icons.ShowPassword : Icons.HidePassword}
-              rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }} />
+              rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }}
+              returnKeyType={'done'}
+              onSubmitEditing={() => {
+                Keyboard.dismiss()
+              }}
+            />
 
             <View style={{ width: '100%', marginTop: 70, alignSelf: 'center' }}>
 

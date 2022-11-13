@@ -12,13 +12,45 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { handleChangePassword } from '../../API/Config';
+import { Keyboard } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const NewPassword = ({ navigation }) => {
 
+    const { userData } = useSelector(state => state.Index)
+
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
+
+    const changePassword = () => {
+        if (password === '') {
+            SimpleToast.show('Please enter your new password')
+            return;
+        }
+        if (password.length < 6) {
+            SimpleToast.show('Password should be at least 6 characters');
+            return;
+        } else {
+            setIsLoading(true)
+            handleChangePassword(userData?._id, password).then((res) => {
+                if (res.code === 200) {
+                    SimpleToast.show('Password changed successfully')
+                    setTimeout(() => {
+                        navigation.pop()
+                    }, 250);
+                }
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false)
+            })
+        }
+
+    }
 
 
     const styles = StyleSheet.create({
@@ -47,7 +79,9 @@ const NewPassword = ({ navigation }) => {
         },
     })
     return (
-        <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
+        <SafeAreaView
+            pointerEvents={isLoading ? 'none' : 'auto'}
+            style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
             {/* <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
                 Contractor Sign In
@@ -60,6 +94,12 @@ const NewPassword = ({ navigation }) => {
                     onChangeText={setPassword}
                     placeholder="New Password"
                     keyboardType='default'
+                    password={true}
+                    returnKeyType={'done'}
+                    autoCapitalize={'none'}
+                    onSubmitEditing={() => {
+                        Keyboard.dismiss()
+                    }}
                 />
 
                 <Text allowFontScaling={false} style={styles.Hint}>{'Requirements:'}</Text>
@@ -79,9 +119,10 @@ const NewPassword = ({ navigation }) => {
                     </View>
                 </View>
                 <ContainedButton
-                    // onPress={onSubmit}
+                    onPress={changePassword}
                     label="Confirm Changes"
                     style={{ marginTop: 22 }}
+                    loading={isLoading}
                 />
             </View>
         </SafeAreaView>

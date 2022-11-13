@@ -5,9 +5,8 @@ const initialState = {
     userData: null,
 };
 
-const UserSessionReducer = (state = initialState, action = {}) => {
+const Reducers = (state = initialState, action = {}) => {
     switch (action.type) {
-
         case AUTH_TOKEN:
             return {
                 ...state,
@@ -28,4 +27,4 @@ const UserSessionReducer = (state = initialState, action = {}) => {
     }
 }
 
-export { UserSessionReducer }
+export { Reducers }

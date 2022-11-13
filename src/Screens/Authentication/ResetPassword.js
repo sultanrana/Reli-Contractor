@@ -11,28 +11,48 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Icons } from '../../Assets/Images/Index';
+import { handleChangePassword } from '../../API/Config';
+import { useSelector } from 'react-redux';
+import { Keyboard } from 'react-native';
 
 const ResetPassword = ({ navigation, route }) => {
+
+  const { userData } = useSelector(state => state.Index)
+
   const [password, setPassword] = useState('');
   const [isPassVisible, setIsPassVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
 
-  const { email, code } = route?.params
 
-  const onSubmit = () => {
+  const setNewPassword = () => {
     if (password === '') {
-      SimpleToast.show('Please enter your password');
+      SimpleToast.show('Please enter your new password')
       return;
+    } else if (password.length < 6) {
+      SimpleToast.show('Password should be at least 6 characters');
+      return
     } else {
-      //Login API here
-      navigation.reset({
-        index: 0,
-        routes: [{ name: References.AuthenticationStack }],
+      setIsLoading(true)
+      handleChangePassword(userData?._id, password).then((res) => {
+        if (res.code === 200) {
+          SimpleToast.show('Password changed successfully')
+          setTimeout(() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: References.AuthenticationStack }],
+            })
+          }, 350);
+        }
+      }).catch((err) => {
+        console.log(err);
+      }).finally(() => {
+        setIsLoading(false)
       })
     }
+
   }
 
   const styles = StyleSheet.create({
@@ -59,7 +79,9 @@ const ResetPassword = ({ navigation, route }) => {
   });
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <SafeAreaView
+      pointerEvents={isLoading ? 'none' : 'auto'}
+      style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
       <View style={[AppStyles.HorizontalStyle]}>
         <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
@@ -74,14 +96,18 @@ const ResetPassword = ({ navigation, route }) => {
           password={isPassVisible ? false : true}
           rightIcon={(isPassVisible) ? Icons.ShowPassword : Icons.HidePassword}
           rightIconOnPress={() => { setIsPassVisible(!isPassVisible) }}
+          autoCapitalize={'none'}
+          returnKeyType={'done'}
+          onSubmitEditing={() => {
+            Keyboard.dismiss()
+          }}
 
         />
         <View style={{ marginVertical: 10 }} />
         <ContainedButton
-          onPress={onSubmit}
+          onPress={setNewPassword}
           label="Save"
-          disabled={buttonDisabled}
-          loading={loading}
+          loading={isLoading}
         />
       </View>
     </SafeAreaView>

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions, SafeAreaView, Platform } from 'react-native';
 import SimpleToast from 'react-native-simple-toast';
+import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service'
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
-import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
-
-import { FontSize } from '../../Theme/FontSize';
-import { Images } from '../../Assets/Images/Index';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { handleRegister } from '../../API/Config';
+import SelectService from '../../Components/SelectService';
+import { setUserLocation } from '../../Redux/UserLocation';
 
 const servicesList = [
   {
@@ -36,80 +38,147 @@ const screenWidth = Dimensions.get('window').width
 
 const SignupTertiary = ({ navigation, route }) => {
 
-  const [address, setAddress] = useState('');
-  const [apartment, setApartment] = useState('');
-  const [travel, setTravel] = useState('');
-
+  const { email, password, firstname, lastname, address, apartment, travel } = route?.params || ''
+  const { location } = useSelector(state => state.Location)
+  const [services, setServices] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
 
-
-  const ServiceBox = ({
-    imageURL,
-    title,
-    Index
-  }) => {
-    return (
-      <View style={{
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: '1.9%',
-        backgroundColor: '#E0E0E0',
-        width: screenWidth / 2.3,
-        borderRadius: 16,
-        height: 200,
-        paddingHorizontal: 8,
-        paddingVertical: 8
-      }}>
-
-        <View style={{
-          alignSelf: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: AppColors.White,
-          height: '65%',
-          width: '100%',
-          borderRadius: 12
-        }}>
-          <Image source={Index == 0 ? Images.Window : Index == 1 ? Images.SlidingDoor : Images.InteriorDoor} resizeMode='contain' resizeMethod='resize' style={{
-            height: 96,
-            width: 96
-          }} />
-        </View>
-
-        <View style={{
-          alignSelf: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '35%',
-          width: '100%',
-        }}>
-          <Text allowFontScaling={false} style={{
-            color: AppColors.TextTitle,
-            fontSize: FontSize.xlarge,
-            fontFamily: Fonts.Bold,
-            textAlign: 'center',
-            textAlignVertical: 'center'
-          }}>{title}</Text>
-        </View>
-
-      </View>
-    )
+  const checkIsPermission = () => {
+    if (services.length === 0) {
+      SimpleToast.show(`Please choose at least one service`);
+      return;
+    } else {
+      check(Platform.OS === 'ios' ? PERMISSIONS.IOS.ACCESS_FINE_LOCATION : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+        .then((result) => {
+          switch (result) {
+            case RESULTS.UNAVAILABLE:
+              console.log('This feature is not available (on this device / in this context)');
+              break;
+            case RESULTS.DENIED:
+              console.log('The permission has not been requested / is denied but requestable');
+              requestPermission()
+              break;
+            case RESULTS.LIMITED:
+              console.log('The permission is limited: some actions are possible');
+              break;
+            case RESULTS.GRANTED:
+              console.log('The permission is granted');
+              onSubmit()
+              break;
+            case RESULTS.BLOCKED:
+              console.log('The permission is denied and not requestable anymore');
+              break;
+          }
+        })
+        .catch((error) => {
+          console.log("locationPermission-error", error);
+        });
+    }
   }
 
-  const { email, password, firstname, lastname } = route?.params
+  const requestPermission = () => {
 
-  const onSubmit = () => {
-    navigation.navigate(References.InfoSubmitted);
+    request(Platform.OS === 'ios' ? PERMISSIONS.IOS.ACCESS_FINE_LOCATION : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            getCurrentLocation()
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
+      })
+      .catch((error) => {
+        console.log("locationPermission-error", error);
+      });
+
   }
+  const getCurrentLocation = async () => {
+
+    try {
+      Geolocation.getCurrentPosition(async info => {
+        console.log('current location lat,long', info)
+        dispatch(setUserLocation(info))
+        onSubmit(info)
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
+
+  const onSubmit = (info = null) => {
+    console.log('creating account...');
+    // console.log(
+    //   email,
+    //   password,
+    //   firstname,
+    //   lastname,
+    //   'contractor',
+    //   address,
+    //   apartment,
+    //   travel,
+    //   info ? info.coords.latitude : location.coords.latitude,
+    //   info ? info.coords.longitude : location.coords.longitude,
+    //   services);
+    setIsLoading(true)
+    handleRegister(
+      email,
+      password,
+      firstname,
+      lastname,
+      'contractor',
+      address,
+      apartment,
+      travel,
+      info != null ? info.coords.latitude : location.coords.latitude,
+      info != null ? info.coords.latitude : location.coords.latitude,
+      services
+    ).then(async (data) => {
+      if (data) {
+        // console.log('...................', data);
+        SimpleToast.show(data?.message)
+        setServices([])
+        setTimeout(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: References.InfoSubmitted }],
+          })
+        }, 500);
+      }
+
+    }).finally(() => {
+      setIsLoading(false)
+    })
+  }
+
+
+
+
+
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <SafeAreaView
+      pointerEvents={isLoading ? 'none' : 'auto'}
+      style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.CommonScreenStyles,AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
 
         <FlatList
           scrollEnabled={true}
@@ -120,7 +189,28 @@ const SignupTertiary = ({ navigation, route }) => {
             alignSelf: 'center',
           }}
           renderItem={({ item, index }) => (
-            <ServiceBox title={item?.title} imageURL={item?.image} Index={index} />
+            <SelectService
+              Item={item}
+              imageURL={item?.image}
+              Index={index}
+              selectedService={(data) => {
+                let tempArray = services
+                // console.log(data);
+                if (typeof data === 'number') {
+                  console.log('if');
+                  tempArray.push(servicesList[data])
+                  console.log(',,,,,,,,,,,,,,,,,', tempArray);
+                  setServices(tempArray)
+                } else {
+                  console.log('else');
+                  tempArray = tempArray.filter((item, index) => {
+                    return item.key != data.key
+                  })
+                  setServices(tempArray)
+                  console.log(',,,,,,,,,,,,,,,,,', tempArray);
+                }
+              }}
+            />
           )}
           contentContainerStyle={{ paddingBottom: 50 }}
           // ItemSeparatorComponent={()=>{
@@ -137,11 +227,12 @@ const SignupTertiary = ({ navigation, route }) => {
           ListFooterComponent={
             () => {
               return (
-                <View style={{ width: '100%', marginTop:12, alignSelf: 'center' }}>
+                <View style={{ width: '100%', marginTop: 12, alignSelf: 'center' }}>
 
                   <ContainedButton
-                    onPress={onSubmit}
+                    onPress={checkIsPermission}
                     label="Continue"
+                    loading={isLoading}
                   />
                   <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
                     <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>

@@ -7,11 +7,13 @@ import Colors from '../Theme/Colors'
 import Fonts from '../Assets/Fonts/Index'
 import { FontSize } from '../Theme/FontSize'
 import { References } from '../Constants/References'
+import { useSelector } from 'react-redux';
 
 
 const Splash = ({ navigation }) => {
 
     const scheme = useColorScheme()
+    const { token } = useSelector(state => state.Index)
 
     useEffect(() => {
 
@@ -21,10 +23,17 @@ const Splash = ({ navigation }) => {
         });
 
         setTimeout(() => {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: References.AuthenticationStack }],
-            })
+            if (token) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: References.DashboardStack }],
+                })
+            } else {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: References.AuthenticationStack }],
+                })
+            }
         }, 1500)
     }, [])
 

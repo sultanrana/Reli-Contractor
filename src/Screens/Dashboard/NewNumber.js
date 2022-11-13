@@ -12,32 +12,52 @@ import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { handleUpdateNumber } from '../../API/Config';
+import { useSelector } from 'react-redux';
+import { Keyboard } from 'react-native';
 
 const NewNumber = ({ navigation }) => {
 
+    const { userData } = useSelector(state => state.Index)
+
     const [number, setNumber] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
-    const onSubmit = () => {
-        // if (email === '') {
-        //   SimpleToast.show('Email cannot be empty');
-        //   return;
-        // } else {
-        navigation.navigate(References.LoginSecondary, {
-            email: email
-        });
-        // }
+    const updateNumber = () => {
+        if (number === '') {
+            SimpleToast.show('Please enter your new number')
+            return;
+        } else {
+            setIsLoading(true)
+            handleUpdateNumber(userData?._id, number).then((res) => {
+                if (res.code === 200) {
+                    SimpleToast.show('Phone Number updated successfully')
+                    setTimeout(() => {
+                        navigation.pop()
+                    }, 250);
+                }
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false)
+            })
+        }
+
     }
 
     return (
-        <SafeAreaView style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.Background }]}>
+        <SafeAreaView
+            pointerEvents={isLoading ? 'none' : 'auto'}
+            style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
             {/* <Text style={[AppStyles.AuthScreenTitle]}>
                 Contractor Sign In
             </Text> */}
-            <View style={[AppStyles.HorizontalStyle,{paddingTop:16}]}>
+            <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
 
                 <InputField
                     title="New Phone Number"
@@ -45,11 +65,15 @@ const NewNumber = ({ navigation }) => {
                     onChangeText={setNumber}
                     placeholder="New Phone Number"
                     keyboardType='numeric'
+                    onSubmitEditing={() => {
+                        Keyboard.dismiss()
+                    }}
                 />
                 <ContainedButton
-                    // onPress={onSubmit}
+                    onPress={updateNumber}
                     label="Confirm Changes"
                     style={{ marginTop: 22 }}
+                    loading={isLoading}
                 />
             </View>
         </SafeAreaView>

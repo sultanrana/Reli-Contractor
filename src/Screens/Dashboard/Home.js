@@ -11,11 +11,27 @@ import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithService from '../../Components/ProjectBoxWithService';
 import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
 import { Images } from '../../Assets/Images/Index';
+import { handleUserProfile } from '../../API/Config';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../../Redux/Actions';
 
 const Home = ({ navigation }) => {
+
+  const dispatch = useDispatch()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+
+  useEffect(() => {
+    getUserDetails()
+  }, [])
+
+  const getUserDetails = () => {
+    handleUserProfile().then((res) => {
+      dispatch(setUserData(res))
+    })
+  }
 
   const renderServiceItem = ({ item, index }) => {
     return (
