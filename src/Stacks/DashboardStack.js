@@ -27,7 +27,7 @@ const DashboardStack = ({ navigation }) => {
             }}
             initialRouteName={References.HomeStack}
             activeColor="#fff" 
-            screenOptions={{
+            screenOptions={{  
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarHideOnKeyboard: true
