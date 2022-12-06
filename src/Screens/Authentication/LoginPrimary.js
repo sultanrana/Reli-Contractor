@@ -32,7 +32,7 @@ const LoginPrimary = ({ navigation }) => {
   }, [])
 
   const checkIsPermission = () => {
-    check(Platform.OS === 'ios' ? PERMISSIONS.IOS.ACCESS_FINE_LOCATION : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+    check(Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
       .then((result) => {
         switch (result) {
           case RESULTS.UNAVAILABLE:
@@ -59,7 +59,7 @@ const LoginPrimary = ({ navigation }) => {
   }
 
   const requestPermission = () => {
-    request(Platform.OS === 'ios' ? PERMISSIONS.IOS.ACCESS_FINE_LOCATION : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+    request(Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
       .then((result) => {
         switch (result) {
           case RESULTS.UNAVAILABLE:
