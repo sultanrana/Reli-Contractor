@@ -26,7 +26,7 @@ const DashboardStack = ({ navigation }) => {
                 backgroundColor: AppColors.Background
             }}
             initialRouteName={References.HomeStack}
-            activeColor="#fff"
+            activeColor="#fff" 
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
