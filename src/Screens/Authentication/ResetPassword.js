@@ -15,7 +15,11 @@ import { handleChangePassword } from '../../API/Config';
 import { useSelector } from 'react-redux';
 import { Keyboard } from 'react-native';
 
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
+const REGEX_PASS_1 = /(.*[a-z].*)/
+const REGEX_PASS_2 = /(.*[A-Z].*)/
+const REGEX_PASS_3 = /(.*\d.*)/
+const PASS_MESSAGE = "*Password doesn't match the criteria of 1 uppercase, lowercase & number"
+
 
 const ResetPassword = ({ navigation, route }) => {
 
@@ -33,12 +37,12 @@ const ResetPassword = ({ navigation, route }) => {
     if (password === '') {
       SimpleToast.show('Please enter your new password')
       return;
-    } else if (PASSWORD_REGEX.test(password) == false) {
-      SimpleToast.show('*Please check your password\nPassword should contain minimum 6 characters, 1 UPPERCASE, 1 lowercase, and 1 number')
-      return;
     } else if (password.length < 6) {
-      SimpleToast.show('Password should be at least 6 characters');
+      SimpleToast.show('Password should contain at least 6 characters');
       return
+    } else if ((REGEX_PASS_1.test(password) && REGEX_PASS_2.test(password) && REGEX_PASS_3.test(password)) == false) {
+      SimpleToast.show(PASS_MESSAGE)
+      return;
     } else {
       setIsLoading(true)
       handleChangePassword(userData?._id, password).then((res) => {

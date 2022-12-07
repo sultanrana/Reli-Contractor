@@ -18,7 +18,12 @@ import { handleEmailCheck } from '../../API/Config';
 
 const screenHeight = Dimensions.get('window').height
 
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
+const REGEX_PASS_1 = /(.*[a-z].*)/
+const REGEX_PASS_2 = /(.*[A-Z].*)/
+const REGEX_PASS_3 = /(.*\d.*)/
+const PASS_MESSAGE = "*Password doesn't match the criteria of 1 uppercase, lowercase & number"
+
+//const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
 const SignupPrimary = ({ navigation }) => {
 
   const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -58,14 +63,17 @@ const SignupPrimary = ({ navigation }) => {
       SimpleToast.show(`Please provide your password`);
       return;
     }
-    if (PASSWORD_REGEX.test(password) == false) {
-      SimpleToast.show('*Please check your password\nPassword should contain minimum 6 characters, 1 UPPERCASE, 1 lowercase, and 1 number')
+    if (password.length < 6) {
+      SimpleToast.show('Password should contain at least 6 characters');
+      return
+    } 
+    
+    if ((REGEX_PASS_1.test(password) && REGEX_PASS_2.test(password) && REGEX_PASS_3.test(password)) == false) {
+      SimpleToast.show(PASS_MESSAGE)
       return;
     } 
-    if (password.length < 6) {
-      SimpleToast.show('Password should be at least 6 characters');
-      return
-    } else {
+    
+    else {
       Keyboard.dismiss()
       setIsLoading(true)
 
