@@ -35,19 +35,19 @@ const AccountDetails = ({ navigation }) => {
 
     const updateUserDetails = () => {
         if (firstName === '') {
-            SimpleToast.show(`First Name cann't be empty`);
+            SimpleToast.show(`Please provide your first name`);
             return;
         }
         if (lastName === '') {
-            SimpleToast.show(`Last Name cann't be empty`);
+            SimpleToast.show(`Please provide your last name`);
             return;
         }
         if (email === '') {
-            SimpleToast.show(`Email cann't be empty`);
+            SimpleToast.show(`Please provide your email`);
             return;
         }
         if (EMAIL_REG.test(email) == false) {
-            SimpleToast.show('Invalid email')
+            SimpleToast.show('*Please check your email and try again')
             return;
         } else {
             setIsLoading(true)

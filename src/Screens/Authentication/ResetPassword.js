@@ -15,6 +15,8 @@ import { handleChangePassword } from '../../API/Config';
 import { useSelector } from 'react-redux';
 import { Keyboard } from 'react-native';
 
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
+
 const ResetPassword = ({ navigation, route }) => {
 
   const { userData } = useSelector(state => state.Index)
@@ -30,6 +32,9 @@ const ResetPassword = ({ navigation, route }) => {
   const setNewPassword = () => {
     if (password === '') {
       SimpleToast.show('Please enter your new password')
+      return;
+    } else if (PASSWORD_REGEX.test(password) == false) {
+      SimpleToast.show('*Please check your password\nPassword should contain minimum 6 characters, 1 UPPERCASE, 1 lowercase, and 1 number')
       return;
     } else if (password.length < 6) {
       SimpleToast.show('Password should be at least 6 characters');

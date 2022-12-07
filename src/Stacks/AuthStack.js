@@ -13,6 +13,7 @@ import SignupTertiary from '../Screens/Authentication/SignupTertiary'
 import ResetPassword from '../Screens/Authentication/ResetPassword'
 import VerifyOTP from '../Screens/Authentication/VerifyOTP'
 import ThankyouForSignup from '../Screens/Authentication/ThankyouForSignup'
+import ContactUs from '../Screens/Dashboard/ContactUs';
 
 const Stack = createStackNavigator()
 const AuthStack = ({navigation, route}) => {
@@ -34,10 +35,13 @@ const AuthStack = ({navigation, route}) => {
             <Stack.Screen name={References.SignupTertiary} component={SignupTertiary} />
 
             <Stack.Screen name={References.ForgotPassword} component={ForgotPassword} />
+            <Stack.Screen name={References.ContactUs} component={ContactUs} />
             <Stack.Screen name={References.VerifyOTP} component={VerifyOTP} />
             <Stack.Screen name={References.ResetPassword} component={ResetPassword} />
 
             <Stack.Screen name={References.InfoSubmitted} component={ThankyouForSignup} />
+
+
         </Stack.Navigator>
     )
 }

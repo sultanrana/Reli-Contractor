@@ -14,9 +14,11 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Icons } from '../../Assets/Images/Index';
+import { handleEmailCheck } from '../../API/Config';
 
 const screenHeight = Dimensions.get('window').height
 
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
 const SignupPrimary = ({ navigation }) => {
 
   const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -25,6 +27,7 @@ const SignupPrimary = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPassVisible, setIsPassVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const fNameRef = useRef()
   const lNameRef = useRef()
   const emailRef = useRef()
@@ -36,38 +39,53 @@ const SignupPrimary = ({ navigation }) => {
 
   const onSubmit = () => {
     if (firstname === '') {
-      SimpleToast.show(`First Name cann't be empty`);
+      SimpleToast.show(`Please provide your first name`);
       return;
     }
     if (lastname === '') {
-      SimpleToast.show(`Last Name cann't be empty`);
+      SimpleToast.show(`Please provide your last name`);
       return;
     }
     if (email === '') {
-      SimpleToast.show(`Email cann't be empty`);
+      SimpleToast.show(`Please provide your email`);
       return;
     }
     if (EMAIL_REG.test(email) == false) {
-      SimpleToast.show('Invalid email')
+      SimpleToast.show('*Please check your email and try again')
       return;
     }
     if (password === '') {
-      SimpleToast.show(`Password cann't be empty`);
+      SimpleToast.show(`Please provide your password`);
       return;
     }
+    if (PASSWORD_REGEX.test(password) == false) {
+      SimpleToast.show('*Please check your password\nPassword should contain minimum 6 characters, 1 UPPERCASE, 1 lowercase, and 1 number')
+      return;
+    } 
     if (password.length < 6) {
       SimpleToast.show('Password should be at least 6 characters');
       return
     } else {
       Keyboard.dismiss()
-      setTimeout(() => {
-        navigation.navigate(References.SignupSecondary, {
-          email: email,
-          password: password,
-          firstname: firstname,
-          lastname: lastname
-        });
-      }, 250);
+      setIsLoading(true)
+
+      handleEmailCheck(email).then((res)=> {
+        if (res) {
+          setTimeout(() => {
+            navigation.navigate(References.SignupSecondary, {
+              email: email,
+              password: password,
+              firstname: firstname,
+              lastname: lastname
+            });
+          }, 250);
+            
+        }
+      }).finally(()=> {
+        setIsLoading(false)
+      })
+
+      
     }
   }
 
@@ -153,6 +171,7 @@ const SignupPrimary = ({ navigation }) => {
               <ContainedButton
                 onPress={onSubmit}
                 label="Continue"
+                loading={isLoading}
               />
 
               <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>

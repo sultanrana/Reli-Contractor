@@ -33,11 +33,11 @@ const SignupSecondary = ({ navigation, route }) => {
 
   const onSubmit = () => {
     if (address === '') {
-      SimpleToast.show(`Address cann't be empty`);
+      SimpleToast.show(`*Please provide valid Address`);
       return;
     }
     if (apartment === '') {
-      SimpleToast.show(`Apartment cann't be empty`);
+      SimpleToast.show(`*Please provide valid Apartment`);
       return;
     }
     if (travel === 0) {
@@ -107,7 +107,8 @@ const SignupSecondary = ({ navigation, route }) => {
             <View style={{ marginVertical: 4 }} />
             <RangeSlider
               from={0}
-              to={3000}
+              to={150}
+              step={5}
               distance={(val) => {
                 setTravel(val)
               }}

@@ -31,7 +31,7 @@ const LoginSecondary = ({ navigation, route }) => {
 
   const onSubmit = () => {
     if (password === '') {
-      SimpleToast.show(`Password can't be empty`)
+      SimpleToast.show(`*Please enter your password to continue`)
       return
     } else if (password.length < 6) {
       SimpleToast.show('Password should be at least 6 characters');

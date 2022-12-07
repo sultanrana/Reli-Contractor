@@ -8,7 +8,7 @@ import Rail from "./Rail";
 import RailSelected from "./RailSelected";
 import Thumb from "./Thumb";
 
-const RangeSlider = ({ from, to, distance = () => { } }) => {
+const RangeSlider = ({ from, to, distance = () => { }, step, unit='m' }) => {
   // const RangeSlider = () => {
   const [low, setLow] = useState(from);
   const [high, setHigh] = useState(to);
@@ -16,7 +16,7 @@ const RangeSlider = ({ from, to, distance = () => { } }) => {
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderLabel = useCallback((value) => <Label text={value} />, []);
+  const renderLabel = useCallback((value) => <Label text={value+unit} />, []);
   const renderNotch = useCallback(() => <Notch />, []);
 
   const handleValueChange = useCallback(
@@ -34,7 +34,7 @@ const RangeSlider = ({ from, to, distance = () => { } }) => {
       <RangeSliderRN
         min={from}
         max={to}
-        step={1}
+        step={step}
         // floatingLabel
         renderThumb={renderThumb}
         renderRail={renderRail}

@@ -254,6 +254,36 @@ export const handleForgotPassword = async (email) => {
 
 }
 
+//CheckEmail
+export const handleEmailCheck = async (email) => {
+    const formData = new URLSearchParams();
+    formData.append('email', email);
+
+    try {
+        const response = await fetch.post(
+            API_URL + '/' + Endpoints.AuthProfile.CheckEmail,
+            formData.toString(),
+            'Email Check Request',
+            null,
+            ContentTypes.XUrlEncodedFormData,
+        )
+
+        if (response?.code === 200) {
+            return response?.data
+        } else if (response?.code === 400) {
+            //SimpleToast.show(response?.message)
+            SimpleToast.show('*This email address already have an account - Please Sign In')
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+
 //Verify OTP
 export const handleVerifyOTP = async (email, otp) => {
     const formData = new URLSearchParams();

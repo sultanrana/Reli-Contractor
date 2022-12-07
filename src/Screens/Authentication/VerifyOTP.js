@@ -54,35 +54,39 @@ const VerifyOTP = ({ navigation, route }) => {
   };
 
   const verifyOTP = () => {
-    setIsLoading(true)
-    handleVerifyOTP(email, code).then(async (data) => {
+    if (code.length === 0) {
+      SimpleToast.show('Please enter your verification code to reset your password')
+    } else {
+      setIsLoading(true)
+      handleVerifyOTP(email, code).then(async (data) => {
 
-      if (data?.code === 200) {
-        SimpleToast.show('OTP verified successfully')
-        setCode('')
-        await AsyncStorage.setItem('token', '' + data?.data?.token).then(() => {
-          dispatch(setUserData(data?.data?.userData))
-          dispatch(setAuthToken(data?.data?.token))
-          setTimeout(() => {
-            navigation.navigate(References.ResetPassword, {
-              email: email,
-              code: code
-            });
-          }, 350);
-        })
-      }
-    }).catch((err) => {
-      console.log(err);
-    }).finally(() => {
-      setIsLoading(false)
-    })
+        if (data?.code === 200) {
+          SimpleToast.show('OTP verified successfully')
+          setCode('')
+          await AsyncStorage.setItem('token', '' + data?.data?.token).then(() => {
+            dispatch(setUserData(data?.data?.userData))
+            dispatch(setAuthToken(data?.data?.token))
+            setTimeout(() => {
+              navigation.navigate(References.ResetPassword, {
+                email: email,
+                code: code
+              });
+            }, 350);
+          })
+        }
+      }).catch((err) => {
+        console.log(err);
+      }).finally(() => {
+        setIsLoading(false)
+      })
+    }
   }
 
   const resendOTP = () => {
     timerFunc()
     setCode('')
     handleResendOTP(email).then(async (data) => {
-      SimpleToast.show('Please check your email')
+      SimpleToast.show('Check your gmail for a verification code')
     }).catch((err) => {
       console.log(err);
     }).finally(() => {

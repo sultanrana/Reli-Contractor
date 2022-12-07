@@ -22,6 +22,7 @@ export const Endpoints = {
         VerifyOTP: 'verifyOTP',
         DeleteAccount: 'deleteAccount',
         ForgotPassword: 'forgotPassword',
+        CheckEmail: 'checkEmail',
         ResendVerifyOTP: 'resendVerifyOTP'
     },
     Dashboard: {

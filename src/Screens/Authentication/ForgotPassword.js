@@ -28,16 +28,16 @@ const LoginSecondary = ({ navigation, route }) => {
 
   const forgotPassword = () => {
     if (email === '') {
-      SimpleToast.show(`Email cann't be empty`);
+      SimpleToast.show(`*Please enter your email address to reset your password`);
       return;
     } if (EMAIL_REG.test(email) == false) {
-      SimpleToast.show('Invalid email')
+      SimpleToast.show('*Please enter a valid Email address')
       return;
     } else {
       setIsLoading(true)
       handleForgotPassword(email).then(async (data) => {
         if(data?.code === 200){
-          SimpleToast.show('Pleas check your email')
+          SimpleToast.show('Check your gmail for a verification code')
           setTimeout(() => {
             navigation.navigate(References.VerifyOTP, { email: email })
           }, 350);
@@ -103,7 +103,11 @@ const LoginSecondary = ({ navigation, route }) => {
           />
           <View style={{ width: '100%', position: 'absolute', bottom: 50, alignSelf: 'center' }}>
 
-            <TouchableOpacity style={{ alignSelf: 'center' }}>
+            <TouchableOpacity style={{ alignSelf: 'center' }} onPress={
+              () => {
+                navigation.navigate(References.ContactUs)
+              }
+            }>
               <Text allowFontScaling={false} style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
                 Contact Support
               </Text>

@@ -45,19 +45,19 @@ const Location = ({ navigation }) => {
 
     const checkIsPermission = () => {
         if (address === '') {
-            SimpleToast.show(`Address cann't be empty`);
+            SimpleToast.show(`*Please provide valid Address`);
             return;
         } if (apartment === '') {
-            SimpleToast.show(`Apartment cann't be empty`);
+            SimpleToast.show(`*Please provide valid Apartment`);
             return;
         } if (city === '') {
-            SimpleToast.show(`City cann't be empty`);
+            SimpleToast.show(`*Please provide valid City`);
             return;
         } if (state === '') {
-            SimpleToast.show(`City cann't be empty`);
+            SimpleToast.show(`*Please provide valid State`);
             return;
         } if (zip === '') {
-            SimpleToast.show(`City cann't be empty`);
+            SimpleToast.show(`*Please provide valid Zip code`);
             return;
         } if (travel === 0) {
             SimpleToast.show(`Please choose a distance`);

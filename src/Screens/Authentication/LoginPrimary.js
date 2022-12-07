@@ -99,10 +99,10 @@ const LoginPrimary = ({ navigation }) => {
 
   const onSubmit = () => {
     if (email === '') {
-      SimpleToast.show(`Email cann't be empty`);
+      SimpleToast.show(`*Please enter your email to continue`);
       return;
     } if (EMAIL_REG.test(email) == false) {
-      SimpleToast.show('Invalid email')
+      SimpleToast.show('*Please check your entry and try again')
       return;
     } else {
       navigation.navigate(References.LoginSecondary, {
