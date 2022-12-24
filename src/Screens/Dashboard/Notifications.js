@@ -14,9 +14,9 @@ import { GetStyles } from '../../Theme/AppStyles';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Unread from '../Notifications/Unread';
 import Read from '../Notifications/Read';
+import { windowWidth } from '../../Constants/Constants';
 
 const Tabs = createMaterialTopTabNavigator()
-const screenWidth = Dimensions.get('window').width
 
 const Notifications = ({ navigation }) => {
   const scheme = useColorScheme()
@@ -25,13 +25,13 @@ const Notifications = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles,{ backgroundColor: AppColors.Background }]}>
+    <View style={[AppStyles.CommonScreenStyles,{ backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator
        pageMargin={2}
         screenOptions={{
-          tabBarItemStyle: { width: screenWidth / 2 },
+          tabBarItemStyle: { width: windowWidth / 2 },
           tabBarScrollEnabled:true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
@@ -51,7 +51,7 @@ const Notifications = ({ navigation }) => {
 
       </Tabs.Navigator>
 
-    </SafeAreaView>
+    </View>
   );
 
 }

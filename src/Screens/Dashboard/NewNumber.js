@@ -20,22 +20,35 @@ const NewNumber = ({ navigation }) => {
 
     const { userData } = useSelector(state => state.Index)
 
-    const [number, setNumber] = useState('');
+    const [inputs, setInputs] = useState({
+        number: ''
+    })
+    const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false);
 
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
+    const handleOnChange = (text, input) => {
+        setInputs(prevState => ({ ...prevState, [input]: text }))
+    }
+
+    const handleError = (errorMsg, input) => {
+        setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+    }
+
     const updateNumber = () => {
-        if (number === '') {
-            SimpleToast.show('Please enter your new number')
-            return;
-        } else {
+        let valid = true
+        Keyboard.dismiss()
+        if (!inputs.number) {
+            handleError('Please enter your new number', 'number')
+            valid = false
+        }
+        if (valid) {
             setIsLoading(true)
-            handleUpdateNumber(userData?._id, number).then((res) => {
+            handleUpdateNumber(userData?._id, inputs.number).then((res) => {
                 if (res.code === 200) {
-                    SimpleToast.show('Phone Number updated successfully')
                     setTimeout(() => {
                         navigation.pop()
                     }, 250);
@@ -50,7 +63,7 @@ const NewNumber = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView
+        <View
             pointerEvents={isLoading ? 'none' : 'auto'}
             style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
@@ -61,8 +74,14 @@ const NewNumber = ({ navigation }) => {
 
                 <InputField
                     title="New Phone Number"
-                    value={number}
-                    onChangeText={setNumber}
+                    value={inputs.number}
+                    onChangeText={(val) => {
+                        handleOnChange(val, 'number')
+                    }}
+                    error={errors.number}
+                    onFocus={() => {
+                        handleError(null, 'number')
+                    }}
                     placeholder="New Phone Number"
                     keyboardType='numeric'
                     onSubmitEditing={() => {
@@ -76,7 +95,7 @@ const NewNumber = ({ navigation }) => {
                     loading={isLoading}
                 />
             </View>
-        </SafeAreaView>
+        </View>
 
     );
 

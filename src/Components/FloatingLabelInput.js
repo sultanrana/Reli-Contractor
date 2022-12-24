@@ -23,11 +23,6 @@ const FloatingLabelInput =
     onSubmitEditing,
     fieldRef,
     customStyle,
-    multiline,
-    editable,
-    maxLength,
-    isError,
-    errorText,
   }) => {
     const scheme = useColorScheme()
     const AppColors = Colors(scheme)
@@ -54,24 +49,24 @@ const FloatingLabelInput =
     return (
 
 
-      // <View style={[styles.mainContainer, customStyle]}>
+      // <View style={{ height:110, justifyContent: 'flex-start', flexDirection: 'column', backgroundColor:'yellow'}}>
 
-      <TextInput
-        // style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
-        ref={fieldRef}
-        allowFontScaling={false}
-        label={placeholder}
-        // placeholder={placeholder}
-        returnKeyType={returnKeyType}
-        value={value}
-        onChangeText={onChangeText}
-        onSubmitEditing={onSubmitEditing}
-        type='outlined'
-        mode="outlined"
-        outlineColor={AppColors.Black}
-        activeOutlineColor={AppColors.Primary}
-        style={[styles.input, customStyle]}
-      />
+
+        <TextInput
+          // style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
+          ref={fieldRef}
+          allowFontScaling={false}
+          label={placeholder}
+          returnKeyType={returnKeyType}
+          value={value}
+          onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+          type='outlined'
+          mode="outlined"
+          outlineColor={AppColors.Black}
+          activeOutlineColor={AppColors.Primary}
+          style={[styles.input, customStyle]}
+        />
 
 
       // </View>

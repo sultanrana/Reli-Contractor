@@ -7,10 +7,10 @@ import * as Animatable from 'react-native-animatable'
 
 import Fonts from '../Assets/Fonts/Index'
 import { Icons, Images } from '../Assets/Images/Index'
+import { windowWidth } from '../Constants/Constants'
 import Colors from '../Theme/Colors'
 import { FontSize } from '../Theme/FontSize'
 
-const screenWidth = Dimensions.get('window').width
 
 const SelectService = ({
     imageURL,
@@ -40,7 +40,7 @@ const SelectService = ({
                 alignItems: 'center',
                 margin: '1.9%',
                 backgroundColor: '#E0E0E0',
-                width: screenWidth / 2.3,
+                width: windowWidth / 2.3,
                 borderRadius: 16,
                 height: 200,
                 paddingHorizontal: 8,

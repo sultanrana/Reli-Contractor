@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Keyboard } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
@@ -18,7 +18,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VerifyOTP = ({ navigation, route }) => {
 
-  const [code, setCode] = useState('');
+  const { email } = route?.params || ''
+  const [inputs, setInputs] = useState({
+    code: ''
+  })
+  const [errors, setErrors] = useState({})
   const [timer, setTimer] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
@@ -26,7 +30,6 @@ const VerifyOTP = ({ navigation, route }) => {
   const AppStyles = GetStyles(scheme)
   const MAX_CODE_LENGTH = 6;
 
-  const { email } = route?.params || ''
 
   useEffect(() => {
     timerFunc()
@@ -53,23 +56,37 @@ const VerifyOTP = ({ navigation, route }) => {
     }
   };
 
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
+
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
+
   const verifyOTP = () => {
-    if (code.length === 0) {
-      SimpleToast.show('Please enter your verification code to reset your password')
-    } else {
+    let valid = true
+    Keyboard.dismiss()
+
+    if (!inputs.code) {
+      handleError('*Please enter your verification code to reset your password', 'code')
+      valid = false
+    }
+
+    if (valid) {
       setIsLoading(true)
-      handleVerifyOTP(email, code).then(async (data) => {
+      handleVerifyOTP(email, inputs.code).then(async (data) => {
 
         if (data?.code === 200) {
           SimpleToast.show('OTP verified successfully')
-          setCode('')
+
           await AsyncStorage.setItem('token', '' + data?.data?.token).then(() => {
             dispatch(setUserData(data?.data?.userData))
             dispatch(setAuthToken(data?.data?.token))
             setTimeout(() => {
               navigation.navigate(References.ResetPassword, {
                 email: email,
-                code: code
+                code: inputs.code
               });
             }, 350);
           })
@@ -84,9 +101,8 @@ const VerifyOTP = ({ navigation, route }) => {
 
   const resendOTP = () => {
     timerFunc()
-    setCode('')
+
     handleResendOTP(email).then(async (data) => {
-      SimpleToast.show('Check your gmail for a verification code')
     }).catch((err) => {
       console.log(err);
     }).finally(() => {
@@ -98,7 +114,7 @@ const VerifyOTP = ({ navigation, route }) => {
 
 
   return (
-    <SafeAreaView
+    <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} />
@@ -110,8 +126,14 @@ const VerifyOTP = ({ navigation, route }) => {
 
         <InputField
           title="Verification Code"
-          value={code}
-          onChangeText={setCode}
+          value={inputs.code}
+          onChangeText={(val) => {
+            handleOnChange(val, 'code')
+          }}
+          error={errors.code}
+          onFocus={() => {
+            handleError(null, 'code')
+          }}
           placeholder="Enter your verification code here"
           maxLength={MAX_CODE_LENGTH}
         />
@@ -157,7 +179,7 @@ const VerifyOTP = ({ navigation, route }) => {
           loading={isLoading}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 
 }

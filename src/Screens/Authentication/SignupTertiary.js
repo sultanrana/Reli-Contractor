@@ -14,6 +14,7 @@ import { GetStyles } from '../../Theme/AppStyles';
 import { handleRegister } from '../../API/Config';
 import SelectService from '../../Components/SelectService';
 import { setUserLocation } from '../../Redux/UserLocation';
+import { showMessage } from 'react-native-flash-message';
 
 const servicesList = [
   {
@@ -31,10 +32,9 @@ const servicesList = [
     title: 'Interior Doors',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
   },
+ 
 
 ];
-const screenHeight = Dimensions.get('window').height
-const screenWidth = Dimensions.get('window').width
 
 const SignupTertiary = ({ navigation, route }) => {
 
@@ -50,7 +50,10 @@ const SignupTertiary = ({ navigation, route }) => {
 
   const checkIsPermission = () => {
     if (services.length === 0) {
-      SimpleToast.show(`Please choose at least one service`);
+      showMessage({
+        message:'*Please choose at least one service',
+        type:'danger'
+      })
       return;
     } else {
       check(Platform.OS === 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
@@ -153,7 +156,10 @@ const SignupTertiary = ({ navigation, route }) => {
     ).then(async (data) => {
       if (data) {
         // console.log('...................', data);
-        SimpleToast.show(data?.message)
+        showMessage({
+          message: data?.message,
+          type: 'success',
+      })
         setServices([])
         setTimeout(() => {
           navigation.reset({
@@ -174,11 +180,11 @@ const SignupTertiary = ({ navigation, route }) => {
 
 
   return (
-    <SafeAreaView
+    <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, {paddingBottom: '37%'}]}>
 
         <FlatList
           scrollEnabled={true}
@@ -212,7 +218,7 @@ const SignupTertiary = ({ navigation, route }) => {
               }}
             />
           )}
-          contentContainerStyle={{ paddingBottom: 50 }}
+          // contentContainerStyle={{ paddingBottom: '30%' }}
           // ItemSeparatorComponent={()=>{
           //   return <View style={{height:24, width:24}}></View>
           // }}
@@ -224,29 +230,25 @@ const SignupTertiary = ({ navigation, route }) => {
               </Text>
             )
           }}
-          ListFooterComponent={
-            () => {
-              return (
-                <View style={{ width: '100%', marginTop: 12, alignSelf: 'center' }}>
-
-                  <ContainedButton
-                    onPress={checkIsPermission}
-                    label="Continue"
-                    loading={isLoading}
-                  />
-                  <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-                    <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-                      Already have an account?
-                      <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )
-            }
-          }
         />
       </View>
-    </SafeAreaView>
+
+
+      <View style={[AppStyles.HorizontalStyle, { width: '100%', position: 'absolute', bottom: '4%', alignSelf: 'center' }]}>
+        <ContainedButton
+          onPress={checkIsPermission}
+          label="Continue"
+          loading={isLoading}
+        />
+        <TouchableOpacity onPress={() => navigation.replace(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+          <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+            Already have an account?
+            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+    </View>
   );
 
 }

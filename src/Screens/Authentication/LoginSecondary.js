@@ -19,26 +19,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Keyboard } from 'react-native';
 
 const LoginSecondary = ({ navigation, route }) => {
-  const [password, setPassword] = useState('');
+
+  const [inputs, setInputs] = useState({
+    password: '',
+  })
+  const [errors, setErrors] = useState({})
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
-
   const dispatch = useDispatch()
 
   const { email } = route?.params || ''
 
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
+
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
+
   const onSubmit = () => {
-    if (password === '') {
-      SimpleToast.show(`*Please enter your password to continue`)
-      return
-    } else if (password.length < 6) {
-      SimpleToast.show('Password should be at least 6 characters');
-      return
-    } else {
+    let valid = true;
+    if (!inputs.password) {
+      handleError('*Please provide your password', 'password')
+      valid = false
+    }
+    if (valid) {
       setIsLoading(true)
-      handleLogin(email, password).then(async (data) => {
+      handleLogin(email, inputs.password).then(async (data) => {
         if (data) {
           await AsyncStorage.setItem('token', '' + data?.token).then(() => {
             dispatch(setUserData(data.userData))
@@ -49,11 +59,11 @@ const LoginSecondary = ({ navigation, route }) => {
             })
           })
         }
-
       }).finally(() => {
         setIsLoading(false)
       })
     }
+
   }
 
 
@@ -82,7 +92,7 @@ const LoginSecondary = ({ navigation, route }) => {
   });
 
   return (
-    <SafeAreaView pointerEvents={isLoading ? 'none' : 'auto'} style={[AppStyles.CommonScreenStyles]}>
+    <View pointerEvents={isLoading ? 'none' : 'auto'} style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
 
@@ -103,8 +113,14 @@ const LoginSecondary = ({ navigation, route }) => {
 
           <InputField
             title="Password"
-            value={password}
-            onChangeText={setPassword}
+            value={inputs.password}
+            onChangeText={(val) => {
+              handleOnChange(val, 'password')
+            }}
+            error={errors.password}
+            onFocus={() => {
+              handleError(null, 'password')
+            }}
             placeholder="Password"
             password={isPassVisible ? false : true}
             isRightIcon
@@ -115,7 +131,6 @@ const LoginSecondary = ({ navigation, route }) => {
             onSubmitEditing={() => {
               Keyboard.dismiss()
             }}
-
           />
           <View style={{ marginVertical: 10 }} />
           <ContainedButton
@@ -132,7 +147,7 @@ const LoginSecondary = ({ navigation, route }) => {
           </TouchableOpacity>
         </KeyboardAwareScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 
 }

@@ -13,33 +13,45 @@ import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Keyboard } from 'react-native';
 import { handleForgotPassword } from '../../API/Config';
+import { EMAIL_REG } from '../../Constants/Constants';
 
-const screenHeight = Dimensions.get('window').height
 
+const ForgotPassword = ({ navigation, route }) => {
 
-const LoginSecondary = ({ navigation, route }) => {
-
-  const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  const [email, setEmail] = useState('');
+  const [inputs, setInputs] = useState({
+    email: '',
+  })
+  const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false);
   const scheme = useColorScheme()
   const AppColors = Colors(scheme)
   const AppStyles = GetStyles(scheme)
 
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
+
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
+
   const forgotPassword = () => {
-    if (email === '') {
-      SimpleToast.show(`*Please enter your email address to reset your password`);
-      return;
-    } if (EMAIL_REG.test(email) == false) {
-      SimpleToast.show('*Please enter a valid Email address')
-      return;
-    } else {
+    let valid = true
+    Keyboard.dismiss()
+    if (!inputs.email) {
+      handleError('*Please provide your email', 'email')
+      valid = false
+    } else if (EMAIL_REG.test(inputs.email) == false) {
+      handleError('*Please provide your email and try again', 'email')
+      valid = false
+    }
+
+    if (valid) {
       setIsLoading(true)
-      handleForgotPassword(email).then(async (data) => {
-        if(data?.code === 200){
-          SimpleToast.show('Check your gmail for a verification code')
+      handleForgotPassword(inputs?.email).then(async (data) => {
+        if (data?.code === 200) {
           setTimeout(() => {
-            navigation.navigate(References.VerifyOTP, { email: email })
+            navigation.navigate(References.VerifyOTP, { email: inputs.email })
           }, 350);
         }
       }).catch((err) => {
@@ -74,7 +86,7 @@ const LoginSecondary = ({ navigation, route }) => {
   });
 
   return (
-    <SafeAreaView
+    <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
@@ -86,8 +98,14 @@ const LoginSecondary = ({ navigation, route }) => {
 
           <InputField
             title="Email"
-            value={email}
-            onChangeText={setEmail}
+            value={inputs.email}
+            onChangeText={(val) => {
+              handleOnChange(val, 'email')
+            }}
+            error={errors.email}
+            onFocus={() => {
+              handleError(null, 'email')
+            }}
             placeholder="Your Email"
             autoCapitalize={'none'}
             keyboardType={'email-address'}
@@ -117,9 +135,9 @@ const LoginSecondary = ({ navigation, route }) => {
 
       </View>
 
-    </SafeAreaView>
+    </View>
   );
 
 }
 
-export default LoginSecondary;
+export default ForgotPassword;

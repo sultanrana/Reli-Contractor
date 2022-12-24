@@ -6,9 +6,8 @@ import colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { FontSize } from '../Theme/FontSize';
 import { Icons, Images } from '../Assets/Images/Index';
+import { windowWidth } from "../Constants/Constants";
 
-
-const deviceWidth = Dimensions.get('window').width
 
 
 const ConfirmationPopup = (props) => {
@@ -96,7 +95,7 @@ const ConfirmationPopup = (props) => {
             isVisible={visible}
             animationIn='fadeInRight'
             animationOut='fadeOutLeft'
-            deviceWidth={deviceWidth}
+            deviceWidth={windowWidth}
             animationInTiming={350}
             animationOutTimixng={350}
             onBackButtonPress={onRequestClose}

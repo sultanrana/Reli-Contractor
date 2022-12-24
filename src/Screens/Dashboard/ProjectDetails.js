@@ -17,9 +17,9 @@ import Message from '../ProjectDetails/Message'
 import Service from '../ProjectDetails/Service'
 import Assignment from '../ProjectDetails/Assignment'
 import Finances from '../ProjectDetails/Finances'
+import { windowWidth } from '../../Constants/Constants';
 
 const Tabs = createMaterialTopTabNavigator()
-const screenWidth = Dimensions.get('window').width
 
 const ProjectDetails = ({ navigation }) => {
   const scheme = useColorScheme()
@@ -27,7 +27,7 @@ const ProjectDetails = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   return (
-    <SafeAreaView style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack bgWhite />
 
       <Tabs.Navigator
@@ -40,7 +40,7 @@ const ProjectDetails = ({ navigation }) => {
         screenOptions={{
           lazy: true,
           tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: screenWidth / 3.15 },
+          tabBarItemStyle: { width: windowWidth / 3.15 },
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
@@ -61,7 +61,7 @@ const ProjectDetails = ({ navigation }) => {
 
       </Tabs.Navigator>
 
-    </SafeAreaView>
+    </View>
   );
 
 }

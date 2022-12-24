@@ -14,8 +14,8 @@ import ServiceContainer from '../../Components/ServiceContainer';
 import OutlinedButton from '../../Components/OutlinedButton';
 import DateSchedule from '../../Components/DateSchedule';
 import { Icons } from '../../Assets/Images/Index';
+import { windowWidth } from '../../Constants/Constants';
 
-const screenWidth = Dimensions.get('window').width
 
 const Overview = ({ navigation }) => {
 
@@ -129,7 +129,7 @@ const Overview = ({ navigation }) => {
     dateContainer: {
       backgroundColor: AppColors.DateBackground,
       height: 165,
-      width: screenWidth / 3.79,
+      width: windowWidth / 3.79,
       borderRadius: 10,
       paddingTop: 8
     },
@@ -210,7 +210,7 @@ const Overview = ({ navigation }) => {
               <View style={[styles.stepCircle, { backgroundColor: (step >= 0.75 && step <= 1) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
               <View style={[styles.stepCircle, { backgroundColor: step == 1 ? AppColors.Primary : AppColors.DarkGrey }]}></View>
             </View>
-            <Progress.Bar animated progress={step} height={2.5} width={screenWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
+            <Progress.Bar animated progress={step} height={2.5} width={windowWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
           </View>
           <Text allowFontScaling={false} style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
           <View style={{ width: '100%', marginVertical: 16 }}>

@@ -24,7 +24,7 @@ const StaffTabs = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   return (
-    <SafeAreaView style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
       
       <LogoOver navigation={navigation} shouldShowBack={true} bgWhite/>
       
@@ -46,7 +46,7 @@ const StaffTabs = ({ navigation }) => {
             </Tabs.Navigator>
 
       
-    </SafeAreaView>
+    </View>
   );
 
 }

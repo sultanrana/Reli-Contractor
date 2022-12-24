@@ -14,40 +14,50 @@ import { Icons } from '../../Assets/Images/Index';
 import { handleChangePassword } from '../../API/Config';
 import { useSelector } from 'react-redux';
 import { Keyboard } from 'react-native';
+import { REGEX_PASS_1, REGEX_PASS_2, REGEX_PASS_3 } from '../../Constants/Constants';
 
-const REGEX_PASS_1 = /(.*[a-z].*)/
-const REGEX_PASS_2 = /(.*[A-Z].*)/
-const REGEX_PASS_3 = /(.*\d.*)/
-const PASS_MESSAGE = "*Password doesn't match the criteria of 1 uppercase, lowercase & number"
 
 
 const ResetPassword = ({ navigation, route }) => {
 
   const { userData } = useSelector(state => state.Index)
 
-  const [password, setPassword] = useState('');
+  const [inputs, setInputs] = useState({
+    password: ''
+  })
+  const [errors, setErrors] = useState({})
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
 
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
+
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
 
   const setNewPassword = () => {
-    if (password === '') {
-      SimpleToast.show('Please enter your new password')
-      return;
-    } else if (password.length < 6) {
-      SimpleToast.show('Password should contain at least 6 characters');
-      return
-    } else if ((REGEX_PASS_1.test(password) && REGEX_PASS_2.test(password) && REGEX_PASS_3.test(password)) == false) {
-      SimpleToast.show(PASS_MESSAGE)
-      return;
-    } else {
+    let valid = true
+    Keyboard.dismiss()
+
+    if (!inputs.password) {
+      handleError('*Please provide your password', 'password')
+      valid = false
+    } else if (inputs.password.length < 6) {
+      handleError('*Password should contain at least 6 characters', 'password')
+      valid = false
+    } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password)) == false) {
+      handleError(`*Password doesn't match the criteria of 1 uppercase, 1 lowercase & number`, 'password')
+      valid = false
+    }
+
+    if (valid) {
       setIsLoading(true)
-      handleChangePassword(userData?._id, password).then((res) => {
+      handleChangePassword(userData?._id, inputs.password).then((res) => {
         if (res.code === 200) {
-          SimpleToast.show('Password changed successfully')
           setTimeout(() => {
             navigation.reset({
               index: 0,
@@ -88,7 +98,7 @@ const ResetPassword = ({ navigation, route }) => {
   });
 
   return (
-    <SafeAreaView
+    <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
@@ -99,8 +109,14 @@ const ResetPassword = ({ navigation, route }) => {
 
         <InputField
           title="New Password"
-          value={password}
-          onChangeText={setPassword}
+          value={inputs.password}
+          onChangeText={(val) => {
+            handleOnChange(val, 'password')
+          }}
+          error={errors.password}
+          onFocus={() => {
+            handleError(null, 'password')
+          }}
           placeholder="New Password"
           password={isPassVisible ? false : true}
           rightIcon={(isPassVisible) ? Icons.ShowPassword : Icons.HidePassword}
@@ -119,7 +135,7 @@ const ResetPassword = ({ navigation, route }) => {
           loading={isLoading}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 
 }

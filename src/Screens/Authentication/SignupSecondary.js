@@ -14,57 +14,75 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Keyboard } from 'react-native';
-
-const screenHeight = Dimensions.get('window').height
+import { showMessage } from 'react-native-flash-message';
 
 const SignupSecondary = ({ navigation, route }) => {
 
+  const { email, password, firstname, lastname } = route?.params || ''
+  const [inputs, setInputs] = useState({
+    address: '',
+    apartment: '',
+    travel: '0',
+  })
+  const [errors, setErrors] = useState({})
   const [address, setAddress] = useState('');
   const [apartment, setApartment] = useState('');
   const [travel, setTravel] = useState(0);
   const addressRef = useRef()
   const unitRef = useRef()
-
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const { email, password, firstname, lastname } = route?.params || ''
 
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
+
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
   const onSubmit = () => {
-    if (address === '') {
-      SimpleToast.show(`*Please provide valid Address`);
-      return;
+    let valid = true
+    Keyboard.dismiss()
+    if (!inputs.address) {
+      handleError('*Please provide valid address', 'address')
+      valid = false
     }
-    if (apartment === '') {
-      SimpleToast.show(`*Please provide valid Apartment`);
-      return;
+    if (!inputs.apartment) {
+      handleError('*Please provide valid apartment', 'apartment')
+      valid = false
     }
-    if (travel === 0) {
-      SimpleToast.show(`Please choose a distance`);
-      return;
-    } else {
+    if (inputs.travel === '0') {
+      showMessage({
+        message: '*Please choose a distance',
+        type: 'danger',
+      })
+      valid = false
+    }
+    if (valid) {
       navigation.navigate(References.SignupTertiary, {
         email: email,
         password: password,
         firstname: firstname,
         lastname: lastname,
-        address: address,
-        apartment: apartment,
-        travel: travel
+        address: inputs.address,
+        apartment: inputs.apartment,
+        travel: inputs.travel
       });
     }
+
   }
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <View style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.HorizontalStyle]}>
 
         <KeyboardAwareScrollView
           enableOnAndroid={true}
           // extraHeight={130} extraScrollHeight={130}
-          contentContainerStyle={{ height: '100%', paddingBottom: 100, }}
+          // contentContainerStyle={{ paddingBottom: 10, }}
           showsVerticalScrollIndicator={false} >
           <>
             <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
@@ -74,8 +92,14 @@ const SignupSecondary = ({ navigation, route }) => {
             <InputField
               fieldRef={addressRef}
               title="Address"
-              value={address}
-              onChangeText={setAddress}
+              value={inputs.address}
+              onChangeText={(val) => {
+                handleOnChange(val, 'address')
+              }}
+              error={errors.address}
+              onFocus={() => {
+                handleError(null, 'address')
+              }}
               placeholder="Address"
               returnKeyType={'next'}
               onSubmitEditing={() => {
@@ -83,14 +107,17 @@ const SignupSecondary = ({ navigation, route }) => {
               }}
             />
 
-
-            <View style={{ marginVertical: 8 }} />
-
             <InputField
               fieldRef={unitRef}
               title="Apartment / Unit"
-              value={apartment}
-              onChangeText={setApartment}
+              value={inputs.apartment}
+              onChangeText={(val) => {
+                handleOnChange(val, 'apartment')
+              }}
+              error={errors.apartment}
+              onFocus={() => {
+                handleError(null, 'apartment')
+              }}
               placeholder="Apartment"
               returnKeyType={'done'}
               onSubmitEditing={() => {
@@ -98,44 +125,37 @@ const SignupSecondary = ({ navigation, route }) => {
               }}
             />
 
-            <View style={{ marginVertical: 8 }} />
-
-            <Text allowFontScaling={false} style={{ textAlign: 'left', width: '90%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish }}>
+            <Text allowFontScaling={false} style={{ textAlign: 'left', width: '100%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish, marginTop:20 }}>
               Wiling to travel
             </Text>
 
-            <View style={{ marginVertical: 4 }} />
             <RangeSlider
               from={0}
               to={150}
               step={5}
               distance={(val) => {
-                setTravel(val)
+                handleOnChange(JSON.stringify(val), 'travel')
               }}
             />
-            <View style={{ marginVertical: 16 }} />
-
 
           </>
 
-          <View style={{ width: '100%', position: 'absolute', bottom: 100, alignSelf: 'center' }}>
-            <ContainedButton
-              onPress={onSubmit}
-              label="Continue"
-            />
-
-            <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-              <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-                Already have an account?
-                <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-              </Text>
-            </TouchableOpacity>
-          </View>
         </KeyboardAwareScrollView>
-
       </View>
+      <View style={[AppStyles.HorizontalStyle, { width: '100%', position: 'absolute', bottom: '4%', alignSelf: 'center' }]}>
+        <ContainedButton
+          onPress={onSubmit}
+          label="Continue"
+        />
 
-    </SafeAreaView>
+        <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+          <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+            Already have an account?
+            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 
 }

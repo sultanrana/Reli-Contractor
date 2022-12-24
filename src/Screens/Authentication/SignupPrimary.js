@@ -6,8 +6,6 @@ import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
 
-import { FontSize } from '../../Theme/FontSize';
-import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
@@ -15,24 +13,21 @@ import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Icons } from '../../Assets/Images/Index';
 import { handleEmailCheck } from '../../API/Config';
+import { EMAIL_REG, REGEX_PASS_1, REGEX_PASS_2, REGEX_PASS_3 } from '../../Constants/Constants';
 
-const screenHeight = Dimensions.get('window').height
 
-const REGEX_PASS_1 = /(.*[a-z].*)/
-const REGEX_PASS_2 = /(.*[A-Z].*)/
-const REGEX_PASS_3 = /(.*\d.*)/
-const PASS_MESSAGE = "*Password doesn't match the criteria of 1 uppercase, lowercase & number"
-
-//const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
 const SignupPrimary = ({ navigation }) => {
 
-  const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+
+  const [inputs, setInputs] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: ''
+  })
+  const [errors, setErrors] = useState({})
   const fNameRef = useRef()
   const lNameRef = useRef()
   const emailRef = useRef()
@@ -42,63 +37,59 @@ const SignupPrimary = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const onSubmit = () => {
-    if (firstname === '') {
-      SimpleToast.show(`Please provide your first name`);
-      return;
-    }
-    if (lastname === '') {
-      SimpleToast.show(`Please provide your last name`);
-      return;
-    }
-    if (email === '') {
-      SimpleToast.show(`Please provide your email`);
-      return;
-    }
-    if (EMAIL_REG.test(email) == false) {
-      SimpleToast.show('*Please check your email and try again')
-      return;
-    }
-    if (password === '') {
-      SimpleToast.show(`Please provide your password`);
-      return;
-    }
-    if (password.length < 6) {
-      SimpleToast.show('Password should contain at least 6 characters');
-      return
-    } 
-    
-    if ((REGEX_PASS_1.test(password) && REGEX_PASS_2.test(password) && REGEX_PASS_3.test(password)) == false) {
-      SimpleToast.show(PASS_MESSAGE)
-      return;
-    } 
-    
-    else {
-      Keyboard.dismiss()
-      setIsLoading(true)
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
 
-      handleEmailCheck(email).then((res)=> {
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
+
+  const onSubmit = () => {
+    let valid = true
+    Keyboard.dismiss()
+    if (!inputs.firstname) {
+      handleError('*Please provide your first name', 'firstname')
+      valid = false
+    }
+    if (!inputs.lastname) {
+      handleError('*Please provide your last name', 'lastname')
+      valid = false
+    }
+    if (!inputs.email) {
+      handleError('*Please provide your email', 'email')
+      valid=false
+    } else if (EMAIL_REG.test(inputs.email) == false) {
+      handleError('*Please provide your email and try again', 'email')
+      valid=false
+    }
+    if (!inputs.password) {
+      handleError('*Please provide your password', 'password')
+      valid=false
+    } else if (inputs.password.length < 6) {
+      handleError('*Password should contain at least 6 characters', 'password')
+      valid=false
+    } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password)) == false) {
+      handleError(`*Password doesn't match the criteria of 1 uppercase, 1 lowercase & number`, 'password')
+      valid=false
+    }
+    if (valid) {
+      setIsLoading(true)
+      handleEmailCheck(inputs.email).then((res) => {
         if (res) {
           setTimeout(() => {
-            navigation.navigate(References.SignupSecondary, {
-              email: email,
-              password: password,
-              firstname: firstname,
-              lastname: lastname
-            });
+            navigation.navigate(References.SignupSecondary, { ...inputs });
           }, 250);
-            
+
         }
-      }).finally(()=> {
+      }).finally(() => {
         setIsLoading(false)
       })
-
-      
     }
   }
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <View style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView
@@ -115,8 +106,14 @@ const SignupPrimary = ({ navigation }) => {
             <InputField
               fieldRef={fNameRef}
               title="First Name"
-              value={firstname}
-              onChangeText={setFirstname}
+              value={inputs.firstname}
+              onChangeText={(val) => {
+                handleOnChange(val, 'firstname')
+              }}
+              error={errors.firstname}
+              onFocus={() => {
+                handleError(null, 'firstname')
+              }}
               placeholder="First Name"
               keyboardType='default'
               maxLength={16}
@@ -125,13 +122,18 @@ const SignupPrimary = ({ navigation }) => {
                 lNameRef.current.focus()
               }}
             />
-            <View style={{ marginVertical: 8 }} />
 
             <InputField
               fieldRef={lNameRef}
               title="Last Name"
-              value={lastname}
-              onChangeText={setLastname}
+              value={inputs.lastname}
+              onChangeText={(val) => {
+                handleOnChange(val, 'lastname')
+              }}
+              error={errors.lastname}
+              onFocus={() => {
+                handleError(null, 'lastname')
+              }}
               placeholder="Last Name"
               keyboardType='default'
               maxLength={16}
@@ -141,13 +143,18 @@ const SignupPrimary = ({ navigation }) => {
               }}
             />
 
-            <View style={{ marginVertical: 8 }} />
 
             <InputField
               fieldRef={emailRef}
               title="Email"
-              value={email}
-              onChangeText={setEmail}
+              value={inputs.email}
+              onChangeText={(val) => {
+                handleOnChange(val, 'email')
+              }}
+              error={errors.email}
+              onFocus={() => {
+                handleError(null, 'email')
+              }}
               placeholder="yourname@email.com"
               keyboardType='email-address'
               autoCapitalize={'none'}
@@ -156,13 +163,18 @@ const SignupPrimary = ({ navigation }) => {
                 passRef.current.focus()
               }}
             />
-            <View style={{ marginVertical: 8 }} />
 
             <InputField
               fieldRef={passRef}
               title="Password"
-              value={password}
-              onChangeText={setPassword}
+              value={inputs.password}
+              onChangeText={(val) => {
+                handleOnChange(val, 'password')
+              }}
+              error={errors.password}
+              onFocus={() => {
+                handleError(null, 'password')
+              }}
               placeholder="Password"
               password={isPassVisible ? false : true}
               isRightIcon
@@ -192,7 +204,7 @@ const SignupPrimary = ({ navigation }) => {
           </>
         </KeyboardAwareScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 
 }

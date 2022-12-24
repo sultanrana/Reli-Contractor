@@ -5,22 +5,24 @@ import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch } from 'react-redux';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
-
-import { FontSize } from '../../Theme/FontSize';
-import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { setUserLocation } from '../../Redux/UserLocation';
+import { EMAIL_REG } from '../../Constants/Constants';
 
 const LoginPrimary = ({ navigation }) => {
-  const EMAIL_REG = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  const [email, setEmail] = useState('');
+
+  const [inputs, setInputs] = useState({
+    email: '',
+  })
+  const [errors, setErrors] = useState({})
   const dispatch = useDispatch()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
@@ -97,22 +99,31 @@ const LoginPrimary = ({ navigation }) => {
 
   };
 
+  const handleOnChange = (text, input) => {
+    setInputs(prevState => ({ ...prevState, [input]: text }))
+  }
+
+  const handleError = (errorMsg, input) => {
+    setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+  }
   const onSubmit = () => {
-    if (email === '') {
-      SimpleToast.show(`*Please enter your email to continue`);
-      return;
-    } if (EMAIL_REG.test(email) == false) {
-      SimpleToast.show('*Please check your entry and try again')
-      return;
-    } else {
-      navigation.navigate(References.LoginSecondary, {
-        email: email
-      });
+    Keyboard.dismiss()
+    let valid = true
+    if (!inputs.email) {
+      handleError('*Please provide your email', 'email')
+      valid = false
+    } else if (EMAIL_REG.test(inputs.email) == false) {
+      handleError('*Please provide your email and try again', 'email')
+      valid = false
+    }
+    if (valid) {
+      navigation.navigate(References.LoginSecondary, {...inputs});
     }
   }
 
+
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles]}>
+    <View style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'} >
@@ -122,8 +133,14 @@ const LoginPrimary = ({ navigation }) => {
 
           <InputField
             title="Email"
-            value={email}
-            onChangeText={setEmail}
+            value={inputs.email}
+            onChangeText={(val) => {
+              handleOnChange(val, 'email')
+            }}
+            error={errors.email}
+            onFocus={() => {
+              handleError(null, 'email')
+            }}
             placeholder="yourname@email.com"
             keyboardType='email-address'
             autoCapitalize={'none'}
@@ -132,7 +149,9 @@ const LoginPrimary = ({ navigation }) => {
           />
           <View style={{ marginVertical: 10 }} />
           <ContainedButton
-            onPress={onSubmit}
+            onPress={() => {
+              onSubmit()
+            }}
             label="Continue"
           />
           <TouchableOpacity
@@ -145,7 +164,7 @@ const LoginPrimary = ({ navigation }) => {
           </TouchableOpacity>
         </KeyboardAwareScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 
 }

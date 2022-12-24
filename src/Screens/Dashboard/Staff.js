@@ -35,7 +35,7 @@ const Staff = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={[AppStyles.Screen, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
 
@@ -56,7 +56,7 @@ const Staff = ({ navigation }) => {
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 
 }

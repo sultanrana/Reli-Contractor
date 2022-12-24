@@ -184,7 +184,7 @@ const Location = ({ navigation }) => {
 
 
     return (
-        <SafeAreaView
+        <View
             pointerEvents={isLoading ? 'none' : 'auto'}
             style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
@@ -278,7 +278,7 @@ const Location = ({ navigation }) => {
                     </>
                 </KeyboardAwareScrollView>
             </View>
-        </SafeAreaView >
+        </View>
     );
 
 }

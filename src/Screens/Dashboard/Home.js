@@ -119,7 +119,7 @@ const Home = ({ navigation }) => {
 
   return (
 
-    <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
+    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <SectionList
@@ -147,7 +147,7 @@ const Home = ({ navigation }) => {
           contentContainerStyle={{ paddingBottom: 10 }}
         />
       </View>
-    </SafeAreaView>
+    </View>
 
 
   );

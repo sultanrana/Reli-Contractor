@@ -13,9 +13,9 @@ import Colors, { colors } from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
+import { windowWidth } from '../../Constants/Constants';
 
 const Tabs = createMaterialTopTabNavigator()
-const screenWidth = Dimensions.get('window').width
 
 const Account = ({ navigation }) => {
   const scheme = useColorScheme()
@@ -24,12 +24,12 @@ const Account = ({ navigation }) => {
 
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
+    <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator pageMargin={2}
         screenOptions={{
-          tabBarItemStyle: { width: screenWidth / 3 },
+          tabBarItemStyle: { width: windowWidth / 3 },
           tabBarScrollEnabled: true,
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
@@ -49,7 +49,7 @@ const Account = ({ navigation }) => {
 
       </Tabs.Navigator>
 
-    </SafeAreaView>
+    </View>
   );
 
 }

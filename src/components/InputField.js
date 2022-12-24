@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
 import {
@@ -37,12 +37,12 @@ const InputField =
     maxLength,
     isTitle = true,
     title,
-    isError,
-    errorText,
-    scheme = 'light'
+    error,
+    scheme = 'light',
+    onFocus = () => { }
   }) => {
 
-
+    const [isFocused, setIsFocused] = useState(true)
 
 
     const styles = StyleSheet.create({
@@ -89,7 +89,7 @@ const InputField =
 
     return (
 
-      <View style={{ justifyContent: 'center', flexDirection: 'column', marginVertical: 4 }}>
+      <View style={{ height: multiline? 190: 110, justifyContent: 'flex-start', flexDirection: 'column'}}>
         {
           (isTitle && title !== '') &&
           <View style={{
@@ -115,12 +115,19 @@ const InputField =
             width: isRightIcon ? '88%' : '100%',
             justifyContent: multiline ? 'flex-start' : 'center'
           }]}>
-            <TextInput 
+            <TextInput
               allowFontScaling={false}
               style={{ fontSize: 14, fontFamily: Fonts.Regular, color: Colors(scheme).TextTitle }}
               placeholder={placeholder}
               value={value}
               onChangeText={onChangeText}
+              onFocus={() => {
+                onFocus()
+                setIsFocused(true)
+              }}
+              onBlur={()=>{
+                setIsFocused(false)
+              }}
               secureTextEntry={password}
               placeholderTextColor={Colors(scheme).Grey}
               autoCapitalize={autoCapitalize}
@@ -149,6 +156,15 @@ const InputField =
           }
 
         </View>
+        {
+         error &&
+          <View style={{
+            margin: 4,
+          }}>
+            <Text allowFontScaling={false} style={{ fontSize: FontSize.small, color: 'red', fontFamily: Fonts.Medium }}>{error}</Text>
+          </View>
+        }
+
       </View>
 
 

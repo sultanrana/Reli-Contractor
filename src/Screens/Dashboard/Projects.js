@@ -15,16 +15,17 @@ import { GetStyles } from '../../Theme/AppStyles';
 import ActiveProjects from '../Projects/ActiveProjects'
 import AvailableProjects from '../Projects/AvailableProjects'
 import CompletedProjects from '../Projects/CompletedProjects'
+import { windowWidth } from '../../Constants/Constants';
 
 const Tabs = createMaterialTopTabNavigator()
-const screenWidth = Dimensions.get('window').width
+
 const Projects = ({ navigation }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
+    <View style={[AppStyles.CommonScreenStyles,{backgroundColor:AppColors.Background}]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
       <Tabs.Navigator
@@ -32,7 +33,7 @@ const Projects = ({ navigation }) => {
         screenOptions={{
           lazy: true,
           tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: screenWidth / 3 },
+          tabBarItemStyle: { width: windowWidth / 3 },
           tabBarActiveTintColor: AppColors.Primary,
           tabBarInactiveTintColor: '#979797',
           tabBarIndicatorContainerStyle: {
@@ -50,7 +51,7 @@ const Projects = ({ navigation }) => {
         <Tabs.Screen name={References.CompletedProjects} component={CompletedProjects} />
       </Tabs.Navigator>
 
-    </SafeAreaView>
+    </View>
   );
 
 }

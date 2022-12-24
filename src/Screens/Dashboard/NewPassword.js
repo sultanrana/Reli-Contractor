@@ -15,30 +15,48 @@ import { GetStyles } from '../../Theme/AppStyles';
 import { handleChangePassword } from '../../API/Config';
 import { Keyboard } from 'react-native';
 import { useSelector } from 'react-redux';
+import { REGEX_PASS_1, REGEX_PASS_2, REGEX_PASS_3 } from '../../Constants/Constants';
 
 const NewPassword = ({ navigation }) => {
 
     const { userData } = useSelector(state => state.Index)
 
-    const [password, setPassword] = useState('');
+    const [inputs, setInputs] = useState({
+        password: ''
+    })
+    const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false);
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
+    const handleOnChange = (text, input) => {
+        setInputs(prevState => ({ ...prevState, [input]: text }))
+    }
+
+    const handleError = (errorMsg, input) => {
+        setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
+    }
+
     const changePassword = () => {
-        if (password === '') {
-            SimpleToast.show('Please enter your new password')
-            return;
+
+        let valid = true
+        Keyboard.dismiss()
+
+        if (!inputs.password) {
+            handleError('*Please provide your password', 'password')
+            valid = false
+        } else if (inputs.password.length < 6) {
+            handleError('*Password should contain at least 6 characters', 'password')
+            valid = false
+        } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password)) == false) {
+            handleError(`*Password doesn't match the criteria of 1 uppercase, 1 lowercase & number`, 'password')
+            valid = false
         }
-        if (password.length < 6) {
-            SimpleToast.show('Password should be at least 6 characters');
-            return;
-        } else {
+        if (valid) {
             setIsLoading(true)
-            handleChangePassword(userData?._id, password).then((res) => {
+            handleChangePassword(userData?._id, inputs.password).then((res) => {
                 if (res.code === 200) {
-                    SimpleToast.show('Password changed successfully')
                     setTimeout(() => {
                         navigation.pop()
                     }, 250);
@@ -58,7 +76,7 @@ const NewPassword = ({ navigation }) => {
             fontSize: FontSize.medium,
             fontFamily: Fonts.Regular,
             color: AppColors.TextTitle,
-            marginTop: 22
+            marginTop: 15
         },
         requirementSection: {
             flexDirection: 'row',
@@ -79,7 +97,7 @@ const NewPassword = ({ navigation }) => {
         },
     })
     return (
-        <SafeAreaView
+        <View
             pointerEvents={isLoading ? 'none' : 'auto'}
             style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
             <LogoOver navigation={navigation} shouldShowBack />
@@ -90,8 +108,14 @@ const NewPassword = ({ navigation }) => {
 
                 <InputField
                     title="New Password"
-                    value={password}
-                    onChangeText={setPassword}
+                    value={inputs.password}
+                    onChangeText={(val) => {
+                        handleOnChange(val, 'password')
+                    }}
+                    error={errors.password}
+                    onFocus={() => {
+                        handleError(null, 'password')
+                    }}
                     placeholder="New Password"
                     keyboardType='default'
                     password={true}
@@ -115,7 +139,7 @@ const NewPassword = ({ navigation }) => {
                     </View>
                     <View style={styles.requirementSection}>
                         <View style={styles.requirementNumber}></View>
-                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Symbols'}</Text>
+                        <Text allowFontScaling={false} style={styles.requirementTitle}>{'Numbers'}</Text>
                     </View>
                 </View>
                 <ContainedButton
@@ -125,7 +149,7 @@ const NewPassword = ({ navigation }) => {
                     loading={isLoading}
                 />
             </View>
-        </SafeAreaView>
+        </View>
 
     );
 

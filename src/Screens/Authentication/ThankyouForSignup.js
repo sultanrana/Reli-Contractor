@@ -14,7 +14,6 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-const screenHeight = Dimensions.get('window').height
 
 const ThankyouForSignup = ({ navigation, route }) => {
 
@@ -28,7 +27,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
   }
 
   return (
-    <SafeAreaView style={[AppStyles.CommonScreenStyles,]}>
+    <View style={[AppStyles.CommonScreenStyles,]}>
       <LogoOver navigation={navigation} shouldShowBack={false} />
 
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { justifyContent: 'center' }]}>
@@ -75,7 +74,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
 
         </KeyboardAwareScrollView>
       </View>
-    </SafeAreaView >
+    </View>
   );
 
 }

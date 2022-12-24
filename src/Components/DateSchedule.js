@@ -6,8 +6,8 @@ import { FontSize } from '../Theme/FontSize';
 import Colors, { colors } from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
+import { windowWidth } from '../Constants/Constants';
 
-const screenWidth = Dimensions.get('window').width
 
 const DateSchedule = ({ Details }) => {
 
@@ -20,7 +20,7 @@ const DateSchedule = ({ Details }) => {
         dateContainer: {
             backgroundColor: AppColors.DateBackground,
             height: 165,
-            width: screenWidth / 3.79,
+            width: windowWidth / 3.79,
             borderRadius: 10,
             paddingTop: 8
         },

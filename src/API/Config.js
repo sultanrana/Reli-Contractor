@@ -8,6 +8,8 @@ import {
     Endpoints
 } from './Constants'
 import SimpleToast from 'react-native-simple-toast';
+import InfoMsg from '../Components/InfoMsg';
+import { showMessage } from 'react-native-flash-message';
 
 //Login
 export const handleLogin = async (email, password) => {
@@ -28,11 +30,17 @@ export const handleLogin = async (email, password) => {
 
             return response?.data
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -66,14 +74,19 @@ export const handleRegister = async (email, password, fName, lName, type, addres
         )
 
         if (response?.code === 200) {
-
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -97,7 +110,10 @@ export const handleUserProfile = async () => {
         //     return null
         // }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -119,13 +135,23 @@ export const handleChangePassword = async (userId, password) => {
         )
 
         if (response?.code === 200) {
+            showMessage({
+                message: 'Password changed successfully',
+                type: 'success'
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -147,13 +173,23 @@ export const handleUpdateNumber = async (userId, number) => {
         )
 
         if (response?.code === 200) {
+            showMessage({
+                message: 'Phone Number updated successfully',
+                type: 'success',
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -177,13 +213,23 @@ export const handleUpdateUserDetails = async (userId, fName, lName, email) => {
         )
 
         if (response?.code === 200) {
+            showMessage({
+                message: 'Details updated successfully',
+                type: 'success',
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -240,14 +286,23 @@ export const handleForgotPassword = async (email) => {
         )
 
         if (response?.code === 200) {
-
+            showMessage({
+                message: 'Check your gmail for a verification code',
+                type: 'success'
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger'
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger'
+        })
         console.log(e);
         throw e
     }
@@ -271,12 +326,17 @@ export const handleEmailCheck = async (email) => {
         if (response?.code === 200) {
             return response?.data
         } else if (response?.code === 400) {
-            //SimpleToast.show(response?.message)
-            SimpleToast.show('*This email address already have an account - Please Sign In')
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -300,14 +360,23 @@ export const handleVerifyOTP = async (email, otp) => {
         )
 
         if (response?.code === 200) {
-
+            showMessage({
+                message: 'OTP verified successfully',
+                type: 'success',
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -330,14 +399,23 @@ export const handleResendOTP = async (email) => {
         )
 
         if (response?.code === 200) {
-
+            showMessage({
+                message: 'Check your gmail for a verification code',
+                type: 'success'
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger'
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger'
+        })
         console.log(e);
         throw e
     }
@@ -360,14 +438,23 @@ export const handleContactUs = async (sub, msg) => {
         )
 
         if (response?.code === 200) {
-
+            showMessage({
+                message: response?.message,
+                type: 'success'
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger'
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger'
+        })
         console.log(e);
         throw e
     }

@@ -7,8 +7,6 @@ import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
 import { Images } from '../Assets/Images/Index';
 
-const screenWidth = Dimensions.get('window').width
-
 const ServiceContainer = ({ Details }) => {
 
     const scheme = useColorScheme()
