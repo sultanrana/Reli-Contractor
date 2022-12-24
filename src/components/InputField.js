@@ -31,7 +31,7 @@ const InputField =
     customStyle,
     rightIconOnPress,
     label,
-    multiline,
+    multiline = false,
     rightIconStyle,
     editable,
     maxLength,
@@ -89,7 +89,7 @@ const InputField =
 
     return (
 
-      <View style={{ height: multiline? 190: 110, justifyContent: 'flex-start', flexDirection: 'column'}}>
+      <View style={{ height: multiline? 190: (!error? 110: 'auto' ), justifyContent: 'flex-start', flexDirection: 'column'}}>
         {
           (isTitle && title !== '') &&
           <View style={{

@@ -39,10 +39,10 @@ const ForgotPassword = ({ navigation, route }) => {
     let valid = true
     Keyboard.dismiss()
     if (!inputs.email) {
-      handleError('*Please provide your email', 'email')
+      handleError('*Please enter your email address to reset your password', 'email')
       valid = false
     } else if (EMAIL_REG.test(inputs.email) == false) {
-      handleError('*Please provide your email and try again', 'email')
+      handleError('*Please enter a valid Email address', 'email')
       valid = false
     }
 
