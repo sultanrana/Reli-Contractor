@@ -109,6 +109,7 @@ const ForgotPassword = ({ navigation, route }) => {
             placeholder="Your Email"
             autoCapitalize={'none'}
             keyboardType={'email-address'}
+            returnKeyType={'done'}
             onSubmitEditing={() => {
               Keyboard.dismiss()
             }}

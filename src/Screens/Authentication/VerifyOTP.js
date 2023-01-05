@@ -15,6 +15,7 @@ import { handleResendOTP, handleVerifyOTP } from '../../API/Config';
 import { setAuthToken, setUserData } from '../../Redux/Actions';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { vs } from 'react-native-size-matters';
 
 const VerifyOTP = ({ navigation, route }) => {
 
@@ -136,8 +137,12 @@ const VerifyOTP = ({ navigation, route }) => {
           }}
           placeholder="Enter your verification code here"
           maxLength={MAX_CODE_LENGTH}
+          returnKeyType={'done'}
+          onSubmitEditing={() => {
+            Keyboard.dismiss()
+          }}
         />
-        <View style={{ marginVertical: 2 }} />
+        <View style={{ marginTop:vs(12) }} />
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
           <Text allowFontScaling={false} style={{
             fontSize: FontSize.medium,

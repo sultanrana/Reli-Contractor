@@ -37,8 +37,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Reli App  would like to access your location for address, it is safe and secure.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Reli App  would like to access your location for address, it is safe and secure.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Reli App  would like to access your location for address, it is safe and secure.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Bold.ttf</string>

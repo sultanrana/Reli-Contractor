@@ -327,7 +327,7 @@ export const handleEmailCheck = async (email) => {
             return response?.data
         } else if (response?.code === 400) {
             showMessage({
-                message: response?.message,
+                message: 'Please check your email, or click the sign in button',
                 type: 'danger',
             })
             return null
