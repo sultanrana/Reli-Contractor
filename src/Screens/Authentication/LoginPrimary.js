@@ -16,6 +16,8 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { setUserLocation } from '../../Redux/UserLocation';
 import { EMAIL_REG } from '../../Constants/Constants';
+import { setCompaniesData } from '../../Redux/Actions';
+import { handleGetAllCompanies } from '../../API/Config';
 
 const LoginPrimary = ({ navigation }) => {
 
@@ -26,6 +28,16 @@ const LoginPrimary = ({ navigation }) => {
   const dispatch = useDispatch()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
+
+
+  const getCompanies = async () => {
+    const companiesData = await handleGetAllCompanies()
+    console.log({companiesData})
+    dispatch(setCompaniesData(companiesData?.data))
+}
+
+
+  useEffect(() => { getCompanies() }, [])
 
   useEffect(() => {
     setTimeout(() => {

@@ -1,7 +1,9 @@
 import {
     USER_DATA,
     AUTH_TOKEN,
-    ON_LOGOUT
+    ON_LOGOUT,
+    COMPANIES,
+
 } from './Types'
 
 const setAuthToken = (payload) => ({
@@ -14,9 +16,14 @@ const setUserData = (payload) => ({
     payload: payload
 })
 
+const setCompaniesData = (payload) => ({
+    type: COMPANIES,
+    payload: payload
+})
+
 const logout = () => ({
     type: ON_LOGOUT,
     payload: null
 })
 
-export {setAuthToken, setUserData, logout }
+export {setAuthToken, setUserData, setCompaniesData, logout }

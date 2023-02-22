@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ContainedButton from '../../Components/ContainedButton'
 import LogoOver from '../../Components/LogoOver';
-import Colors from '../../Theme/Colors';
+import Colors, { colors } from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
@@ -15,30 +15,31 @@ import { handleRegister } from '../../API/Config';
 import SelectService from '../../Components/SelectService';
 import { setUserLocation } from '../../Redux/UserLocation';
 import { showMessage } from 'react-native-flash-message';
+import { vs } from 'react-native-size-matters';
 
-const servicesList = [
-  {
-    key: '1',
-    title: 'Windows',
-    image: 'https://icon-library.com/images/open-windows-icon/open-windows-icon-9.jpg'
-  },
-  {
-    key: '2',
-    title: 'Sliding Glass Doors',
-    image: 'https://cdn3.vectorstock.com/i/1000x1000/82/97/glass-door-icon-image-vector-19068297.jpg'
-  },
-  {
-    key: '3',
-    title: 'Interior Doors',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-  },
+// const servicesList = [
+//   {
+//     key: '1',
+//     title: 'Windows',
+//     image: 'https://icon-library.com/images/open-windows-icon/open-windows-icon-9.jpg'
+//   },
+//   {
+//     key: '2',
+//     title: 'Sliding Glass Doors',
+//     image: 'https://cdn3.vectorstock.com/i/1000x1000/82/97/glass-door-icon-image-vector-19068297.jpg'
+//   },
+//   {
+//     key: '3',
+//     title: 'Interior Doors',
+//     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
+//   },
  
 
-];
+// ];
 
 const SignupTertiary = ({ navigation, route }) => {
 
-  const { email, password, firstname, lastname, address, apartment, travel } = route?.params || ''
+  const { email, password, firstname, lastname, address, apartment, travel, accountType, company } = route?.params || ''
   const { location } = useSelector(state => state.Location)
   const [services, setServices] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -47,6 +48,17 @@ const SignupTertiary = ({ navigation, route }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
+  const {companies} = useSelector(state=>state.CompaniesData)
+
+  const selectedCompany = companies.filter(c => c?._id === company)[0]
+
+  console.log({selectedCompany});
+
+  const servicesList = selectedCompany?.services?.map((item, index) => ({
+    key: `${item}`,
+    title: `${item}`.toUpperCase(),
+    image: (item === 'window') ? 'https://icon-library.com/images/open-windows-icon/open-windows-icon-9.jpg': ((item === 'door') ? 'https://cdn3.vectorstock.com/i/1000x1000/82/97/glass-door-icon-image-vector-19068297.jpg' : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU')
+  })) 
 
   const checkIsPermission = () => {
     if (services.length === 0) {
@@ -152,7 +164,9 @@ const SignupTertiary = ({ navigation, route }) => {
       travel,
       info != null ? info.coords.latitude : location.coords.latitude,
       info != null ? info.coords.latitude : location.coords.latitude,
-      services
+      services,
+      accountType,
+      company
     ).then(async (data) => {
       if (data) {
         // console.log('...................', data);
@@ -230,6 +244,18 @@ const SignupTertiary = ({ navigation, route }) => {
               </Text>
             )
           }}
+          ListEmptyComponent={() => (
+            <Text style={{
+              fontFamily: Fonts.Medium,
+              fontSize: vs(11),
+              color: colors.Black,
+              textAlign: 'center',
+              alignSelf: 'center',
+              marginTop: vs(20)
+            }}>
+              {'No services found in the company.'}
+            </Text>
+          )}
         />
       </View>
 

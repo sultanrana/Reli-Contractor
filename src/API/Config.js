@@ -48,7 +48,7 @@ export const handleLogin = async (email, password) => {
 }
 
 //Register
-export const handleRegister = async (email, password, fName, lName, type, address, apartment, distance, lat, long, services) => {
+export const handleRegister = async (email, password, fName, lName, type, address, apartment, distance, lat, long, services, accountType, company) => {
     const formData = new URLSearchParams();
     formData.append('email', email);
     formData.append('password', password);
@@ -56,6 +56,8 @@ export const handleRegister = async (email, password, fName, lName, type, addres
     formData.append('lastName', lName);
     formData.append('userType', type);
     formData.append('address', address);
+    formData.append('accountType', accountType);
+    formData.append('company', company);
     formData.append('appartment', apartment);
     formData.append('willingRange', distance);
     formData.append('lat', lat);
@@ -485,3 +487,26 @@ export const handleDeleteAccount = async (userId) => {
 
 }
 
+// Get All Companies
+export const handleGetAllCompanies = async () => {
+    console.log('Calling Companies Eddpoint');
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.AuthProfile.ListOfAllCompanies}`,
+            'Company Listing',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI0Mzg5MjdmMWE0MTNhMDVmMDI2OCIsImlhdCI6MTY2ODU0MTYxNywiZXhwIjoxNzAwMDc3NjE3fQ.8mX3JqRFwskaISPHJBYKIWUDQ7Z-hPPsq0AwKgxxotw'
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}

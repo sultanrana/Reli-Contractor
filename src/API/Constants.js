@@ -1,5 +1,6 @@
 //API Base URL
-export const API_URL = 'http://34.236.149.254/api/mobile/api/';
+// export const API_URL = 'http://34.236.149.254/api/mobile/api/';
+export const API_URL = 'http://34.236.149.254/api/mobile/api/'
 
 //API Content Types
 export const ContentTypes = {
@@ -23,7 +24,8 @@ export const Endpoints = {
         DeleteAccount: 'deleteAccount',
         ForgotPassword: 'forgotPassword',
         CheckEmail: 'checkEmail',
-        ResendVerifyOTP: 'resendVerifyOTP'
+        ResendVerifyOTP: 'resendVerifyOTP',
+        ListOfAllCompanies: 'listOfCompanies',
     },
     Dashboard: {
         ContactUs: 'contactUs',
