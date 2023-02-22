@@ -6,9 +6,11 @@ import { ContentTypes } from "./Constants";
  * @param url
  * @returns {Promise<R>}
  */
-const get = async (url, request) => {
+const get = async (url, request, authHeader) => {
 
-  let authHeader = await AsyncStorage.getItem('token')
+  if (!authHeader) {
+    authHeader = await AsyncStorage.getItem('token')
+  }
 
   return new Promise((resolve, reject) => {
 
@@ -21,7 +23,7 @@ const get = async (url, request) => {
       },
     }).then((res) => res.json())
       .then((result) => {
-        console.log(`${request}-response: `, result)
+        // console.log(`${request}-response: `, result)
         if (result) {
           resolve(result);
         } else {

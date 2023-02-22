@@ -18,7 +18,7 @@ import { showMessage } from 'react-native-flash-message';
 
 const SignupSecondary = ({ navigation, route }) => {
 
-  const { email, password, firstname, lastname } = route?.params || ''
+  const { email, password, firstname, lastname, accountType, company } = route?.params || ''
   const [inputs, setInputs] = useState({
     address: '',
     apartment: '',
@@ -66,6 +66,8 @@ const SignupSecondary = ({ navigation, route }) => {
         password: password,
         firstname: firstname,
         lastname: lastname,
+        accountType: accountType,
+        company: company,
         address: inputs.address,
         apartment: inputs.apartment,
         travel: inputs.travel
