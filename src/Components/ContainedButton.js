@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, Image, View, ActivityIndicator } fr
 import Fonts from '../Assets/Fonts/Index'
 import colors from '../Theme/Colors'
 
-const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', disabled = false, loading = false }) => {
+const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', disabled = false, loading = false, renderLeft }) => {
 
     const styles = StyleSheet.create({
         mainContainer: {
@@ -35,6 +35,10 @@ const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', 
             activeOpacity={0.8}
             style={[styles.mainContainer, style]}
             disabled={disabled || loading}>
+
+            {
+                renderLeft && renderLeft()
+            }
 
             {loading ?
                 <ActivityIndicator size={'small'} color={'white'} style={{ marginRight: 16, marginLeft: 8 }} />

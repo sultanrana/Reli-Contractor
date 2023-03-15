@@ -10,6 +10,7 @@ import {
 import SimpleToast from 'react-native-simple-toast';
 import InfoMsg from '../Components/InfoMsg';
 import { showMessage } from 'react-native-flash-message';
+import { ProjectStatuses } from '../Constants/ProjectStatus';
 
 //Login
 export const handleLogin = async (email, password) => {
@@ -509,4 +510,303 @@ export const handleGetAllCompanies = async () => {
         throw e
     }
 
+}
+
+export const handleGetDashboardData = async (authToken) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.DashboardData}`,
+            'Get Dashboard Data',
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetAllActiveProjects = async (authToken) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Projects.ActiveProjects}`,
+            Endpoints.Dashboard.Projects.ActiveProjects,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetAllAvailableProjects = async (authToken) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Projects.AvailableProjects}`,
+            Endpoints.Dashboard.Projects.AvailableProjects,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetAllCompletedProjects = async (authToken) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Projects.CompletedProjects}`,
+            Endpoints.Dashboard.Projects.CompletedProjects,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleChangeProjectStatusRequest = async (authToken, projectID, newProjectStatus) => {
+
+    try {
+        const formData = new URLSearchParams();
+        formData.append('requestStatus', newProjectStatus);
+
+        const response = await fetch.post(
+            API_URL + `${Endpoints.Dashboard.Projects.UpdateProjectStatus}/${projectID}`,
+            formData.toString(),
+            Endpoints.Dashboard.Projects.UpdateProjectStatus,
+            authToken,
+            ContentTypes.XUrlEncodedFormData,
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetStaffData = async (authToken, companyID) => {
+
+    try {
+
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Staff}/${companyID}`,
+            Endpoints.Dashboard.Staff,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetProjectDetails = async (authToken, projectID) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Projects.ProjectDetails}/${projectID}`,
+            Endpoints.Dashboard.Projects.ProjectDetails,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetStaffList = async (authToken, companyID) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Staff}/${companyID}`,
+            Endpoints.Dashboard.Staff,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handlePostClaimData = async (authToken, projectID, orderStatus, date) => {
+    try {
+        const formData = new URLSearchParams();
+        formData.append('orderStatus', orderStatus);
+        formData.append('orderStatusDate', date);
+
+        const body = {
+            orderStatus: orderStatus,
+            orderStatusDate: date
+        }
+
+        const response = await fetch.post(
+            API_URL + `${Endpoints.Dashboard.ChangeProjectOrderStatus}/${projectID}`,
+            JSON.stringify(body),
+            Endpoints.Dashboard.ChangeProjectOrderStatus,
+            authToken,
+            ContentTypes.Raw,
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+}
+
+export const handlePostAssigneeData = async (authToken, projectID, orderStatus = ProjectStatuses.Assigned, date, assigneeID) => {
+    try {
+        console.log({authToken, projectID, orderStatus, date, assigneeID});
+        const formData = new URLSearchParams();
+
+        const body = {
+            order: projectID,
+            userTo: assigneeID,
+            assignedDate: date
+        }
+
+
+        formData.append('order', projectID);
+        formData.append('userTo', assigneeID);
+        formData.append('assignedDate', date);
+
+        console.log(JSON.stringify(body));
+
+        const response = await fetch.post(
+            API_URL + `${Endpoints.Dashboard.AssignProjectToUser}`,
+            JSON.stringify(body),
+            Endpoints.Dashboard.AssignProjectToUser,
+            authToken,
+            ContentTypes.Raw,
+        )
+
+        console.log('Code', response?.code);
+
+        if (response?.code === 200) {
+
+            console.log('Responsezzz', response);
+            
+            const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus)
+
+            if (res2) {
+                return res2
+            } return 'Project Status Change not working'
+
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        } else if (response?.code === 404) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+}
+
+export const handleProjectStatusChange = async (authToken, projectID, orderStatus) => {
+    try {
+        const formData = new URLSearchParams();
+        formData.append('orderStatus', orderStatus);
+        // formData.append('orderStatusDate', date);
+
+        const body = {
+            orderStatus: orderStatus,
+        }
+
+        const response = await fetch.post(
+            API_URL + `${Endpoints.Dashboard.ChangeProjectOrderStatus}/${projectID}`,
+            JSON.stringify(body),
+            Endpoints.Dashboard.ChangeProjectOrderStatus,
+            authToken,
+            ContentTypes.Raw,
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
 }

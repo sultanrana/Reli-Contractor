@@ -1,6 +1,7 @@
 //API Base URL
 // export const API_URL = 'http://34.236.149.254/api/mobile/api/';
 export const API_URL = 'http://34.236.149.254/api/mobile/api/'
+export const IMAGES_URL = 'http://34.236.149.254/src/uploads/images/'
 
 //API Content Types
 export const ContentTypes = {
@@ -29,5 +30,18 @@ export const Endpoints = {
     },
     Dashboard: {
         ContactUs: 'contactUs',
+        DashboardData: 'contractorDashboard',
+
+        Projects: {
+            ActiveProjects: 'listOfActiveContractorProjects',
+            AvailableProjects: 'listOfAvailableContractorProjects',
+            CompletedProjects: 'listOfCompletedContractorProjects',
+            UpdateProjectStatus: 'changeProjectRequestStatus',
+            ProjectDetails: 'orderDetail'
+        },
+
+        Staff: 'listOfStaff',
+        ChangeProjectOrderStatus: 'changeProjectOrderStatus',
+        AssignProjectToUser: 'assignProjectToUser'
     }
 }

@@ -6,6 +6,7 @@ import Colors, { colors } from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
 import { Images } from '../Assets/Images/Index';
+import { API_URL, IMAGES_URL } from '../API/Constants';
 
 const ServiceContainer = ({ Details }) => {
 
@@ -13,7 +14,14 @@ const ServiceContainer = ({ Details }) => {
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
+    function capitalizeFirstLetter(str) {
 
+        // converting first letter to uppercase
+        const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+    
+        return capitalized;
+    }
+    
 
     const styles = StyleSheet.create({
         serviceContainer: {
@@ -70,16 +78,74 @@ const ServiceContainer = ({ Details }) => {
                         height: 50,
                         width: 50,
                         alignSelf: 'center'
-                    }} source={Images.SideWindow} />
+                    }} source={(Details?.images?.length <=0) ? Images.SideWindow: {
+                        uri: IMAGES_URL + Details?.images[0]
+                    }} />
                 </View>
-                <Text allowFontScaling={false} style={styles.mainTitle}>{'Premium Window'}</Text>
+                <Text allowFontScaling={false} style={styles.mainTitle}>{Details?.serviceName}</Text>
             </View>
             <View style={styles.serviceNameContainer}>
-                <Text allowFontScaling={false} style={styles.serviceName}>{'Stacked: '}</Text>
-                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.stacked}</Text>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Service Type: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.serviceType)}</Text>
             </View>
 
             <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Room Type: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.roomType)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Distance from Ground: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details?.distanceFromGround}</Text>
+            </View>
+            
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Floor Type: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.floorType)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Width: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details?.width}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Height: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{Details?.height}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Glass Type: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.glassType)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Design Type: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.designType)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Color Selection: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.colorSelection)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Style Selection: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.styleSelection)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Opening Type: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.openingType)}</Text>
+            </View>
+
+            <View style={styles.serviceNameContainer}>
+                <Text allowFontScaling={false} style={styles.serviceName}>{'Opening Direction: '}</Text>
+                <Text allowFontScaling={false} style={styles.seriveDesc}>{capitalizeFirstLetter(Details?.openingDirection)}</Text>
+            </View>
+
+            {/* <View style={styles.serviceNameContainer}>
                 <Text allowFontScaling={false} style={styles.serviceName}>{'Top Section: '}</Text>
                 <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.topSection}</Text>
             </View>
@@ -122,7 +188,7 @@ const ServiceContainer = ({ Details }) => {
             <View style={styles.serviceNameContainer}>
                 <Text allowFontScaling={false} style={styles.serviceName}>{'Room: '}</Text>
                 <Text allowFontScaling={false} style={styles.seriveDesc}>{Details.room}</Text>
-            </View>
+            </View> */}
         </View>
     );
 

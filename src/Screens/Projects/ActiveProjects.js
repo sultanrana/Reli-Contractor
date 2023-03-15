@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList } from 'react-native';
@@ -13,6 +13,10 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
 import { Images } from '../../Assets/Images/Index';
+import { useSelector } from 'react-redux';
+import { handleGetAllActiveProjects } from '../../API/Config';
+import Loader from '../../Components/Loader';
+import { vs } from 'react-native-size-matters';
 
 const ActiveProjects = ({ navigation }) => {
 
@@ -20,82 +24,76 @@ const ActiveProjects = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
+  const [loading, setLoading] = useState(true)
+  const [projectData, setProjectData] = useState([])
+  const { id, details } = useSelector(({ Projects }) => Projects)
+  const { token } = useSelector(({ Index }) => Index)
+
+
+  useEffect(() => {
+    handleGetAllActiveProjects(token).then(({ data }) => {
+      setProjectData(data?.length > 0 ? data : [])
+    }).finally(() => {
+      setLoading(false)
+    })
+  }, [])
+
   const renderDateItem = ({ item, index }) => {
+    const details = item?.orderdetails[0]
+    const dateMap = item?.dateSelection.map((d, i) => {
+      return (i === item?.dateSelection?.length - 1 ? 'or ' : '') + (moment(d).format('MMM DD'))
+    }).join(', ')
+
     return (
       <ProjectBoxWithDate
         navigation={navigation}
-        title={item?.title}
-        subtitle1={item?.subtitle1}
-        subtitle2={item?.subtitle2}
-        imageURL1={item?.image1}
-        imageURL2={item?.image2}
+        id={item?._id}
+        title={details?.serviceName}
+        subtitle1={'-'}
+        subtitle2={dateMap}
+        imageURL1={Images.House}
+        calenderData={{
+          date: moment(details?.createdAt).format('DD'),
+          month: moment(details?.createdAt).format('MMM'),
+          day: moment(details?.createdAt).format('ddd')
+        }}
       />
     )
   }
 
   const Data = [
     {
-      title: 'Today',
+      title: '',
       renderItem: renderDateItem,
-      data: [
-        {
-          title: "2x Sliding Glass Doors",
-          subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-          subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: Images.House,
-          image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-        },
-        {
-          title: "2x Sliding Glass Doors",
-          subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-          subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: Images.House,
-          image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-        },
-        {
-          title: "2x Sliding Glass Doors",
-          subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-          subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: Images.House,
-          image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-        },
-      ]
-    },
-    {
-      title: 'Wednesday, Oct 06',
-      renderItem: renderDateItem,
-      data: [
-        {
-          title: "2x Sliding Glass Doors",
-          subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-          subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: Images.House,
-          image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-        },
-        {
-          title: "2x Sliding Glass Doors",
-          subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-          subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: Images.House,
-          image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-        },
-        {
-          title: "2x Sliding Glass Doors",
-          subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-          subtitle2: "Aug 22 , Aug 23, or Sep 1",
-          image1: Images.House,
-          image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-        },
-      ]
+      data: projectData
     }
   ]
 
   return (
     <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background, paddingTop: 10 }]}>
+      <Loader loading={loading} />
       <SectionList
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
+        renderSectionFooter={({ section }) => {
+          if (section.data.length == 0 && !loading) {
+            return (
+              <Text allowFontScaling={false} style={{
+                fontFamily: Fonts.Light,
+                fontSize: FontSize.medium,
+                color: AppColors.DarkGrey,
+                marginTop: vs(50),
+                textAlign: 'center',
+              }}>
+                {'No Active Projects'}
+              </Text>
+            )
+          }
+          return (
+            <></>
+          )
+        }}
         keyExtractor={(item, index) => 'ci' + index}
         renderItem={({ section: { renderItem } }) => { renderItem }}
         renderSectionHeader={({ section: { title } }) => (

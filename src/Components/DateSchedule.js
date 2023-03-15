@@ -1,34 +1,47 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, useColorScheme, Dimensions, FlatList } from 'react-native';
+import { Text, View, Image, StyleSheet, useColorScheme, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 
 import { FontSize } from '../Theme/FontSize';
 import Colors, { colors } from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
 import { windowWidth } from '../Constants/Constants';
+import moment from 'moment-timezone';
 
 
-const DateSchedule = ({ Details }) => {
+const DateSchedule = ({ item, index, selectedDateIndex, setSelectedDateIndex, clickable }) => {
 
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
-    const styles = StyleSheet.create({
+    const details = {
+        day: moment(item).format('ddd'),
+        date: moment(item).format('DD'),
+        month: moment(item).format('MMM'),
+        time: 'Time\nRequired',
+    }
 
+    const isSelected = (index === selectedDateIndex) 
+
+    const styles = StyleSheet.create({
         dateContainer: {
-            backgroundColor: AppColors.DateBackground,
+            backgroundColor: isSelected? '#FDECDF': AppColors.DateBackground,
             height: 165,
             width: windowWidth / 3.79,
             borderRadius: 10,
-            paddingTop: 8
+            paddingTop: 8,
+
+            borderColor: isSelected? AppColors.Primary: AppColors.White,
+            borderWidth: isSelected? 2: 0,
         },
         dateInnerContainer: {
             backgroundColor: AppColors.White,
             height: '75%',
             width: '100%',
             borderRadius: 10,
+
         },
         timeContainer: {
             height: '25%',
@@ -49,7 +62,10 @@ const DateSchedule = ({ Details }) => {
     })
 
     return (
-        <View style={styles.dateContainer}>
+        <TouchableOpacity style={styles.dateContainer} activeOpacity={0.75} onPress={() => {
+            console.log('Date Selected', item);
+            setSelectedDateIndex(index)
+        }} disabled={!clickable}> 
             <View style={{ height: '75%', paddingHorizontal: 7, }}>
                 <View style={styles.dateInnerContainer}>
                     <View style={{
@@ -64,7 +80,7 @@ const DateSchedule = ({ Details }) => {
                             fontFamily: Fonts.Regular,
                             fontSize: FontSize.medium,
                             color: AppColors.White,
-                        }}>{Details.day}</Text>
+                        }}>{details.day}</Text>
                     </View>
 
                     <Text allowFontScaling={false} style={{
@@ -72,7 +88,7 @@ const DateSchedule = ({ Details }) => {
                         fontSize: 40,
                         color: AppColors.TextTitle,
                         alignSelf: 'center'
-                    }}>{Details.date}</Text>
+                    }}>{details.date}</Text>
                 </View>
                 <Text allowFontScaling={false} style={{
                     fontFamily: Fonts.SemiBold,
@@ -80,12 +96,12 @@ const DateSchedule = ({ Details }) => {
                     color: AppColors.TextTitle,
                     alignSelf: 'center',
                     marginTop: 5
-                }}>{Details.month}</Text>
+                }}>{details.month}</Text>
             </View>
             <View style={styles.timeContainer}>
-                <Text allowFontScaling={false} style={styles.time}>{Details.time}</Text>
+                <Text allowFontScaling={false} style={styles.time}>{details.time}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
 

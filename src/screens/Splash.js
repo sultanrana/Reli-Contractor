@@ -21,8 +21,6 @@ const Splash = ({ navigation }) => {
     useEffect(() => {
 
         const checkConnectivity = NetInfo.addEventListener(state => {
-            console.log("Connection type", state.type);
-            console.log("Is connected ? ", state.isConnected);
         });
 
         setTimeout(() => {

@@ -31,12 +31,7 @@ const ProjectDetails = ({ navigation }) => {
       <LogoOver navigation={navigation} shouldShowBack bgWhite />
 
       <Tabs.Navigator
-        // initialLayout={
-        //   {
-        //     width: Dimensions.get('window').width
-        //   }}
-
-        pageMargin={2}
+      pageMargin={2}
         screenOptions={{
           lazy: true,
           tabBarScrollEnabled: true,
@@ -53,7 +48,7 @@ const ProjectDetails = ({ navigation }) => {
             textTransform: 'none'
           }
         }}>
-        <Tabs.Screen name='Overview' component={Overview} />
+        <Tabs.Screen name='Overview' component={Overview}/>
         <Tabs.Screen name='Message' component={Message} />
         <Tabs.Screen name='Service' component={Service} />
         <Tabs.Screen name='Assignment' component={Assignment} />

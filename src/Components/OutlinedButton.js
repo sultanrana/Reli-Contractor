@@ -36,7 +36,7 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
     return (
 
         <TouchableOpacity
-            onPress={() => {
+            onPress={onPress ? onPress : () => {
                 navigation && (
                     label === 'Location' ?
                         navigation.navigate(References.Location)

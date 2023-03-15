@@ -17,9 +17,12 @@ import { Icons, Images } from '../Assets/Images/Index';
 import Colors from '../Theme/Colors';
 import { GetStyles } from '../Theme/AppStyles';
 import { References } from '../Constants/References';
+import { useDispatch } from 'react-redux';
+import { setProjectID } from '../Redux/Actions';
 
 const ProjectBoxWithService =
     ({
+        id,
         navigation,
         title,
         subtitle1,
@@ -32,6 +35,8 @@ const ProjectBoxWithService =
         const scheme = useColorScheme()
         const AppColors = Colors(scheme)
         const AppStyles = GetStyles(scheme)
+
+        const dispatch = useDispatch()
 
         const styles = StyleSheet.create({
             mainContainer: {
@@ -61,7 +66,12 @@ const ProjectBoxWithService =
 
             <TouchableOpacity
                 activeOpacity={1}
-                onPress={() => navigation.navigate(References.ProjectDetails)}
+                onPress={() => {
+                    dispatch(setProjectID(id))
+                    navigation.navigate(References.ProjectDetails, {
+                        projectID: id
+                    })
+                }}
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
@@ -78,7 +88,9 @@ const ProjectBoxWithService =
                         position: 'absolute',
                         right: 0
                     }}>
-                        <Image source={Images.SlidingDoor} style={{
+                        <Image source={{
+                            uri: imageURL2
+                        }} style={{
                             zIndex: 2,
                             height: 40,
                             width: 40,
@@ -104,7 +116,7 @@ const ProjectBoxWithService =
                             color: AppColors.TextTitle,
                             textAlignVertical: 'center'
                         }}>
-                            {title}
+                            {title || '-'}
                         </Text>
                         <Text allowFontScaling={false} style={{
                             fontFamily: Fonts.Light,

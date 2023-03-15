@@ -17,23 +17,27 @@ import { Icons, Images } from '../Assets/Images/Index';
 import Colors from '../Theme/Colors';
 import { GetStyles } from '../Theme/AppStyles';
 import { References } from '../Constants/References';
+import { useDispatch } from 'react-redux';
+import { setProjectID } from '../Redux/Actions';
 
 const ProjectBoxWithDate =
     ({
+        id,
         navigation,
         title,
         subtitle1,
         subtitle2,
         imageURL1,
-        imageURL2,
-        clickable = true,
-        staff
+        staff,
+        calenderData = { date: '01', day: 'Mon', month: 'Jan' }
 
     }) => {
 
         const scheme = useColorScheme()
         const AppColors = Colors(scheme)
         const AppStyles = GetStyles(scheme)
+
+        const dispatch = useDispatch()
 
         const styles = StyleSheet.create({
             mainContainer: {
@@ -45,7 +49,7 @@ const ProjectBoxWithDate =
                 zIndex: 0,
                 elevation: 2,
                 shadowColor: AppColors.BlackGreyish,
-                shadowOffset: { width: 0, height:1 },
+                shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 0.16,
                 // shadowRadius: 6
             },
@@ -72,7 +76,12 @@ const ProjectBoxWithDate =
 
             <TouchableOpacity
                 activeOpacity={1}
-                onPress={clickable ? ()=>navigation.navigate(References.ProjectDetails) : ()=> {}}
+                onPress={() => {
+                    dispatch(setProjectID(id))
+                    navigation.navigate(References.ProjectDetails, {
+                        projectID: id
+                    })
+                }}
                 style={[styles.mainContainer]}>
 
                 <View style={{ alignItems: 'center', width: '35%', flexDirection: 'row' }}>
@@ -106,7 +115,7 @@ const ProjectBoxWithDate =
                                     color: AppColors.Background,
                                     alignSelf: 'center'
                                 }}>
-                                    {'Wed'}
+                                    {calenderData.day}
                                 </Text>
                             </View>
                             <Text allowFontScaling={false} style={{
@@ -116,7 +125,7 @@ const ProjectBoxWithDate =
                                 textAlignVertical: 'center',
                                 alignSelf: 'center'
                             }}>
-                                {'06'}
+                                {calenderData.date}
                             </Text>
                         </View>
                         <Text allowFontScaling={false} style={{
@@ -127,7 +136,7 @@ const ProjectBoxWithDate =
                             position: 'absolute',
                             bottom: 0
                         }}>
-                            {'Oct'}
+                            {calenderData.month}
                         </Text>
 
                     </View>
@@ -161,39 +170,39 @@ const ProjectBoxWithDate =
                             {subtitle1}
                         </Text>
                         {
-                            staff ? 
-                            <>
-                            <Text allowFontScaling={false} style={{
-                                fontFamily: Fonts.Light,
-                                fontSize: FontSize.small,
-                                color: AppColors.Text,
-                                marginVertical: 1,
-                                textAlignVertical: 'center'
-                            }}>
-                                {'Project Status: Materials Ordered'}
-                            </Text>
-                            <Text allowFontScaling={false} style={{
-                                fontFamily: Fonts.Light,
-                                fontSize: FontSize.small,
-                                color: AppColors.Text,
-                                marginVertical: 1,
-                                textAlignVertical: 'center'
-                            }}>
-                                {'Staff Assigned: Robert Fox'}
-                            </Text>
-                            </>
-                            :
-                            <Text allowFontScaling={false} style={{
-                                fontFamily: Fonts.Light,
-                                fontSize: FontSize.small,
-                                color: AppColors.Text,
-                                marginVertical: 1,
-                                textAlignVertical: 'center'
-                            }}>
-                                {subtitle2}
-                            </Text>
+                            staff ?
+                                <>
+                                    <Text allowFontScaling={false} style={{
+                                        fontFamily: Fonts.Light,
+                                        fontSize: FontSize.small,
+                                        color: AppColors.Text,
+                                        marginVertical: 1,
+                                        textAlignVertical: 'center'
+                                    }}>
+                                        {'Project Status: Materials Ordered'}
+                                    </Text>
+                                    <Text allowFontScaling={false} style={{
+                                        fontFamily: Fonts.Light,
+                                        fontSize: FontSize.small,
+                                        color: AppColors.Text,
+                                        marginVertical: 1,
+                                        textAlignVertical: 'center'
+                                    }}>
+                                        {'Staff Assigned: Robert Fox'}
+                                    </Text>
+                                </>
+                                :
+                                <Text allowFontScaling={false} style={{
+                                    fontFamily: Fonts.Light,
+                                    fontSize: FontSize.small,
+                                    color: AppColors.Text,
+                                    marginVertical: 1,
+                                    textAlignVertical: 'center'
+                                }}>
+                                    {subtitle2}
+                                </Text>
                         }
-                       
+
                     </View>
 
                 </View>
