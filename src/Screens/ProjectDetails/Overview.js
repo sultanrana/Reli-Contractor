@@ -392,11 +392,14 @@ const Overview = ({ navigation }) => {
             label={'Get Suport'}
             style={{ width: projectData?.orderStatus !== ProjectStatuses.Completed ? '45%' : '99%', borderColor: AppColors.Primary }}
             labelStyle={{ color: AppColors.Primary }}
+            onPress={()=>{
+              navigation.navigate(References.AccountStack)
+            }}
           />
 
           {projectData?.orderStatus !== ProjectStatuses.Completed &&
             <ContainedButton
-              onPress={() => { setPopupVisible(true) }}
+              onPress={changeStatus}
               label={buttonTitle}
               style={{ width: '45%' }}
               disabled={isButtonDisabled}

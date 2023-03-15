@@ -51,8 +51,8 @@ const LoginSecondary = ({ navigation, route }) => {
       handleLogin(email, inputs.password).then(async (data) => {
         if (data) {
           await AsyncStorage.setItem('token', '' + data?.token).then(() => {
-            dispatch(setUserData(data.userData))
-            dispatch(setAuthToken(data.token))
+            dispatch(setUserData(data?.userData))
+            dispatch(setAuthToken(data?.token))
             navigation.reset({
               index: 0,
               routes: [{ name: References.DashboardStack }],

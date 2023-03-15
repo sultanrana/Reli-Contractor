@@ -11,6 +11,10 @@ import { handleGetStaffData } from '../../API/Config';
 import { useSelector } from 'react-redux';
 import { IMAGES_URL } from '../../API/Constants';
 import Loader from '../../Components/Loader';
+import { Text } from 'react-native';
+import Fonts from '../../Assets/Fonts/Index';
+import { vs } from 'react-native-size-matters';
+import { FontSize } from '../../Theme/FontSize';
 
 const Tabs = createMaterialTopTabNavigator()
 
@@ -30,8 +34,8 @@ const Staff = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const [isLoading, setIsLoading] = useState(false) 
-  const [isListLoading, setIsListLoading] = useState(false) 
+  const [isLoading, setIsLoading] = useState(false)
+  const [isListLoading, setIsListLoading] = useState(false)
   const [staffData, setStaffData] = useState([])
 
   const { token, userData } = useSelector(state => state.Index)
@@ -48,7 +52,7 @@ const Staff = ({ navigation }) => {
   const getStaff = async () => {
     // setIsLoading(is => ((!actionNeeded || !claim) && !is))
     setIsLoading(true)
-    handleGetStaffData(token, '6374e8ee44b48004449be4f5').then(({ data }) => {
+    handleGetStaffData(token, userData?.company).then(({ data }) => {
       console.log('Staff Data', data);
       setStaffData(data)
     }).finally(() => {
@@ -59,13 +63,13 @@ const Staff = ({ navigation }) => {
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
-      <Loader loading={isLoading}/>
+      <Loader loading={isLoading} />
       <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={staffData}
           renderItem={({ item }) => (
-            <StaffItemBox navigation={navigation} name={item?.name} image={{uri: IMAGES_URL + item?.image}} id={item?._id}  />
+            <StaffItemBox navigation={navigation} name={item?.name} image={{ uri: IMAGES_URL + item?.image }} id={item?._id} />
           )}
           keyExtractor={(item, index) => 'stf' + index}
           contentContainerStyle={{ paddingBottom: '30%' }}
@@ -84,6 +88,23 @@ const Staff = ({ navigation }) => {
               setIsListLoading(false)
             })
           }}
+          ListEmptyComponent={() => (
+            <>
+              {
+                !isLoading &&
+                <Text style={{
+                  fontFamily: Fonts.Light,
+                  fontSize: FontSize.medium,
+                  color: AppColors.DarkGrey,
+                  marginTop: vs(50),
+                  textAlign: 'center',
+                  alignSelf: 'center',
+                }}>
+                  {'No Staff Member Found'}
+                </Text>
+              }
+            </>
+          )}
         />
       </View>
     </View>

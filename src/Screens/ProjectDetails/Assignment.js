@@ -51,7 +51,7 @@ const Assignment = ({ navigation, route }) => {
 
   const getStaff = async () => {
     setIsLoading(true)
-    handleGetStaffData(token, '6374e8ee44b48004449be4f5').then(({ data }) => {
+    handleGetStaffData(token, userData?.company).then(({ data }) => {
       console.log('Staff Data', data);
       setStaffData(data)
     }).finally(() => {
@@ -151,6 +151,23 @@ const Assignment = ({ navigation, route }) => {
           <View style={{ marginVertical: 4 }} />
         )}
         ListHeaderComponent={renderHeader}
+        ListEmptyComponent={() => (
+          <>
+            {
+              !isLoading &&
+              <Text style={{
+                fontFamily: Fonts.Light,
+                fontSize: FontSize.medium,
+                color: AppColors.DarkGrey,
+                marginTop: vs(50),
+                alignSelf: 'center',
+                textAlign: 'center'
+              }}>
+              {'No Staff Member Found'}
+              </Text>
+            }
+          </>
+        )}
       />
 
     </View>

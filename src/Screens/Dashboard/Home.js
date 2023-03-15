@@ -112,7 +112,7 @@ const Home = ({ navigation }) => {
 
   const Data = [
     {
-      title: (claim.length > 0) ? 'Claim Projects' : '',
+      title: (claim?.length > 0) ? 'Claim Projects' : '',
       renderItem: renderServiceItem,
       data: claim ? claim : []
       // data: [
@@ -140,7 +140,7 @@ const Home = ({ navigation }) => {
       // ]
     },
     {
-      title: (actionNeeded.length > 0) ? 'Action Needed' : '',
+      title: (actionNeeded?.length > 0) ? 'Action Needed' : '',
       renderItem: renderDateItem,
       data: actionNeeded ? actionNeeded : []
       // data: [
