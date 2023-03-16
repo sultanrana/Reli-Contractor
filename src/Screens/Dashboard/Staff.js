@@ -69,7 +69,12 @@ const Staff = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           data={staffData}
           renderItem={({ item }) => (
-            <StaffItemBox navigation={navigation} name={item?.name} image={{ uri: IMAGES_URL + item?.image }} id={item?._id} />
+            <StaffItemBox navigation={navigation}
+              name={item?.firstName + ' ' + item?.lastName}
+              image={(item?.profileImage != null && item?.profileImage != '') ? { uri: IMAGES_URL + item?.profileImage } : ''}
+              id={item?._id}
+              Item={item}
+            />
           )}
           keyExtractor={(item, index) => 'stf' + index}
           contentContainerStyle={{ paddingBottom: '30%' }}
