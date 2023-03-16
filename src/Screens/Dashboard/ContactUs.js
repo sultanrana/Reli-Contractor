@@ -21,6 +21,7 @@ const ContactUs = ({ navigation }) => {
     const [subject, setSubject] = useState('')
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false);
+    const [openSubject, setOpenSubject] = useState(false);
 
     const [subjectList, setSubjectList] = useState([
         { label: 'Subject 1', value: 'Subject 1' },

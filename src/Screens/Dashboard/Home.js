@@ -192,6 +192,20 @@ const Home = ({ navigation }) => {
           ItemSeparatorComponent={() => (<View style={{ marginVertical: 4 }} />)}
           SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
           contentContainerStyle={{ paddingBottom: 10 }}
+          ListEmptyComponent={() => {
+            return (
+              <Text style={{
+                fontFamily: Fonts.Light,
+                fontSize: FontSize.medium,
+                color: AppColors.DarkGrey,
+                // marginTop: vs(50),
+                textAlign: 'center',
+                alignSelf: 'center',
+              }}>
+                {'No Projects Found'}
+              </Text>
+            )
+          }}
         />
       </View>
     </View>

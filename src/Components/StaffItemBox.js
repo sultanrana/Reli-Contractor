@@ -5,16 +5,17 @@ import { AppStylesLight, AppStylesDark } from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 import { useColorScheme } from "react-native";
 import { References } from '../Constants/References';
-import { Images } from '../Assets/Images/Index';
+import { Icons, Images } from '../Assets/Images/Index';
 import { FontSize } from '../Theme/FontSize';
 import Fonts from '../Assets/Fonts/Index';
 import { vs } from 'react-native-size-matters';
 import ContainedButton from './ContainedButton';
 
-const StaffItemBox = ({ navigation, id, image, name, onClaim }) => {
+const StaffItemBox = ({ navigation, id, image, name, onClaim, Item }) => {
     const AppColors = Colors(useColorScheme())
     const AppStyles = (useColorScheme() === 'light') ? AppStylesLight : AppStylesDark;
 
+    // console.log({Item});
     const styles = StyleSheet.create({
         mainView: {
             height: 56,
@@ -38,18 +39,31 @@ const StaffItemBox = ({ navigation, id, image, name, onClaim }) => {
             }} style={styles.mainView}
             disabled={onClaim ? true : false} >
 
-            <Image source={image} style={{
-                height: 32,
-                width: 32,
-                borderRadius: 32,
+            {
+                image ?
+                    <Image source={image} style={{
+                        height: 32,
+                        width: 32,
+                        borderRadius: 32,
 
-            }} resizeMode='contain' resizeMethod='resize' />
+                    }} resizeMode='contain' resizeMethod='resize' />
+                    :
+                    <Image source={Icons.Profile} style={{
+                        height: 32,
+                        width: 32,
+                        borderRadius: 32,
 
-            <Text allowFontScaling={false} style={{
+                    }} resizeMode='contain' resizeMethod='resize' />
+            }
+
+            <Text 
+            numberOfLines={1}
+            allowFontScaling={false} style={{
                 fontSize: FontSize.large,
                 fontFamily: Fonts.SemiBold,
                 color: AppColors.TextTitle,
-                paddingHorizontal: 16
+                paddingHorizontal: 16,
+                width:'60%'
             }}>{name}</Text>
 
             {
@@ -61,8 +75,8 @@ const StaffItemBox = ({ navigation, id, image, name, onClaim }) => {
                 }}>
                     <View style={{
                         width: vs(74),
-                        alignSelf: 'flex-end',
                         justifyContent: 'center',
+                        // alignItems:'center'
                     }}>
 
                         <ContainedButton

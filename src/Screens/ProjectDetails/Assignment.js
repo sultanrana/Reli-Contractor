@@ -36,7 +36,7 @@ const Assignment = ({ navigation, route }) => {
   useEffect(() => {
     if (isFocused) {
 
-      if(details?.orderStatus === ProjectStatuses.Unassigned || details?.orderStatus === ProjectStatuses.Scheduled || details?.orderStatus === ProjectStatuses.Pending){
+      if (details?.orderStatus === ProjectStatuses.Unassigned || details?.orderStatus === ProjectStatuses.Scheduled || details?.orderStatus === ProjectStatuses.Pending) {
         getStaff()
       } else {
         SimpleToast.show(`Project has already been ${details?.orderStatus?.toLowerCase()}`)
@@ -61,7 +61,7 @@ const Assignment = ({ navigation, route }) => {
 
   const onClaim = (staffID) => {
     setIsLoading(true)
-    console.log({staffID});
+    console.log({ staffID });
     handlePostAssigneeData(token, id, ProjectStatuses.Assigned, details?.dateSelection[0], staffID).then(res => {
       console.log('Assignment Response', res);
       setIsLoading(false)
@@ -90,11 +90,11 @@ const Assignment = ({ navigation, route }) => {
           alignItems: 'center'
         }}>
 
-          <DateSchedule 
-          clickable={false}
-          index={1}
-          selectedDateIndex={0}
-          item={details?.dateSelection[0]}
+          <DateSchedule
+            clickable={false}
+            index={1}
+            selectedDateIndex={0}
+            item={details?.dateSelection[0]}
           />
 
           <View style={{
@@ -140,7 +140,13 @@ const Assignment = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         data={staffData}
         renderItem={({ item }) => (
-          <StaffItemBox navigation={navigation} name={item?.name} image={{ uri: IMAGES_URL + item?.image }} onClaim={onClaim} id={item?._id} />
+          <StaffItemBox navigation={navigation}
+            name={item?.firstName + ' ' + item?.lastName}
+            image={(item?.profileImage != null && item?.profileImage != '') ? { uri: IMAGES_URL + item?.profileImage } : ''}
+            onClaim={onClaim}
+            id={item?._id}
+            Item={item}
+          />
         )}
         keyExtractor={(item, index) => 'stf' + index}
         contentContainerStyle={{ paddingBottom: '30%' }}
@@ -163,7 +169,7 @@ const Assignment = ({ navigation, route }) => {
                 alignSelf: 'center',
                 textAlign: 'center'
               }}>
-              {'No Staff Member Found'}
+                {'No Staff Member Found'}
               </Text>
             }
           </>

@@ -23,7 +23,16 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <MainStack />
       </PersistGate>
-      <FlashMessage position="top" animated hideStatusBar={Platform.OS === 'ios' ? true : false}  textStyle={{ fontSize: FontSize.medium, fontFamily: Fonts.Bold }} titleStyle={{ marginTop: deviceId === ('iPhone15,2' || 'iPhone15,3' || 'iPhone15,4') ? ((windowWidth*10)/100): deviceHeight - windowHeight, fontSize: FontSize.medium, fontFamily: Fonts.Medium }} />
+      <FlashMessage
+        position="top"
+        animated
+        hideStatusBar={Platform.OS === 'ios' ? true : false}
+        textStyle={{ fontSize: FontSize.medium, fontFamily: Fonts.Bold }}
+        titleStyle={{
+          marginTop: deviceId === ('iPhone15,2' || 'iPhone15,3' || 'iPhone15,4') ? ((windowWidth * 10) / 100) : ((windowWidth * 7) / 100),
+          fontSize: FontSize.medium,
+          fontFamily: Fonts.Medium
+        }} />
     </Provider>
 
   );
