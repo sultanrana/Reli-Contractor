@@ -697,6 +697,7 @@ export const handleGetStaffList = async (authToken, companyID) => {
 }
 
 export const handlePostClaimData = async (authToken, projectID, orderStatus, date) => {
+   
     try {
         const formData = new URLSearchParams();
         formData.append('orderStatus', orderStatus);
@@ -714,6 +715,8 @@ export const handlePostClaimData = async (authToken, projectID, orderStatus, dat
             authToken,
             ContentTypes.Raw,
         )
+
+        console.log('Responsez', response);
 
         if (response?.code === 200) {
             return response

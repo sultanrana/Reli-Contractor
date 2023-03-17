@@ -144,28 +144,30 @@ const Service = ({ navigation }) => {
   const listFooterComponent = () => {
     return (
       <View style={{
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 10
       }}>
-        {details?.orderStatus !== ProjectStatuses.Completed &&
+
+
+{ !isButtonDisabled &&  details?.orderStatus !== ProjectStatuses.Arrived && 
+          <ContainedButton
+          onPress={changeStatus}
+          label={buttonTitle}
+          style={{ width: '100%' }}
+          disabled={isButtonDisabled}
+        />
+        }
+
+        {details?.orderStatus !== ProjectStatuses.Completed && projectData?.requestStatus === 'Accepted' &&
           <OutlinedButton
             label={'Mark as Completed'}
-            style={{ borderColor: AppColors.Primary, marginVertical: 16, width: !isButtonDisabled? '60%': '99%' }}
+            style={{ borderColor: AppColors.Primary, marginVertical: 16, width: !isButtonDisabled? '100%': '100%' }}
             labelStyle={{ color: AppColors.Primary, fontSize: vs(11) }}
             onPress={onComplete}
           />
         }
 
-        { !isButtonDisabled && 
-          <ContainedButton
-          onPress={changeStatus}
-          label={buttonTitle}
-          style={{ width: '30%' }}
-          disabled={isButtonDisabled}
-        />
-        }
       </View>
     )
   }

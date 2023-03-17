@@ -13,12 +13,14 @@ import DateSchedule from '../../Components/DateSchedule';
 import { Icons } from '../../Assets/Images/Index';
 import { windowWidth } from '../../Constants/Constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { handleGetProjectDetails, handlePostAssigneeData, handlePostClaimData, handleProjectStatusChange } from '../../API/Config';
+import { handleChangeProjectStatusRequest, handleGetProjectDetails, handlePostAssigneeData, handlePostClaimData, handleProjectStatusChange } from '../../API/Config';
 import Loader from '../../Components/Loader'
 import { ProjectStatuses } from '../../Constants/ProjectStatus';
 import { References } from '../../Constants/References';
 import { setProjectDetails } from '../../Redux/Actions';
 import { useIsFocused } from '@react-navigation/native';
+import SimpleToast from 'react-native-simple-toast';
+import { vs } from 'react-native-size-matters';
 
 const Overview = ({ navigation }) => {
 
@@ -32,6 +34,11 @@ const Overview = ({ navigation }) => {
   const [loading, setLoading] = useState(true)
   const [projectData, setProjectData] = useState(null)
   const [selectedDateIndex, setSelectedDateIndex] = useState(-1)
+
+  const [buttonTitle, setButtonTitle] = useState("")
+  const [primaryButtonVisible, setPrimaryButtonVisible] = useState(true)
+  const [step, setStep] = useState(0)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   const { id, details } = useSelector(({ Projects }) => Projects)
   const { token } = useSelector(({ Index }) => Index)
@@ -69,6 +76,50 @@ const Overview = ({ navigation }) => {
   }
 
   const isFocused = useIsFocused()
+
+  useEffect(() => {
+    setIsButtonDisabled(false)
+
+    if (projectData?.requestStatus !== 'Accepted' && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
+      setPrimaryButtonVisible(true)
+      setButtonTitle('Claim')
+    } else if (projectData?.requestStatus === 'Accepted') {
+      if (selectedDateIndex === -1 && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
+        setPrimaryButtonVisible(false)
+      } else {
+        setPrimaryButtonVisible(true)
+        if ((projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === ProjectStatuses.Pending) && selectedDateIndex !== -1) {
+          setButtonTitle('Schedule')
+          setStep(0)
+        } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
+          setButtonTitle('Assign Staff')
+          setStep(0.25)
+        } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
+          setButtonTitle('Confirm Materials Ordered')
+          setStep(0.5)
+        } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
+          setButtonTitle('En route')
+          setStep(0.75)
+        } else if (projectData?.orderStatus === ProjectStatuses.Enroute) {
+          setButtonTitle('Arrived')
+          setStep(1)
+        } else if (projectData?.orderStatus === ProjectStatuses.Arrived) {
+          setButtonTitle('Project Completed')
+          setStep(1.25)
+        } else if (projectData?.orderStatus === ProjectStatuses.Completed) {
+          setButtonTitle('Project is Completed')
+          setStep(1.5)
+          setPrimaryButtonVisible(false)
+
+        } else {
+        }
+      }
+    }
+
+
+
+  }, [selectedDateIndex, projectData?.orderStatus, projectData?.requestStatus])
+
 
   const loadData = () => {
     handleGetProjectDetails(token, id).then(({ data }) => {
@@ -195,10 +246,6 @@ const Overview = ({ navigation }) => {
     }
   })
 
-  let buttonTitle = '';
-  let step = 0;
-  let isButtonDisabled = false;
-
   const editAssignment = () => {
     console.log('Edit');
     navigation.navigate('Assignment', {
@@ -216,35 +263,11 @@ const Overview = ({ navigation }) => {
     })
   }
 
-  if (selectedDateIndex === -1 && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
-    buttonTitle = 'Claim'
-    isButtonDisabled = true
-  }
-
-  if (projectData?.orderStatus === ProjectStatuses.Unassigned || selectedDateIndex !== -1) {
-    buttonTitle = 'Schedule and Claim'
-    step = 0
-  } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-    buttonTitle = 'Assign Staff'
-    step = 0.25
-  } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
-    buttonTitle = 'Confirm Materials Ordered'
-    step = 0.5
-  } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
-    buttonTitle = 'En route'
-    step = 0.75
-  } else if (projectData?.orderStatus === ProjectStatuses.Enroute) {
-    buttonTitle = 'Arrived'
-    step = 1
-  } else if (projectData?.orderStatus === ProjectStatuses.Arrived) {
-    buttonTitle = 'Project Completed'
-    step = 1.25
-  } else if (projectData?.orderStatus === ProjectStatuses.Completed) {
-    buttonTitle = 'Project is Completed'
-    step = 1.5
-  } else {
-    buttonTitle = 'Claim'
-    isButtonDisabled = (selectedDateIndex === -1)
+  const onAcceptProject = async () => {
+    setLoading(true)
+    handleChangeProjectStatusRequest(token, id, 'Accepted').finally(() => {
+      loadData()
+    })
   }
 
   const changeStatus = async () => {
@@ -253,15 +276,16 @@ const Overview = ({ navigation }) => {
     let newAssignee = null
 
     if (selectedDateIndex === -1 && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
+      onAcceptProject()
       return
     }
 
-    if (buttonTitle === 'Assign Staff') {
+    if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
       onAssign()
       return
     }
 
-    if (projectData?.orderStatus === ProjectStatuses.Unassigned || selectedDateIndex !== -1) {
+    if ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
       newStatus = ProjectStatuses.Scheduled
     } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
       newStatus = ProjectStatuses.Assigned
@@ -282,10 +306,6 @@ const Overview = ({ navigation }) => {
       if (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned) {
         handlePostClaimData(token, id, newStatus, projectData?.dateSelection[selectedDateIndex]).finally(() => {
           setTimeout(loadData, 400)
-        })
-        setProjectDetails(p=>p)
-      } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-        handlePostAssigneeData(token, id, newStatus, projectData?.dateSelection[selectedDateIndex], newAssignee).finally(() => {
           loadData()
         })
       } else {
@@ -317,24 +337,54 @@ const Overview = ({ navigation }) => {
               <View style={[styles.stepCircle, { backgroundColor: (step >= 1.25 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
               <View style={[styles.stepCircle, { backgroundColor: step == 1.5 ? AppColors.Primary : AppColors.DarkGrey }]}></View>
             </View>
-            <Progress.Bar animated progress={step/1.5} height={2.5} width={windowWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
+            <Progress.Bar animated progress={step / 1.5} height={2.5} width={windowWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
           </View>
           <Text allowFontScaling={false} style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
-          <View style={{ width: '100%', marginVertical: 16 }}>
+          <View style={{ width: '100%', marginVertical: 16, flexDirection: 'row' }}>
             <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal
               data={projectData?.dateSelection}
               renderItem={({ item, index }) => (
-                <DateSchedule {...{ index, selectedDateIndex, setSelectedDateIndex, item, clickable: (projectData?.dateSelection?.length > 1 && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === 'Accepted')) }} />
+                <DateSchedule {...{ index, selectedDateIndex, setSelectedDateIndex, item, clickable: (projectData?.requestStatus === 'Accepted' && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === 'Accepted')) }} />
               )}
               keyExtractor={(item, index) => 'sch' + index}
               ItemSeparatorComponent={() => {
-                return <View style={{ width: 10 }} />
+                return <View style={{ width: vs(8) }} />
+              }}
+              contentContainerStyle={{
+                width: projectData?.dateSelection?.length > 1 ? '100%' : '40%'
               }}
             />
+
+            {
+              projectData?.dateSelection?.length < 2 && projectData?.assignedorder != null && projectData?.assignedorder != undefined &&
+
+              <View style={{
+                width: '60%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: vs(8)
+              }}>
+                <Text allowFontScaling={false} style={{
+                  fontFamily: Fonts.SemiBold,
+                  fontSize: FontSize.large,
+                  color: AppColors.BackgroundInverse
+                }}>
+                  {`Project assigned to:\n`}
+                  <Text allowFontScaling={false} style={{
+                    fontFamily: Fonts.Medium,
+                    fontSize: FontSize.medium,
+                    color: AppColors.BackgroundInverse
+                  }}>
+                    {`${projectData?.assignedorder?.userTo?.firstName} ${projectData?.assignedorder?.userTo?.lastName}`}
+                  </Text>
+                </Text>
+              </View>
+            }
+
           </View>
-          {projectData?.orderStatus !== ProjectStatuses.Completed &&
+          {primaryButtonVisible &&
             <ContainedButton
               onPress={() => {
                 changeStatus()
@@ -367,7 +417,7 @@ const Overview = ({ navigation }) => {
             label={'Edit Assignment'}
             style={{ borderColor: AppColors.Primary, marginVertical: 16 }}
             labelStyle={{ color: AppColors.Primary }}
-            onPress={()=>{
+            onPress={() => {
               editAssignment()
             }}
           />
@@ -390,14 +440,14 @@ const Overview = ({ navigation }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 }}>
           <OutlinedButton
             label={'Get Suport'}
-            style={{ width: projectData?.orderStatus !== ProjectStatuses.Completed ? '45%' : '99%', borderColor: AppColors.Primary }}
+            style={{ width: primaryButtonVisible ? '45%' : '99%', borderColor: AppColors.Primary }}
             labelStyle={{ color: AppColors.Primary }}
-            onPress={()=>{
+            onPress={() => {
               navigation.navigate(References.AccountStack)
             }}
           />
 
-          {projectData?.orderStatus !== ProjectStatuses.Completed &&
+          {primaryButtonVisible &&
             <ContainedButton
               onPress={changeStatus}
               label={buttonTitle}

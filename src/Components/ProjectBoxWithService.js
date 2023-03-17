@@ -88,9 +88,7 @@ const ProjectBoxWithService =
                         position: 'absolute',
                         right: 0
                     }}>
-                        <Image source={{
-                            uri: imageURL2
-                        }} style={{
+                        <Image source={Images.SideWindow} style={{
                             zIndex: 2,
                             height: 40,
                             width: 40,
