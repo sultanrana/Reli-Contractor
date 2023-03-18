@@ -33,7 +33,9 @@ const Service = ({ navigation }) => {
   const [projectData, setProjectData] = useState(null)
 
   const { id, details } = useSelector(({ Projects }) => Projects)
-  const { token } = useSelector(({ Index }) => Index)
+  const { token, userData } = useSelector(({ Index }) => Index)
+
+  const isAdmin = (userData?.accountType == 'admin_contractor')
 
   const onComplete = () => {
     setLoading(true)
@@ -79,15 +81,13 @@ const Service = ({ navigation }) => {
       return
     }
 
-    if (buttonTitle === 'Assign Staff') {
+    if (buttonTitle === 'Assign Staff' && isAdmin) {
       onAssign()
       return
     }
 
-    if (projectData?.orderStatus === ProjectStatuses.Unassigned) {
-      newStatus = ProjectStatuses.Scheduled
-    } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-      newStatus = ProjectStatuses.Assigned
+    if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
+      newStatus = isAdmin? ProjectStatuses.Assigned: ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
       newStatus = ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
@@ -102,16 +102,6 @@ const Service = ({ navigation }) => {
 
     if (newStatus !== '') {
       setLoading(true)
-      // if (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned) {
-      //   handlePostClaimData(token, id, newStatus, projectData?.dateSelection[selectedDateIndex]).finally(() => {
-      //     loadData()
-      //   })
-      // } 
-      // else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-      //   handlePostAssigneeData(token, id, newStatus, projectData?.dateSelection[selectedDateIndex], newAssignee).finally(() => {
-      //     loadData()
-      //   })
-      // } 
       handleProjectStatusChange(token, id, newStatus).finally(() => {
         loadData()
       })
@@ -150,19 +140,19 @@ const Service = ({ navigation }) => {
       }}>
 
 
-{ !isButtonDisabled &&  details?.orderStatus !== ProjectStatuses.Arrived && 
+        {!isButtonDisabled && details?.orderStatus !== ProjectStatuses.Arrived && !loading &&
           <ContainedButton
-          onPress={changeStatus}
-          label={buttonTitle}
-          style={{ width: '100%' }}
-          disabled={isButtonDisabled}
-        />
+            onPress={changeStatus}
+            label={buttonTitle}
+            style={{ width: '100%' }}
+            disabled={isButtonDisabled}
+          />
         }
 
-        {details?.orderStatus !== ProjectStatuses.Completed && projectData?.requestStatus === 'Accepted' &&
+        {details?.orderStatus !== ProjectStatuses.Completed && projectData?.requestStatus === 'Accepted' && !loading &&
           <OutlinedButton
             label={'Mark as Completed'}
-            style={{ borderColor: AppColors.Primary, marginVertical: 16, width: !isButtonDisabled? '100%': '100%' }}
+            style={{ borderColor: AppColors.Primary, marginVertical: 16, width: !isButtonDisabled ? '100%' : '100%' }}
             labelStyle={{ color: AppColors.Primary, fontSize: vs(11) }}
             onPress={onComplete}
           />
@@ -183,7 +173,7 @@ const Service = ({ navigation }) => {
 
   return (
     <View style={[AppStyles.ProjectDetailsScreen]}>
-      <Loader loading={loading}/>
+      <Loader loading={loading} />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={(projectData?.orderdetails != null) ? (projectData?.orderdetails) : []}

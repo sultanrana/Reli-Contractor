@@ -41,7 +41,11 @@ const Overview = ({ navigation }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   const { id, details } = useSelector(({ Projects }) => Projects)
-  const { token } = useSelector(({ Index }) => Index)
+  const { token, userData } = useSelector(({ Index }) => Index)
+
+
+  const isAdmin = (userData?.accountType == 'admin_contractor')
+  const STEP_MAX = isAdmin ? 1.5 : 1.25
 
   const dispatch = useDispatch()
 
@@ -82,33 +86,35 @@ const Overview = ({ navigation }) => {
 
     if (projectData?.requestStatus !== 'Accepted' && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
       setPrimaryButtonVisible(true)
-      setButtonTitle('Claim')
+      setButtonTitle(isAdmin ? 'Claim' : 'Confirm Sizes')
+
     } else if (projectData?.requestStatus === 'Accepted') {
-      if (selectedDateIndex === -1 && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
-        setPrimaryButtonVisible(false)
+      setStep(isAdmin ? 0 : 0.25)
+      if ((selectedDateIndex === -1) && isAdmin && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
+        setPrimaryButtonVisible(!isAdmin)
       } else {
         setPrimaryButtonVisible(true)
-        if ((projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === ProjectStatuses.Pending) && selectedDateIndex !== -1) {
-          setButtonTitle('Schedule')
-          setStep(0)
+        if ((projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === ProjectStatuses.Pending) && (selectedDateIndex !== -1 || !isAdmin)) {
+          setButtonTitle(isAdmin ? 'Schedule' : 'Confirm Materials Ordered')
+          setStep(isAdmin ? 0 : 0.25)
         } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-          setButtonTitle('Assign Staff')
-          setStep(0.25)
+          setButtonTitle(isAdmin ? 'Assign Staff' : 'Confirm Materials Ordered')
+          setStep(isAdmin ? 0.25 : 0.25)
         } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
           setButtonTitle('Confirm Materials Ordered')
-          setStep(0.5)
+          setStep(isAdmin ? 0.5 : 0.25)
         } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
           setButtonTitle('En route')
-          setStep(0.75)
+          setStep(isAdmin ? 0.75 : 0.5)
         } else if (projectData?.orderStatus === ProjectStatuses.Enroute) {
           setButtonTitle('Arrived')
-          setStep(1)
+          setStep(isAdmin ? 1 : 0.75)
         } else if (projectData?.orderStatus === ProjectStatuses.Arrived) {
           setButtonTitle('Project Completed')
-          setStep(1.25)
+          setStep(isAdmin ? 1.25 : 1)
         } else if (projectData?.orderStatus === ProjectStatuses.Completed) {
           setButtonTitle('Project is Completed')
-          setStep(1.5)
+          setStep(isAdmin ? 1.5 : 1.25)
           setPrimaryButtonVisible(false)
 
         } else {
@@ -125,6 +131,8 @@ const Overview = ({ navigation }) => {
     handleGetProjectDetails(token, id).then(({ data }) => {
       if (data[0]?.orderStatusDate != null && data[0]?.orderStatusDate != undefined && data[0]?.orderStatusDate != '') {
         data[0].dateSelection = new Array(data[0]?.orderStatusDate?.split('T')[0])
+      } else if(!isAdmin) {
+        data[0].dateSelection = new Array(data[0]?.dateSelection[0])
       }
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
       setProjectData(data?.length > 0 ? data[0] : null)
@@ -272,23 +280,21 @@ const Overview = ({ navigation }) => {
 
   const changeStatus = async () => {
     let newStatus = ''
-    let newDate = null
-    let newAssignee = null
 
-    if (selectedDateIndex === -1 && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
+    if ((projectData?.requestStatus !== 'Accepted') && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
       onAcceptProject()
       return
     }
 
-    if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
+    if (projectData?.orderStatus === ProjectStatuses.Scheduled && isAdmin) {
       onAssign()
       return
     }
 
     if ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
-      newStatus = ProjectStatuses.Scheduled
+      newStatus = isAdmin? ProjectStatuses.Scheduled: ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-      newStatus = ProjectStatuses.Assigned
+      newStatus = isAdmin? ProjectStatuses.Assigned: ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
       newStatus = ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
@@ -329,15 +335,19 @@ const Overview = ({ navigation }) => {
 
           <View style={styles.progressMainCon}>
             <View style={styles.stepsContainer}>
-              <View style={[styles.stepCircle, { backgroundColor: (step >= 0 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
-              <View style={[styles.stepCircle, { backgroundColor: (step >= 0.25 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
-              <View style={[styles.stepCircle, { backgroundColor: (step >= 0.50 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
-              <View style={[styles.stepCircle, { backgroundColor: (step >= 0.75 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
-              <View style={[styles.stepCircle, { backgroundColor: (step >= 1 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
-              <View style={[styles.stepCircle, { backgroundColor: (step >= 1.25 && step <= 1.5) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
-              <View style={[styles.stepCircle, { backgroundColor: step == 1.5 ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              <View style={[styles.stepCircle, { backgroundColor: (step >= 0 && step <= STEP_MAX) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              <View style={[styles.stepCircle, { backgroundColor: (step >= 0.25 && step <= STEP_MAX) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              <View style={[styles.stepCircle, { backgroundColor: (step >= 0.50 && step <= STEP_MAX) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              <View style={[styles.stepCircle, { backgroundColor: (step >= 0.75 && step <= STEP_MAX) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              <View style={[styles.stepCircle, { backgroundColor: (step >= 1 && step <= STEP_MAX) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              {
+                //There's a difference of 0.25 in Bar for Admin>Standard Contractor
+                isAdmin &&
+                <View style={[styles.stepCircle, { backgroundColor: (step >= 1.25 && step <= STEP_MAX) ? AppColors.Primary : AppColors.DarkGrey }]}></View>
+              }
+              <View style={[styles.stepCircle, { backgroundColor: step == STEP_MAX ? AppColors.Primary : AppColors.DarkGrey }]}></View>
             </View>
-            <Progress.Bar animated progress={step / 1.5} height={2.5} width={windowWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
+            <Progress.Bar animated progress={step / STEP_MAX} height={2.5} width={windowWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
           </View>
           <Text allowFontScaling={false} style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
           <View style={{ width: '100%', marginVertical: 16, flexDirection: 'row' }}>
@@ -412,7 +422,7 @@ const Overview = ({ navigation }) => {
   const listFooterComponent = () => {
     return (
       <>
-        {(projectData?.orderStatus === ProjectStatuses.Assigned) &&
+        {(projectData?.orderStatus === ProjectStatuses.Assigned) && isAdmin &&
           <OutlinedButton
             label={'Edit Assignment'}
             style={{ borderColor: AppColors.Primary, marginVertical: 16 }}

@@ -18,6 +18,7 @@ import Service from '../ProjectDetails/Service'
 import Assignment from '../ProjectDetails/Assignment'
 import Finances from '../ProjectDetails/Finances'
 import { windowWidth } from '../../Constants/Constants';
+import { useSelector } from 'react-redux';
 
 const Tabs = createMaterialTopTabNavigator()
 
@@ -26,12 +27,14 @@ const ProjectDetails = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
+  const { token, userData } = useSelector(({ Index }) => Index)
+
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack bgWhite />
 
       <Tabs.Navigator
-      pageMargin={2}
+        pageMargin={2}
         screenOptions={{
           lazy: true,
           tabBarScrollEnabled: true,
@@ -48,10 +51,13 @@ const ProjectDetails = ({ navigation }) => {
             textTransform: 'none'
           }
         }}>
-        <Tabs.Screen name='Overview' component={Overview}/>
+        <Tabs.Screen name='Overview' component={Overview} />
         <Tabs.Screen name='Message' component={Message} />
         <Tabs.Screen name='Service' component={Service} />
-        <Tabs.Screen name='Assignment' component={Assignment} />
+        {
+          (userData?.accountType == 'admin_contractor') &&
+          <Tabs.Screen name='Assignment' component={Assignment} />
+        }
         <Tabs.Screen name='Finances' component={Finances} />
 
       </Tabs.Navigator>

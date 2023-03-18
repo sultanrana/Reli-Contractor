@@ -19,6 +19,7 @@ import Loader from '../../Components/Loader';
 import { useIsFocused } from '@react-navigation/native';
 import { API_URL, IMAGES_URL } from '../../API/Constants';
 import moment from 'moment-timezone';
+import { vs } from 'react-native-size-matters';
 
 const Home = ({ navigation }) => {
 
@@ -115,57 +116,11 @@ const Home = ({ navigation }) => {
       title: (claim?.length > 0) ? 'Claim Projects' : '',
       renderItem: renderServiceItem,
       data: claim ? claim : []
-      // data: [
-      //   {
-      //     title: "2x Sliding Glass Doors",
-      //     subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-      //     subtitle2: "Aug 22 , Aug 23, or Sep 1",
-      //     image1: Images.House,
-      //     image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-      //   },
-      //   {
-      //     title: "2x Sliding Glass Doors",
-      //     subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-      //     subtitle2: "Aug 22 , Aug 23, or Sep 1",
-      //     image1: Images.House,
-      //     image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-      //   },
-      //   {
-      //     title: "2x Sliding Glass Doors",
-      //     subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-      //     subtitle2: "Aug 22 , Aug 23, or Sep 1",
-      //     image1: Images.House,
-      //     image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-      //   },
-      // ]
     },
     {
       title: (actionNeeded?.length > 0) ? 'Action Needed' : '',
       renderItem: renderDateItem,
       data: actionNeeded ? actionNeeded : []
-      // data: [
-      //   {
-      //     title: "2x Sliding Glass Doors",
-      //     subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-      //     subtitle2: "Aug 22 , Aug 23, or Sep 1",
-      //     image1: Images.House,
-      //     image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-      //   },
-      //   {
-      //     title: "2x Sliding Glass Doors",
-      //     subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-      //     subtitle2: "Aug 22 , Aug 23, or Sep 1",
-      //     image1: Images.House,
-      //     image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-      //   },
-      //   {
-      //     title: "2x Sliding Glass Doors",
-      //     subtitle1: "2900 Bristol St, Costa Mesa, CA 92626",
-      //     subtitle2: "Aug 22 , Aug 23, or Sep 1",
-      //     image1: Images.House,
-      //     image2: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
-      //   },
-      // ]
     }
   ]
 
@@ -174,7 +129,9 @@ const Home = ({ navigation }) => {
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <Loader loading={isLoading} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
-        <SectionList
+        {
+          !(claim?.length == 0 && actionNeeded?.length == 0 && !isLoading) ?
+          <SectionList
           stickySectionHeadersEnabled={false}
           showsVerticalScrollIndicator={false}
           sections={Data}
@@ -206,7 +163,19 @@ const Home = ({ navigation }) => {
               </Text>
             )
           }}
-        />
+        />:
+        <Text allowFontScaling={false} style={{
+          fontFamily: Fonts.Light,
+          fontSize: FontSize.medium,
+          color: AppColors.DarkGrey,
+          marginTop: vs(50),
+          textAlign: 'center',
+          width: '100%'
+        }}>
+          {'No Projects'}
+        </Text>
+        }
+        
       </View>
     </View>
 
