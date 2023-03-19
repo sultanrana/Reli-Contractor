@@ -131,9 +131,9 @@ const Overview = ({ navigation }) => {
     handleGetProjectDetails(token, id).then(({ data }) => {
       if (data[0]?.orderStatusDate != null && data[0]?.orderStatusDate != undefined && data[0]?.orderStatusDate != '') {
         data[0].dateSelection = new Array(data[0]?.orderStatusDate?.split('T')[0])
-      } else if(!isAdmin) {
+      } else {
         data[0].dateSelection = new Array(data[0]?.dateSelection[0])
-      }
+      } 
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
       setProjectData(data?.length > 0 ? data[0] : null)
       console.log('Details', data[0]);
