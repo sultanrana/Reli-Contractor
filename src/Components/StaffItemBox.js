@@ -63,7 +63,7 @@ const StaffItemBox = ({ navigation, id, image, name, onClaim, Item }) => {
                 fontFamily: Fonts.SemiBold,
                 color: AppColors.TextTitle,
                 paddingHorizontal: 16,
-                width:'60%'
+                width:onClaim? '60%': '90%'
             }}>{name}</Text>
 
             {

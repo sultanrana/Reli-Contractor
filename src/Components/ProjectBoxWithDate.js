@@ -153,22 +153,26 @@ const ProjectBoxWithDate =
                         marginHorizontal: 8,
                         flexDirection: 'column'
                     }}>
-                        <Text allowFontScaling={false} style={{
-                            fontFamily: Fonts.SemiBold,
-                            fontSize: FontSize.xlarge,
-                            color: AppColors.TextTitle,
-                            textAlignVertical: 'center'
-                        }}>
-                            {title}
-                        </Text>
-                        <Text allowFontScaling={false} style={{
-                            fontFamily: Fonts.Light,
-                            fontSize: FontSize.small,
-                            color: AppColors.Text,
-                            textAlignVertical: 'center'
-                        }}>
-                            {subtitle1}
-                        </Text>
+                        {(title?.trim() !== '') &&
+                            <Text allowFontScaling={false} style={{
+                                fontFamily: Fonts.SemiBold,
+                                fontSize: FontSize.xlarge,
+                                color: AppColors.TextTitle,
+                                textAlignVertical: 'center'
+                            }}>
+                                {title}
+                            </Text>
+                        }
+                        {(subtitle1 !== '') &&
+                            <Text allowFontScaling={false} style={{
+                                fontFamily: Fonts.Light,
+                                fontSize: FontSize.small,
+                                color: AppColors.Text,
+                                textAlignVertical: 'center'
+                            }}>
+                                {subtitle1}
+                            </Text>
+                        }
                         {
                             staff ?
                                 <>

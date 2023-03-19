@@ -761,8 +761,6 @@ export const handlePostAssigneeData = async (authToken, projectID, orderStatus =
 
         if (response?.code === 200) {
 
-            console.log('Responsezzz', response);
-            
             const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus)
 
             if (res2) {
@@ -774,6 +772,11 @@ export const handlePostAssigneeData = async (authToken, projectID, orderStatus =
             return null
         } else if (response?.code === 404) {
             SimpleToast.show(response?.message)
+            const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus)
+
+            if (res2) {
+                return res2
+            }
             return null
         }
     } catch (e) {
@@ -812,4 +815,50 @@ export const handleProjectStatusChange = async (authToken, projectID, orderStatu
         console.log(e);
         throw e
     }
+}
+
+export const handleGetScheduledProjects = async (authToken, forStaffID) => {
+    // Filter-based staff_id param for next use
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Projects.ScheduleProjectsForStaff}`,
+            Endpoints.Dashboard.Projects.ScheduleProjectsForStaff,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetListOfNotifications = async (authToken, readBit) => {
+    // Filter-based read param for next use
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.Notifications}`,
+            Endpoints.Dashboard.Notifications,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
 }

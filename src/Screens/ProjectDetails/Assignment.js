@@ -16,6 +16,7 @@ import { IMAGES_URL } from '../../API/Constants';
 import { vs } from 'react-native-size-matters';
 import DateSchedule from '../../Components/DateSchedule';
 import { ProjectStatuses } from '../../Constants/ProjectStatus';
+import ContainedButton from '../../Components/ContainedButton';
 
 const Assignment = ({ navigation, route }) => {
   const scheme = useColorScheme()
@@ -90,12 +91,15 @@ const Assignment = ({ navigation, route }) => {
           alignItems: 'center'
         }}>
 
-          <DateSchedule
-            clickable={false}
-            index={1}
-            selectedDateIndex={0}
-            item={details?.dateSelection[0]}
-          />
+          {
+            !(details?.requestStatus !== 'Accepted' || details?.orderStatus === ProjectStatuses.Unassigned || details?.orderStatus === ProjectStatuses.Pending) &&
+            <DateSchedule
+              clickable={false}
+              index={1}
+              selectedDateIndex={0}
+              item={details?.dateSelection[0]}
+            />
+          }
 
           <View style={{
             flex: 1,
@@ -114,13 +118,24 @@ const Assignment = ({ navigation, route }) => {
               {`PROJECT ID\n${id}`}
             </Text>
 
-            <Text style={{
+            {/* <Text style={{
               fontFamily: Fonts.Light,
               color: AppColors.BackgroundInverse,
               fontSize: vs(9)
             }} allowFontScaling={false} >
               {`[ Location Required from Backend ]`}
-            </Text>
+            </Text> */}
+
+            {(details?.requestStatus !== 'Accepted' || details?.orderStatus === ProjectStatuses.Unassigned || details?.orderStatus === ProjectStatuses.Pending) &&
+              <Text style={{
+                fontFamily: Fonts.Light,
+                color: AppColors.BackgroundInverse,
+                fontSize: vs(9),
+                marginTop: vs(12)
+              }} allowFontScaling={false} >
+                {`For assigning this project, you must ${(details?.requestStatus !== 'Accepted') ? 'claim' : 'schedule'} this project first. `}
+              </Text>
+            }
 
           </View>
 
@@ -136,45 +151,67 @@ const Assignment = ({ navigation, route }) => {
 
       <Loader loading={isLoading} />
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={staffData}
-        renderItem={({ item }) => (
-          <StaffItemBox navigation={navigation}
-            name={item?.firstName + ' ' + item?.lastName}
-            image={(item?.profileImage != null && item?.profileImage != '') ? { uri: IMAGES_URL + item?.profileImage } : ''}
-            onClaim={onClaim}
-            id={item?._id}
-            Item={item}
-          />
-        )}
-        keyExtractor={(item, index) => 'stf' + index}
-        contentContainerStyle={{ paddingBottom: '30%' }}
-        style={{
-          flexGrow: 0,
-        }}
-        ItemSeparatorComponent={() => (
-          <View style={{ marginVertical: 4 }} />
-        )}
-        ListHeaderComponent={renderHeader}
-        ListEmptyComponent={() => (
-          <>
-            {
-              !isLoading &&
-              <Text style={{
-                fontFamily: Fonts.Light,
-                fontSize: FontSize.medium,
-                color: AppColors.DarkGrey,
-                marginTop: vs(50),
-                alignSelf: 'center',
-                textAlign: 'center'
-              }}>
-                {'No Staff Member Found'}
-              </Text>
-            }
-          </>
-        )}
-      />
+      {(details?.requestStatus !== 'Accepted' || details?.orderStatus === ProjectStatuses.Unassigned || details?.orderStatus === ProjectStatuses.Pending) ?
+        <>
+          {renderHeader()}
+          <ContainedButton
+            label={(details?.requestStatus !== 'Accepted') ? 'Claim' : 'Schedule'}
+            style={{
+              width: '97%',
+              alignSelf: 'center',
+              backgroundColor: AppColors.Background,
+              borderColor: AppColors.Primary,
+              borderWidth: 1
+            }}
+            labelStyle={{
+              color: AppColors.Primary
+            }}
+            onPress={() => {
+              navigation.navigate('Overview')
+            }} />
+        </> :
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={staffData}
+          renderItem={({ item }) => (
+            <StaffItemBox navigation={navigation}
+              name={item?.firstName + ' ' + item?.lastName}
+              image={(item?.profileImage != null && item?.profileImage != '') ? { uri: IMAGES_URL + item?.profileImage } : ''}
+              onClaim={onClaim}
+              id={item?._id}
+              Item={item}
+            />
+          )}
+          keyExtractor={(item, index) => 'stf' + index}
+          contentContainerStyle={{ paddingBottom: '30%' }}
+          style={{
+            flexGrow: 0,
+          }}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginVertical: 4 }} />
+          )}
+          ListHeaderComponent={renderHeader}
+          ListEmptyComponent={() => (
+            <>
+              {
+                !isLoading &&
+                <Text style={{
+                  fontFamily: Fonts.Light,
+                  fontSize: FontSize.medium,
+                  color: AppColors.DarkGrey,
+                  marginTop: vs(50),
+                  alignSelf: 'center',
+                  textAlign: 'center'
+                }}>
+                  {'No Staff Member Found'}
+                </Text>
+              }
+            </>
+          )}
+        />
+      }
+
+
 
     </View>
   );

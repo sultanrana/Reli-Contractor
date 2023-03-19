@@ -18,17 +18,6 @@ import { FontSize } from '../../Theme/FontSize';
 
 const Tabs = createMaterialTopTabNavigator()
 
-const STAFF_MEMBERS_DATA = [
-  { image: Images.Dummy1, name: 'John Doe' },
-  { image: Images.Dummy2, name: 'Jane Cooper' },
-  { image: Images.Dummy3, name: 'Esther Howard' },
-  { image: Images.Dummy4, name: 'Leslie Alexander' },
-  { image: Images.Dummy5, name: 'Kristin Watson' },
-  { image: Images.Dummy7, name: 'Cameron Williamson' },
-  { image: Images.Dummy6, name: 'Robert Fox' },
-  { image: Images.Dummy8, name: 'Cody Fisher' },
-]
-
 const Staff = ({ navigation }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)

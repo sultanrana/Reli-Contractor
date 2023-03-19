@@ -37,11 +37,13 @@ export const Endpoints = {
             AvailableProjects: 'listOfAvailableContractorProjects',
             CompletedProjects: 'listOfCompletedContractorProjects',
             UpdateProjectStatus: 'changeProjectRequestStatus',
-            ProjectDetails: 'orderDetail'
+            ProjectDetails: 'orderDetail',
+            ScheduleProjectsForStaff: 'listOfScheduledContractorProjects'
         },
 
         Staff: 'listOfStaff',
         ChangeProjectOrderStatus: 'changeProjectOrderStatus',
-        AssignProjectToUser: 'assignProjectToUser'
+        AssignProjectToUser: 'assignProjectToUser',
+        Notifications: 'listOfNotifications'
     }
 }
