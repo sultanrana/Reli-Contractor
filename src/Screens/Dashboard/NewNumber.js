@@ -21,7 +21,7 @@ const NewNumber = ({ navigation }) => {
     const { userData } = useSelector(state => state.Index)
 
     const [inputs, setInputs] = useState({
-        number: ''
+        number: userData != null ? userData?.phoneNumber : ''
     })
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false);

@@ -131,51 +131,54 @@ const Home = ({ navigation }) => {
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         {
           !(claim?.length == 0 && actionNeeded?.length == 0 && !isLoading) ?
-          <SectionList
-          stickySectionHeadersEnabled={false}
-          showsVerticalScrollIndicator={false}
-          sections={Data}
-          keyExtractor={(item, index) => 'ci' + index}
-          renderItem={({ section: { renderItem } }) => { renderItem }}
-          renderSectionHeader={({ section: { title } }) => (
+            <SectionList
+              stickySectionHeadersEnabled={false}
+              showsVerticalScrollIndicator={false}
+              sections={(Data[0]?.data.length > 0 || Data[1]?.data.length>0 ) ? Data: []}
+              keyExtractor={(item, index) => 'ci' + index}
+              renderItem={({ section: { renderItem } }) => { renderItem }}
+              renderSectionHeader={({ section: { title } }) => (
+                <Text allowFontScaling={false} style={{
+                  fontFamily: Fonts.SemiBold,
+                  fontSize: FontSize.xxlarge,
+                  color: AppColors.TextTitle,
+                }}>
+                  {title}
+                </Text>
+              )}
+              ItemSeparatorComponent={() => (<View style={{ marginVertical: 4 }} />)}
+              SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
+              contentContainerStyle={{ paddingBottom: 10 }}
+              ListEmptyComponent={() => {
+               if(!isLoading){
+                return (
+                  <Text style={{
+                    fontFamily: Fonts.Light,
+                    fontSize: FontSize.large,
+                    color: AppColors.DarkGrey,
+                    marginTop: vs(150),
+                    textAlign: 'center',
+                    alignSelf: 'center',
+                  }}>
+                    {'No Projects Found'}
+                  </Text>
+                )
+               }
+               return null
+              }}
+            /> :
             <Text allowFontScaling={false} style={{
-              fontFamily: Fonts.SemiBold,
-              fontSize: FontSize.xxlarge,
-              color: AppColors.TextTitle,
+              fontFamily: Fonts.Light,
+              fontSize: FontSize.medium,
+              color: AppColors.DarkGrey,
+              marginTop: vs(50),
+              textAlign: 'center',
+              width: '100%'
             }}>
-              {title}
+              {'No Projects'}
             </Text>
-          )}
-          ItemSeparatorComponent={() => (<View style={{ marginVertical: 4 }} />)}
-          SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
-          contentContainerStyle={{ paddingBottom: 10 }}
-          ListEmptyComponent={() => {
-            return (
-              <Text style={{
-                fontFamily: Fonts.Light,
-                fontSize: FontSize.medium,
-                color: AppColors.DarkGrey,
-                // marginTop: vs(50),
-                textAlign: 'center',
-                alignSelf: 'center',
-              }}>
-                {'No Projects Found'}
-              </Text>
-            )
-          }}
-        />:
-        <Text allowFontScaling={false} style={{
-          fontFamily: Fonts.Light,
-          fontSize: FontSize.medium,
-          color: AppColors.DarkGrey,
-          marginTop: vs(50),
-          textAlign: 'center',
-          width: '100%'
-        }}>
-          {'No Projects'}
-        </Text>
         }
-        
+
       </View>
     </View>
 

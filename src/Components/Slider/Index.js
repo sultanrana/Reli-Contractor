@@ -7,6 +7,7 @@ import Notch from "./Notch";
 import Rail from "./Rail";
 import RailSelected from "./RailSelected";
 import Thumb from "./Thumb";
+import { useEffect } from "react";
 
 const RangeSlider = ({ from, to, distance = () => { }, step, unit='m' }) => {
   // const RangeSlider = () => {
@@ -21,13 +22,17 @@ const RangeSlider = ({ from, to, distance = () => { }, step, unit='m' }) => {
 
   const handleValueChange = useCallback(
     (newLow, newHigh) => {
-      // console.log({newLow});
+      console.log({newLow});
+      console.log({newHigh});
       setLow(newLow);
       setHigh(newHigh);
       distance(newLow)
-    },
-    [setLow, setHigh]
+    },[setLow, setHigh]
   );
+
+  useEffect(()=>{
+    handleValueChange()
+  },[])
 
   return (
     <>
@@ -43,6 +48,7 @@ const RangeSlider = ({ from, to, distance = () => { }, step, unit='m' }) => {
         renderLabel={renderLabel}
         renderNotch={renderNotch}
         onValueChanged={handleValueChange}
+        
       />
     </>
   );

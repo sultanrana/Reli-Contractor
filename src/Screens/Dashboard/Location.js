@@ -26,12 +26,12 @@ const Location = ({ navigation }) => {
     const { location } = useSelector(state => state.Location)
 
     const [isLoading, setIsLoading] = useState(false);
-    const [address, setAddress] = useState('');
-    const [apartment, setApartment] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [zip, setZip] = useState('');
-    const [travel, setTravel] = useState(0);
+    const [address, setAddress] = useState(userData != null ? userData?.address : '');
+    const [apartment, setApartment] = useState(userData != null ? userData?.appartment : '');
+    const [city, setCity] = useState(userData != null ? userData?.city : '');
+    const [state, setState] = useState(userData != null ? userData?.state : '');
+    const [zip, setZip] = useState(userData != null ? userData?.zipCode : '');
+    const [travel, setTravel] = useState(userData != null ? userData?.willingRange : '125');
     const addressRef = useRef()
     const apartmentRef = useRef()
     const cityRef = useRef()
@@ -264,10 +264,12 @@ const Location = ({ navigation }) => {
                         <Text allowFontScaling={false} style={styles.travel}>{'Wiling to travel:'}</Text>
                         <RangeSlider
                             from={0}
-                            to={3000}
+                            to={150}
+                            step={5}
                             distance={(val) => {
-                                setTravel(val)
-                            }} />
+                                setTravel(JSON.stringify(val))
+                            }}
+                        />
 
                         <ContainedButton
                             onPress={checkIsPermission}

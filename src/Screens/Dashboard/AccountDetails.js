@@ -20,10 +20,11 @@ import { EMAIL_REG } from '../../Constants/Constants';
 const AccountDetails = ({ navigation }) => {
 
     const { userData } = useSelector(state => state.Index)
+
     const [inputs, setInputs] = useState({
-        firstname: '',
-        lastname: '',
-        email: '',
+        firstname: userData != null ? userData?.firstName : '',
+        lastname: userData != null ? userData?.lastName : '',
+        email: userData != null ? userData?.email : '',
     })
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false);
