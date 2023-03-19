@@ -149,7 +149,7 @@ const Service = ({ navigation }) => {
           />
         }
 
-        {details?.orderStatus !== ProjectStatuses.Completed && projectData?.requestStatus === 'Accepted' && !loading &&
+        {details?.orderStatus !== ProjectStatuses.Completed && projectData?.requestStatus === 'Accepted' && !loading && details?.orderStatus !== ProjectStatuses.Pending && details?.orderStatus !== ProjectStatuses.Scheduled &&
           <OutlinedButton
             label={'Mark as Completed'}
             style={{ borderColor: AppColors.Primary, marginVertical: 16, width: !isButtonDisabled ? '100%' : '100%' }}
