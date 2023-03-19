@@ -761,7 +761,7 @@ export const handlePostAssigneeData = async (authToken, projectID, orderStatus =
 
         if (response?.code === 200) {
 
-            const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus)
+            const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus, date)
 
             if (res2) {
                 return res2
@@ -772,7 +772,7 @@ export const handlePostAssigneeData = async (authToken, projectID, orderStatus =
             return null
         } else if (response?.code === 404) {
             SimpleToast.show(response?.message)
-            const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus)
+            const res2 = await handleProjectStatusChange(authToken, projectID, orderStatus, date)
 
             if (res2) {
                 return res2
@@ -786,7 +786,7 @@ export const handlePostAssigneeData = async (authToken, projectID, orderStatus =
     }
 }
 
-export const handleProjectStatusChange = async (authToken, projectID, orderStatus) => {
+export const handleProjectStatusChange = async (authToken, projectID, orderStatus, date) => {
     try {
         const formData = new URLSearchParams();
         formData.append('orderStatus', orderStatus);
@@ -794,6 +794,7 @@ export const handleProjectStatusChange = async (authToken, projectID, orderStatu
 
         const body = {
             orderStatus: orderStatus,
+            orderStatusDate: date
         }
 
         const response = await fetch.post(

@@ -129,9 +129,9 @@ const Overview = ({ navigation }) => {
 
   const loadData = () => {
     handleGetProjectDetails(token, id).then(({ data }) => {
-      if (data[0]?.orderStatusDate != null && data[0]?.orderStatusDate != undefined && data[0]?.orderStatusDate != '') {
+      if (data[0]?.orderStatusDate != null && data[0]?.orderStatusDate != undefined && data[0]?.orderStatusDate != '' && (data[0]?.orderStatus !== ProjectStatuses.Pending && data[0]?.orderStatus !== ProjectStatuses.Unassigned)) {
         data[0].dateSelection = new Array(data[0]?.orderStatusDate?.split('T')[0])
-      } else {
+      } else if (data[0]?.orderStatus !== ProjectStatuses.Unassigned && data[0]?.orderStatus !== ProjectStatuses.Pending) {
         data[0].dateSelection = new Array(data[0]?.dateSelection[0])
       } 
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
@@ -315,7 +315,7 @@ const Overview = ({ navigation }) => {
           loadData()
         })
       } else {
-        handleProjectStatusChange(token, id, newStatus).finally(() => {
+        handleProjectStatusChange(token, id, newStatus, projectData?.dateSelection[0]).finally(() => {
           loadData()
         })
       }

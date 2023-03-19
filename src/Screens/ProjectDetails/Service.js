@@ -39,7 +39,7 @@ const Service = ({ navigation }) => {
 
   const onComplete = () => {
     setLoading(true)
-    handleProjectStatusChange(token, id, ProjectStatuses.Completed).finally(() => {
+    handleProjectStatusChange(token, id, ProjectStatuses.Completed, details?.dateSelection[0]).finally(() => {
       loadData()
     })
   }
@@ -102,7 +102,7 @@ const Service = ({ navigation }) => {
 
     if (newStatus !== '') {
       setLoading(true)
-      handleProjectStatusChange(token, id, newStatus).finally(() => {
+      handleProjectStatusChange(token, id, newStatus, details?.dateSelection[0]).finally(() => {
         loadData()
       })
     }
