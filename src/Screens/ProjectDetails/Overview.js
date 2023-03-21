@@ -449,7 +449,7 @@ const Overview = ({ navigation }) => {
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 }}>
           <OutlinedButton
-            label={'Get Suport'}
+            label={'Get Support'}
             style={{ width: primaryButtonVisible ? '45%' : '99%', borderColor: AppColors.Primary }}
             labelStyle={{ color: AppColors.Primary }}
             onPress={() => {

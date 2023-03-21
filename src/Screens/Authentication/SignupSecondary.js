@@ -128,7 +128,7 @@ const SignupSecondary = ({ navigation, route }) => {
             />
 
             <Text allowFontScaling={false} style={{ textAlign: 'left', width: '100%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish, marginTop:20 }}>
-              Wiling to travel
+              Willing to travel
             </Text>
 
             <RangeSlider

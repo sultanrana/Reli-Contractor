@@ -261,7 +261,7 @@ const Location = ({ navigation }) => {
                             />
                         </View>
 
-                        <Text allowFontScaling={false} style={styles.travel}>{'Wiling to travel:'}</Text>
+                        <Text allowFontScaling={false} style={styles.travel}>{'Willing to travel:'}</Text>
                         <RangeSlider
                             from={0}
                             to={150}
