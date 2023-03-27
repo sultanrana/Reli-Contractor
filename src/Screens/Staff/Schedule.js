@@ -19,6 +19,7 @@ import { FlatList } from 'react-native';
 import Loader from '../../Components/Loader';
 import { useSelector } from 'react-redux';
 import moment from 'moment-timezone';
+import { vs } from 'react-native-size-matters';
 
 
 
@@ -89,6 +90,19 @@ const Schedule = ({ navigation, route }) => {
           return <View style={{ marginVertical: 4 }} />
         }}
         contentContainerStyle={{ paddingBottom: 10 }}
+        ListEmptyComponent={() => {
+          return (
+            <Text allowFontScaling={false} style={{
+              fontFamily: Fonts.Light,
+              fontSize: FontSize.medium,
+              color: AppColors.DarkGrey,
+              marginTop: vs(50),
+              textAlign: 'center',
+            }}>
+              {'No Scheduled Projects'}
+            </Text>
+          )
+        }}
         refreshing={listLoading}
         onRefresh={() => {
           setListLoading(true)

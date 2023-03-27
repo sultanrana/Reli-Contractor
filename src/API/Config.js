@@ -697,7 +697,7 @@ export const handleGetStaffList = async (authToken, companyID) => {
 }
 
 export const handlePostClaimData = async (authToken, projectID, orderStatus, date) => {
-   
+
     try {
         const formData = new URLSearchParams();
         formData.append('orderStatus', orderStatus);
@@ -733,7 +733,7 @@ export const handlePostClaimData = async (authToken, projectID, orderStatus, dat
 
 export const handlePostAssigneeData = async (authToken, projectID, orderStatus = ProjectStatuses.Assigned, date, assigneeID) => {
     try {
-        console.log({authToken, projectID, orderStatus, date, assigneeID});
+        console.log({ authToken, projectID, orderStatus, date, assigneeID });
         const formData = new URLSearchParams();
 
         const body = {
@@ -848,6 +848,126 @@ export const handleGetListOfNotifications = async (authToken, readBit) => {
             API_URL + `${Endpoints.Dashboard.Notifications}`,
             Endpoints.Dashboard.Notifications,
             authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetListOfTransactions = async (authToken) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.TransactionsList}`,
+            Endpoints.Dashboard.TransactionsList,
+            authToken
+        )
+
+        console.log(Endpoints.Dashboard.TransactionsList, response?.data);
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetListOfOptions = async (authToken, uid) => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.Dashboard.StatusBitsList}/${uid}`,
+            Endpoints.Dashboard.StatusBitsList,
+            authToken
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleUpdateOptions = async (authToken, uid, {
+    newMessageFromCustomerNoti, newOrder, upcomingDelivery, newMessageFromCustomerEmail, projectUpdates, cancellation, rescheduleRequest, reminders
+}) => {
+
+    try {
+        const formData = new URLSearchParams();
+        formData.append('newMessageFromCustomerNoti', newMessageFromCustomerNoti);
+        formData.append('newOrder', newOrder);
+        formData.append('upcomingDelivery', upcomingDelivery);
+        formData.append('newMessageFromCustomerEmail', newMessageFromCustomerEmail);
+        formData.append('projectUpdates', projectUpdates);
+        formData.append('cancellation', cancellation);
+        formData.append('rescheduleRequest', rescheduleRequest);
+        formData.append('reminders', reminders);
+
+        const response = await fetch.post(
+            API_URL + `${Endpoints.Dashboard.StatusBitsUpdate}/${uid}`,
+            formData.toString(),
+            Endpoints.Dashboard.StatusBitsUpdate,
+            authToken,
+            ContentTypes.XUrlEncodedFormData,
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleUpdateStaffMember = async (authToken, staffID, {
+    firstName, lastName, email, phoneNumber, accountType, userType, image
+}) => {
+
+    try {
+        const formData = new URLSearchParams();
+        firstName && formData.append('firstName', firstName);
+        lastName && formData.append('lastName', lastName);
+        email && formData.append('email', email);
+        phoneNumber && formData.append('phoneNumber', phoneNumber);
+        accountType && formData.append('accountType', accountType);
+        userType && formData.append('userType', userType);
+        image && formData.append('image', image);
+
+        console.log('Data', API_URL + `${Endpoints.Dashboard.UpdateStaff}/${staffID}`, formData);
+
+        const response = await fetch.put(
+            API_URL + `${Endpoints.Dashboard.UpdateStaff}/${staffID}`,
+            formData,
+            Endpoints.Dashboard.UpdateStaff,
+            authToken,
+            `${ContentTypes.MultipartFormData};boundary=${formData._boundary}`,
         )
 
         if (response?.code === 200) {

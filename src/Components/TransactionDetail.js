@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native'
 import Fonts from '../Assets/Fonts/Index'
 import colors from '../Theme/Colors'
 import { Images } from '../Assets/Images/Index'
+import { vs } from 'react-native-size-matters'
 
 const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => {
 
@@ -48,7 +49,7 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
             height: '20%',
             borderBottomLeftRadius: 10,
             borderBottomRightRadius: 10,
-            backgroundColor: Details.status === 'Finished' ? '#00C389' : colors(scheme).Primary,
+            backgroundColor: Details.status === 'Completed' ? '#00C389' : colors(scheme).Primary,
             justifyContent: 'center',
             alignItems: 'center',
         },
@@ -66,13 +67,15 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
         order: {
             color: colors(scheme).Primary,
             fontSize: 18,
-            fontFamily: Fonts.SemiBold
+            fontFamily: Fonts.SemiBold,
+            marginBottom: vs(4)
         },
         generalTitles: {
             color: colors(scheme).Black,
             fontSize: 14,
             fontFamily: Fonts.SemiBold,
-            marginVertical: 5
+            marginVertical: 5,
+            marginTop: vs(4)
         },
         generalDesc: {
             color: colors(scheme).Black,
@@ -117,11 +120,11 @@ const TransactionDetail = ({ style, Details, labelStyle, scheme = 'light' }) => 
             <View style={styles.detailContainer}>
 
                 <Text allowFontScaling={false} style={styles.order}>{Details.title}</Text>
-                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Assigned: '}
-                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.assigned}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Created: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.created}</Text>
                 </Text>
-                <Text allowFontScaling={false} style={styles.generalTitles}>{'Date Completed: '}
-                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.completed}</Text>
+                <Text allowFontScaling={false} style={styles.generalTitles}>{'Status Updated: '}
+                    <Text allowFontScaling={false} style={styles.generalDesc}>{Details.updated}</Text>
                 </Text>
                 <Text allowFontScaling={false} style={styles.generalTitles}>{'Amount: '}
                     <Text allowFontScaling={false} style={styles.generalDesc}>{Details.amount}</Text>

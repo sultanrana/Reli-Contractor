@@ -15,24 +15,31 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Icons } from '../../Assets/Images/Index';
+import { useSelector } from 'react-redux';
+import { IMAGES_URL } from '../../API/Constants';
+import { handleUpdateStaffMember } from '../../API/Config';
+import { ShowErrorMessage, ShowSuccessMessage } from '../../Components/InfoMsg';
+import MediaOptions from '../../Components/MediaOptions';
+import { Media } from '../../Helpers/MediaProvider';
 
 const Edit = ({ navigation }) => {
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [number, setNumber] = useState('');
+  const { userData, token } = useSelector(state => state.Index)
+  const { list, current } = useSelector(({ Staff }) => Staff)
+
+  const [firstName, setFirstName] = useState(current?.firstName);
+  const [lastName, setLastName] = useState(current?.lastName);
+  const [email, setEmail] = useState(current?.email);
+  const [number, setNumber] = useState(current?.phoneNumber);
   const [openRole, setOpenRole] = useState(false);
-  const [openStatus, setOpenStatus] = useState(false);
-  const [role, setRole] = useState(false);
-  const [status, setStatus] = useState(false);
+  const [role, setRole] = useState(current?.accountType);
+  const [mediaOptions, setMediaOptions] = useState(false)
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null)
   const [roleLsist, setRolesList] = useState([
-    { label: 'Contractor', value: 'Contractor' },
-    { label: 'Client', value: 'Client' }
-  ])
-  const [statusList, setStatusList] = useState([
-    { label: 'Active', value: 'Active' },
-    { label: 'Inactive', value: 'Inactive' }
+    { label: 'Standard', value: 'standard_contractor' },
+    { label: 'Admin', value: 'admin_contractor' }
   ])
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
@@ -44,7 +51,7 @@ const Edit = ({ navigation }) => {
       width: 150,
       borderRadius: 150,
       backgroundColor: AppColors.White,
-      borderWidth: 1,
+      borderWidth: 0.5,
       borderColor: AppColors.Grey,
       justifyContent: 'center',
       alignItems: 'center'
@@ -57,35 +64,147 @@ const Edit = ({ navigation }) => {
     },
     addIcon: {
       height: 50,
-      width: 50
+      width: 50,
+      tintColor: AppColors.DarkGrey
     }
   })
 
 
+  const addOrUpdateProfileLocalImage = (isExisting) => {
+    // Add Android Permission Check here and call the below function setMediaOptions(true) after granted permissions
+    setMediaOptions(true)
+  }
+
+  const onUpdateStaff = async () => {
+    setIsButtonLoading(true)
+    handleUpdateStaffMember(token, current?._id, {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phoneNumber: number,
+      accountType: role,
+      userType: current?.userType,
+      image: selectedImage
+    }).then(({message})=> {
+      ShowSuccessMessage(message)
+    }).catch(({message})=> {
+      ShowErrorMessage(message)
+    }).finally(() => {
+      setIsButtonLoading(false)
+    })
+  }
+
+
+  const Galleryopen = () => {
+    let tempArr = []
+    Media
+        .OpenGalery(true)
+        .then((obj) => {
+            // console.log('Galleryopen..............', obj);
+            const fileName = obj?.path.split('/')
+            const source = {
+                name: Platform.OS == 'ios' ? obj.filename : fileName[fileName.length - 1],
+                type: obj.mime,
+                uri: obj?.path,
+            };
+            setSelectedImage(source)
+            setMediaOptions(false)
+        })
+        .catch((error) => {
+            console.log('Galleryopen-error', error);
+        });
+
+};
+
+const Camerapopen = async () => {
+    Media
+        .OpenCamera(true)
+        .then((obj) => {
+            const fileName = obj?.path.split('/')
+            const source = {
+                name: fileName[fileName.length - 1],
+                type: obj.mime,
+                uri: obj?.path,
+            };
+            setSelectedImage(source)
+            setMediaOptions(false)
+        }).catch((error) => {
+            console.log('Camerapopen..............', error);
+        });
+
+
+    Media
+        .OpenGalery(true)
+        .then((obj) => {
+            const fileName = obj?.path.split('/')
+            const source = {
+                name: fileName[fileName.length - 1],
+                type: obj.mime,
+                uri: obj?.path,
+            };
+            setMediaOptions(false)
+            setSelectedImage(source)
+        })
+        .catch((error) => {
+            console.log('Camerapopen..............', error);
+        });
+};
+
 
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
+      <MediaOptions
+                visible={mediaOptions}
+                onRequestClose={() => {
+                    setMediaOptions(false)
+                }}
+                selectedOption={(val) => {
+                    if (val == '2') {
+                        Camerapopen()
+                    } else if (val == '3') {
+                        Galleryopen()
+                    }
+                }}
+            />
       <KeyboardAwareScrollView
         contentContainerStyle={{ paddingVertical: 35 }}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
 
         <View style={{ alignSelf: 'center', alignItems: 'center' }}>
-          <View style={styles.addImage}>
-            <Image source={Icons.Add} style={styles.addIcon} resizeMode={'contain'} />
-          </View>
-          <Text allowFontScaling={false} style={styles.title}>{'Add Image'}</Text>
+          <TouchableOpacity style={styles.addImage} disabled={(current?.profileImage !== null || selectedImage)} onPress={() => { addOrUpdateProfileLocalImage(false) }}>
+            <Image source={(current?.profileImage == null && !selectedImage) ? Icons.Add :
+              { uri: selectedImage? selectedImage?.uri: IMAGES_URL + current?.profileImage }} style={(current?.profileImage == null && !selectedImage) ? styles.addIcon : {
+                height: 150,
+                width: 150,
+                borderRadius: 150,
+              }} resizeMode={'contain'} />
+          </TouchableOpacity>
+          <TouchableOpacity disabled={(current?.profileImage == null && !selectedImage)} onPress={() => { addOrUpdateProfileLocalImage(true) }} >
+            <Text allowFontScaling={false} style={[styles.title, {
+              color: (current?.profileImage == null && !selectedImage) ? AppColors.BackgroundInverse : AppColors.Primary
+            }]}>{(current?.profileImage == null && !selectedImage) ? 'Add Image' : 'Change Image'}</Text>
+          </TouchableOpacity>
         </View>
 
         <InputField
-          title="Name"
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter Contractor Name"
+          title="First Name"
+          value={firstName}
+          onChangeText={setFirstName}
+          placeholder="Enter First Name"
           keyboardType='default'
           maxLength={16}
         />
-        <View style={{ marginVertical: 8 }} />
+        <View style={{ marginVertical: 2 }} />
+
+        <InputField
+          title="Last Name"
+          value={lastName}
+          onChangeText={setLastName}
+          placeholder="Enter Last Name"
+          keyboardType='default'
+          maxLength={16}
+        />
+        <View style={{ marginVertical: 2 }} />
 
         <InputField
           title="Email"
@@ -94,7 +213,7 @@ const Edit = ({ navigation }) => {
           placeholder="Enter Contractor Email"
           keyboardType='email-address'
         />
-        <View style={{ marginVertical: 8 }} />
+        <View style={{ marginVertical: 2 }} />
 
         <InputField
           title="Phone Number"
@@ -105,8 +224,8 @@ const Edit = ({ navigation }) => {
           maxLength={16}
         />
 
-        <View style={{ marginVertical: 12 }} />
-        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Role'}</Text>
+        <View style={{ marginVertical: 2 }} />
+        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold, marginHorizontal: 4 }}>{'Role'}</Text>
         <DropDownPicker
           closeAfterSelecting={true}
           open={openRole}
@@ -145,6 +264,8 @@ const Edit = ({ navigation }) => {
           }}
           style={{
             // borderColor: valueRequired ? colors.Reddish : colors.grayish,
+            borderWidth: 0.75,
+            borderColor: AppColors.Black,
             backgroundColor: AppColors.White,
             width: "100%",
             minHeight: 40,
@@ -162,8 +283,8 @@ const Edit = ({ navigation }) => {
           }}
         />
 
-        <View style={{ marginVertical: 12 }} />
-        <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
+        {/* <View style={{ marginVertical: 12 }} /> */}
+        {/* <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
         <DropDownPicker
           closeAfterSelecting={true}
           open={openStatus}
@@ -216,12 +337,13 @@ const Edit = ({ navigation }) => {
             color: AppColors.Black,
             fontSize: 14,
           }}
-        />
+        /> */}
 
         <View style={{ marginVertical: 12 }} />
         <ContainedButton
-          onPress={() => { setPopupVisible(true) }}
+          onPress={onUpdateStaff}
           label="Save Changes"
+          loading={isButtonLoading}
         />
       </KeyboardAwareScrollView>
 
@@ -231,7 +353,7 @@ const Edit = ({ navigation }) => {
         Icon={Icons.Confirm}
         IconBackground={'#FDECDF'}
         Title={'Confirmation'}
-        TitleStyle={{color:AppColors.Primary}}
+        TitleStyle={{ color: AppColors.Primary }}
       />
     </View>
   );

@@ -77,19 +77,16 @@ const post = async (url, dataStr, request = '', bearer, contentType = ContentTyp
 
 const put = async (url, dataStr, request = '', bearer, contentType = ContentTypes.Raw, method = 'PUT', isJson = true) => {
 
-  let authHeader = await AsyncStorage.getItem('token')
-
   return new Promise((resolve, reject) => {
 
     fetch(url, {
       method: method,
       headers: {
         Accept: 'application/json',
-        Authorization: authHeader ? `Bearer ${authHeader}` : "",
-        'Content-Type': contentType,
+        Authorization: `Bearer ${bearer}`,
+        'Content-Type': `${contentType}`,
       },
       body: dataStr,
-      json: isJson
     }).then((res) => res.json())
       .then((result) => {
         console.log(`${request} response:`, result)

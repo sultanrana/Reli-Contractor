@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+
+<key>NSMicrophoneUsageDescription</key>
+	<string>Your message to user when the microphone is accessed for the first time</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Reli would like to access your Photos for profile or patient photos. Your photos won't be shared without your permission. It is safe and secure. </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Reli would like to access your Photos for profile or patient photos. Your photos won't be shared without your permission. It is safe and secure.</string>
+	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -66,4 +74,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
+
+
 </plist>

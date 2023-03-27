@@ -7,6 +7,11 @@ import {
     CLAIM_PROJECTS,
     PROJECT_ID,
     PROJECT_DETAILS,
+    UNPAID_TRANSACTIONS,
+    PAID_TRANSACTIONS,
+    OPTIONS,
+    STAFF_LIST,
+    STAFF_CURRENT,
 
 } from './Types'
 
@@ -48,9 +53,34 @@ const setProjectDetails = (payload) => ({
     payload: payload
 })
 
+const setUnpaidTransactions = (payload) => ({
+    type: UNPAID_TRANSACTIONS,
+    payload: payload
+})
+
+const setPaidTransactions = (payload) => ({
+    type: PAID_TRANSACTIONS,
+    payload: payload
+})
+
+const setOptions = (payload) => ({
+    type: OPTIONS,
+    payload: payload
+})
+
+const setStaffList = (payload) => ({
+    type: STAFF_LIST,
+    payload: payload
+})
+
+const setCurrentStaff = (payload) => ({
+    type: STAFF_CURRENT,
+    payload: payload
+})
+
 const logout = () => ({
     type: ON_LOGOUT,
     payload: null
 })
 
-export {setAuthToken, setUserData, setCompaniesData, logout, setActionNeededProjects, setClaimProjects, setProjectDetails, setProjectID }
+export {setAuthToken, setUserData, setCompaniesData, logout, setActionNeededProjects, setClaimProjects, setProjectDetails, setProjectID, setOptions, setPaidTransactions, setUnpaidTransactions, setStaffList, setCurrentStaff }

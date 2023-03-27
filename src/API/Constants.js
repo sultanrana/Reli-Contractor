@@ -42,8 +42,13 @@ export const Endpoints = {
         },
 
         Staff: 'listOfStaff',
+        UpdateStaff: 'updateStaff',
         ChangeProjectOrderStatus: 'changeProjectOrderStatus',
         AssignProjectToUser: 'assignProjectToUser',
-        Notifications: 'listOfNotifications'
+        Notifications: 'listOfNotifications',
+        TransactionsList: 'listofTransactions',
+
+        StatusBitsList: 'getUserAllStatusBit',
+        StatusBitsUpdate: 'updateUserStatusBit',
     }
 }

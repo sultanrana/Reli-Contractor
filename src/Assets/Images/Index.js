@@ -19,6 +19,9 @@ const Icons = {
     Congrats: require('./congrats.png'),
     Alert: require('./alert.png'),
 
+    Camera: require('./camera.png'),
+    Gallery: require('./gallery.png'),
+
 }
 
 const Images = {

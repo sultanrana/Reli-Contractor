@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "267873578295",
+    "project_id": "reli-solutions-inc",
+    "storage_bucket": "reli-solutions-inc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267873578295:android:df0916c4712eb8c4e7beb2",
+        "android_client_info": {
+          "package_name": "com.relicontractor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267873578295-2jinviut5a03hh96avhhdgvheghpg6kd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH-imH_lLUaqVwlvHYOpkWu87yq65GNyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267873578295-2jinviut5a03hh96avhhdgvheghpg6kd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "267873578295-hv3n2ofukaptddk5d6um3ctd9q1j8fb5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.relicontractor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

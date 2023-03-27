@@ -14,12 +14,14 @@ import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { handleUpdateUserDetails } from '../../API/Config';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { EMAIL_REG } from '../../Constants/Constants';
+import { setUserData } from '../../Redux/Actions';
 
 const AccountDetails = ({ navigation }) => {
 
     const { userData } = useSelector(state => state.Index)
+    const dispatch = useDispatch()
 
     const [inputs, setInputs] = useState({
         firstname: userData != null ? userData?.firstName : '',
@@ -66,6 +68,12 @@ const AccountDetails = ({ navigation }) => {
             setIsLoading(true)
             handleUpdateUserDetails(userData?._id, inputs.firstname, inputs.lastname, inputs.email).then((res) => {
                 if (res.code === 200) {
+                    dispatch(setUserData({
+                        ...userData,
+                        firstName: inputs.firstname, 
+                        lastName: inputs.lastname, 
+                        email: inputs.email
+                    }))
                     setTimeout(() => {
                         navigation.pop()
                     }, 250);

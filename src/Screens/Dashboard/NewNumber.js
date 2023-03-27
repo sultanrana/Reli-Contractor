@@ -13,8 +13,9 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { handleUpdateNumber } from '../../API/Config';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Keyboard } from 'react-native';
+import { setUserData } from '../../Redux/Actions';
 
 const NewNumber = ({ navigation }) => {
 
@@ -29,6 +30,7 @@ const NewNumber = ({ navigation }) => {
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
+    const dispatch = useDispatch()
 
     const handleOnChange = (text, input) => {
         setInputs(prevState => ({ ...prevState, [input]: text }))
@@ -49,6 +51,10 @@ const NewNumber = ({ navigation }) => {
             setIsLoading(true)
             handleUpdateNumber(userData?._id, inputs.number).then((res) => {
                 if (res.code === 200) {
+                    dispatch(setUserData({
+                        ...userData,
+                        phoneNumber: inputs.number
+                    }))
                     setTimeout(() => {
                         navigation.pop()
                     }, 250);

@@ -5,10 +5,10 @@ import Colors, { colors } from '../../Theme/Colors';
 import { GetStyles } from '../../Theme/AppStyles';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import StaffItemBox from '../../Components/StaffItemBox'
-import { Images } from '../../Assets/Images/Index';
+import { setStaffList } from '../../Redux/Actions'
 import { useIsFocused } from '@react-navigation/native';
 import { handleGetStaffData } from '../../API/Config';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IMAGES_URL } from '../../API/Constants';
 import Loader from '../../Components/Loader';
 import { Text } from 'react-native';
@@ -23,9 +23,11 @@ const Staff = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const [isLoading, setIsLoading] = useState(false)
+  const { list } = useSelector(({Staff}) => Staff)
+  const dispatch = useDispatch()
+
+  const [isLoading, setIsLoading] = useState(list.length === 0)
   const [isListLoading, setIsListLoading] = useState(false)
-  const [staffData, setStaffData] = useState([])
 
   const { token, userData } = useSelector(state => state.Index)
 
@@ -36,16 +38,13 @@ const Staff = ({ navigation }) => {
     }
   }, [isFocused])
 
-  console.log('User Data', userData);
-
   const getStaff = async () => {
-    // setIsLoading(is => ((!actionNeeded || !claim) && !is))
-    setIsLoading(true)
+    console.log('Staff Data is Loading');
     handleGetStaffData(token, userData?.company).then(({ data }) => {
-      console.log('Staff Data', data);
-      setStaffData(data)
+      dispatch(setStaffList(data))
     }).finally(() => {
       setIsLoading(false)
+      setIsListLoading(false)
     })
   }
 
@@ -56,7 +55,7 @@ const Staff = ({ navigation }) => {
       <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={staffData}
+          data={list}
           renderItem={({ item }) => (
             <StaffItemBox navigation={navigation}
               name={item?.firstName + ' ' + item?.lastName}
@@ -76,11 +75,7 @@ const Staff = ({ navigation }) => {
           refreshing={isListLoading}
           onRefresh={() => {
             setIsListLoading(true)
-            handleGetStaffData(token, '6374e8ee44b48004449be4f5').then(({ data }) => {
-              setStaffData(data)
-            }).finally(() => {
-              setIsListLoading(false)
-            })
+            getStaff()
           }}
           ListEmptyComponent={() => (
             <>

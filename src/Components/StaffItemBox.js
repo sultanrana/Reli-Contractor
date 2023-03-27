@@ -10,10 +10,13 @@ import { FontSize } from '../Theme/FontSize';
 import Fonts from '../Assets/Fonts/Index';
 import { vs } from 'react-native-size-matters';
 import ContainedButton from './ContainedButton';
+import { useDispatch } from 'react-redux';
+import { setCurrentStaff } from '../Redux/Actions';
 
 const StaffItemBox = ({ navigation, id, image, name, onClaim, Item }) => {
     const AppColors = Colors(useColorScheme())
     const AppStyles = (useColorScheme() === 'light') ? AppStylesLight : AppStylesDark;
+    const dispatch = useDispatch()
 
     // console.log({Item});
     const styles = StyleSheet.create({
@@ -35,7 +38,10 @@ const StaffItemBox = ({ navigation, id, image, name, onClaim, Item }) => {
         <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => {
-                navigation.navigate(References.StaffTabs)
+                dispatch(setCurrentStaff(Item))
+                setTimeout(() => {
+                    navigation.navigate(References.StaffTabs)
+                }, 300)
             }} style={styles.mainView}
             disabled={onClaim ? true : false} >
 

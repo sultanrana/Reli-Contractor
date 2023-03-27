@@ -147,6 +147,22 @@ const Location = ({ navigation }) => {
             info != null ? info.coords.latitude : location.coords.latitude,
         ).then((res) => {
             if (res.code === 200) {
+                // dispatch(setUserData({
+                //     ...userData,
+                //     address: address,
+                //     appartment: apartment,
+                //     willingRange: travel,
+                //     zipCode: zip,
+                //     state: state,
+                //     city: city,
+                //     location: {
+                //         ...userData?.location,
+                //         coordinates: [
+                //             info != null ? info.coords.latitude : location.coords.latitude,
+                //             info != null ? info.coords.latitude : location.coords.latitude,
+                //         ]
+                //     }
+                // }))
                 SimpleToast.show('Location updated successfully')
                 dispatch(setUserData(res?.data?.userData))
                 setTimeout(() => {

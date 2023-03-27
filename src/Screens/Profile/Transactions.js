@@ -1,78 +1,72 @@
-import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList } from 'react-native';
-
-
+import React, { useEffect, useState } from 'react';
+import { Text, View, useColorScheme, SectionList } from 'react-native';
 import { FontSize } from '../../Theme/FontSize';
-import Colors, { colors } from '../../Theme/Colors';
+import Colors from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import Notification from '../../Components/Notification';
 import TransactionDetail from '../../Components/TransactionDetail';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import { handleGetListOfTransactions } from '../../API/Config';
+import Loader from '../../Components/Loader'
+import { setUnpaidTransactions, setPaidTransactions } from '../../Redux/Actions'
+import moment from 'moment-timezone';
 
 const Transactions = ({ navigation }) => {
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
+  const isFocused = useIsFocused()
+
+  const { token, userData } = useSelector(({ Index }) => Index)
+  const { unpaid, paid } = useSelector(({ Transactions }) => Transactions)
+
+  const dispatch = useDispatch()
+
+  const [isLoading, setIsLoading] = useState((
+    unpaid.length === 0 && paid.length === 0
+  ))
+
+  const loadData = async () => {
+    handleGetListOfTransactions(token).then(({ data }) => {
+      const tPaid = []
+      const tUnpaid = []
+      data.forEach(element => {
+        if (element?.stripePaymentId != null && element?.stripePaymentId != '' && element?.stripePaymentId != undefined) {
+          tPaid.push(element)
+        } else tUnpaid.push(element)
+      });
+
+      dispatch(setUnpaidTransactions(tUnpaid))
+      dispatch(setPaidTransactions(tPaid))
+
+    }).finally(() => {
+      setIsLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    if (isFocused) {
+      loadData()
+    }
+  }, [isFocused])
 
   const Data = [
     {
-      title: 'Unpaid',
-      data: [
-        {
-          title: 'Order # 01',
-          assigned: '01/10/2022',
-          completed: '06/10/2022',
-          amount: '$1249.00',
-          status: 'Finished'
-        },
-        {
-          title: 'Order # 02',
-          assigned: '01/10/2022',
-          completed: '07/10/2022',
-          amount: '$1249.00',
-          status: 'In Progress'
-        },
-        {
-          title: 'Order # 03',
-          assigned: '01/10/2022',
-          completed: '09/10/2022',
-          amount: '$1249.00',
-          status: 'Finished'
-        },
-      ]
+      title: unpaid.length>0 && 'Unpaid',
+      data: unpaid
     },
     {
-      title: 'Paid',
-      data: [
-        {
-          title: 'Order # 01',
-          assigned: '01/10/2022',
-          completed: '03/10/2022',
-          amount: '$1249.00',
-          status: 'Finished'
-        },
-        {
-          title: 'Order # 02',
-          assigned: '01/10/2022',
-          completed: '03/10/2022',
-          amount: '$1249.00',
-          status: 'Finished'
-        },
-        {
-          title: 'Order # 03',
-          assigned: '01/10/2022',
-          completed: '03/10/2022',
-          amount: '$1249.00',
-          status: 'Finished'
-        },
-      ]
+      title: paid.length>0 && 'Paid',
+      data: paid
     },
   ]
 
   return (
     <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
+
+      <Loader loading={isLoading}/>
 
       <SectionList
         stickySectionHeadersEnabled={false}
@@ -82,7 +76,13 @@ const Transactions = ({ navigation }) => {
         renderItem={({ item }) => {
           return (
             <TransactionDetail
-              Details={item}
+              Details={{
+                title: item?.name,
+                created: moment(item?.createdAt).format('DD/MM/YYYY'),
+                updated: moment(item?.orderStatusDate).format('DD/MM/YYYY'),
+                amount: `$${parseFloat(item?.totalAmount).toFixed(2)}`,
+                status: item?.orderStatus
+              }}
             />
           )
         }}
