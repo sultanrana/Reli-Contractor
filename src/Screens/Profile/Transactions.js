@@ -11,6 +11,7 @@ import { handleGetListOfTransactions } from '../../API/Config';
 import Loader from '../../Components/Loader'
 import { setUnpaidTransactions, setPaidTransactions } from '../../Redux/Actions'
 import moment from 'moment-timezone';
+import { vs } from 'react-native-size-matters';
 
 const Transactions = ({ navigation }) => {
 
@@ -24,9 +25,7 @@ const Transactions = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const [isLoading, setIsLoading] = useState((
-    unpaid.length === 0 && paid.length === 0
-  ))
+  const [isLoading, setIsLoading] = useState(false)
 
   const loadData = async () => {
     handleGetListOfTransactions(token).then(({ data }) => {
@@ -48,17 +47,18 @@ const Transactions = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused) {
+      setIsLoading(unpaid.length === 0 && paid.length === 0)
       loadData()
     }
   }, [isFocused])
 
   const Data = [
     {
-      title: unpaid.length>0 && 'Unpaid',
+      title: unpaid.length > 0 && 'Unpaid',
       data: unpaid
     },
     {
-      title: paid.length>0 && 'Paid',
+      title: paid.length > 0 && 'Paid',
       data: paid
     },
   ]
@@ -66,12 +66,12 @@ const Transactions = ({ navigation }) => {
   return (
     <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White, paddingTop: 10 }]}>
 
-      <Loader loading={isLoading}/>
+      <Loader loading={isLoading} />
 
       <SectionList
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
-        sections={Data}
+        sections={(Data[0]?.data.length > 0 || Data[1]?.data.length>0 ) ? Data: []}
         keyExtractor={(item, index) => 'ci' + index}
         renderItem={({ item }) => {
           return (
@@ -103,6 +103,23 @@ const Transactions = ({ navigation }) => {
         SectionSeparatorComponent={() => {
           return <View style={{ marginTop: 8 }} />
         }}
+        ListEmptyComponent={() => {
+          if(!isLoading){
+           return (
+             <Text style={{
+               fontFamily: Fonts.Light,
+               fontSize: FontSize.large,
+               color: AppColors.DarkGrey,
+               marginTop: vs(150),
+               textAlign: 'center',
+               alignSelf: 'center',
+             }}>
+               {'No Transactions Found'}
+             </Text>
+           )
+          }
+          return null
+         }}
       />
     </View>
   );

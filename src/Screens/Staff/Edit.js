@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
@@ -69,10 +70,126 @@ const Edit = ({ navigation }) => {
     }
   })
 
+  const CheckCameraPermission = () => {
+    check(PERMISSIONS.ANDROID.CAMERA)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            RequestCameraPermission()
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            CheckStoragePermission()
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
+      })
+      .catch((error) => {
+        // …
+      });
+  }
+
+  const RequestCameraPermission = () => {
+    request(PERMISSIONS.ANDROID.CAMERA)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            CheckStoragePermission()
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            SimpleToast.show('Go to settings to enable camera permission')
+            break;
+        }
+      })
+      .catch((error) => {
+        // …
+      });
+  }
+
+  const CheckStoragePermission = () => {
+    check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            RequestStoragePermission()
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            setMediaOptions(true)
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+        }
+      })
+      .catch((error) => {
+        // …
+      });
+  }
+
+  const RequestStoragePermission = () => {
+    request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
+          case RESULTS.LIMITED:
+            console.log('The permission is limited: some actions are possible');
+            break;
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            setMediaOptions(true)
+            break;
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            SimpleToast.show('Go to settings to enable storage permission')
+            break;
+        }
+      })
+      .catch((error) => {
+        // …
+      });
+  }
 
   const addOrUpdateProfileLocalImage = (isExisting) => {
     // Add Android Permission Check here and call the below function setMediaOptions(true) after granted permissions
-    setMediaOptions(true)
+    if (Platform.OS === 'android') {
+      CheckCameraPermission()
+    } else {
+      setMediaOptions(true)
+    }
+
   }
 
   const onUpdateStaff = async () => {
@@ -85,9 +202,9 @@ const Edit = ({ navigation }) => {
       accountType: role,
       userType: current?.userType,
       image: selectedImage
-    }).then(({message})=> {
+    }).then(({ message }) => {
       ShowSuccessMessage(message)
-    }).catch(({message})=> {
+    }).catch(({ message }) => {
       ShowErrorMessage(message)
     }).finally(() => {
       setIsButtonLoading(false)
@@ -96,76 +213,58 @@ const Edit = ({ navigation }) => {
 
 
   const Galleryopen = () => {
-    let tempArr = []
+    setMediaOptions(false)
     Media
-        .OpenGalery(true)
-        .then((obj) => {
-            // console.log('Galleryopen..............', obj);
-            const fileName = obj?.path.split('/')
-            const source = {
-                name: Platform.OS == 'ios' ? obj.filename : fileName[fileName.length - 1],
-                type: obj.mime,
-                uri: obj?.path,
-            };
-            setSelectedImage(source)
-            setMediaOptions(false)
-        })
-        .catch((error) => {
-            console.log('Galleryopen-error', error);
-        });
+      .OpenGalery(true)
+      .then((obj) => {
+        // console.log('Galleryopen..............', obj);
+        const fileName = obj?.path.split('/')
+        const source = {
+          name: Platform.OS == 'ios' ? obj.filename : fileName[fileName.length - 1],
+          type: obj.mime,
+          uri: obj?.path,
+        };
+        setSelectedImage(source)
+      })
+      .catch((error) => {
+        console.log('Galleryopen-error', error);
+      });
 
-};
+  };
 
-const Camerapopen = async () => {
+  const Camerapopen = async () => {
+    setMediaOptions(false)
     Media
-        .OpenCamera(true)
-        .then((obj) => {
-            const fileName = obj?.path.split('/')
-            const source = {
-                name: fileName[fileName.length - 1],
-                type: obj.mime,
-                uri: obj?.path,
-            };
-            setSelectedImage(source)
-            setMediaOptions(false)
-        }).catch((error) => {
-            console.log('Camerapopen..............', error);
-        });
-
-
-    Media
-        .OpenGalery(true)
-        .then((obj) => {
-            const fileName = obj?.path.split('/')
-            const source = {
-                name: fileName[fileName.length - 1],
-                type: obj.mime,
-                uri: obj?.path,
-            };
-            setMediaOptions(false)
-            setSelectedImage(source)
-        })
-        .catch((error) => {
-            console.log('Camerapopen..............', error);
-        });
-};
+      .OpenCamera(true)
+      .then((obj) => {
+        const fileName = obj?.path.split('/')
+        const source = {
+          name: fileName[fileName.length - 1],
+          type: obj.mime,
+          uri: obj?.path,
+        };
+        setSelectedImage(source)
+      }).catch((error) => {
+        console.log('Camerapopen..............', error);
+      });
+  };
 
 
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
       <MediaOptions
-                visible={mediaOptions}
-                onRequestClose={() => {
-                    setMediaOptions(false)
-                }}
-                selectedOption={(val) => {
-                    if (val == '2') {
-                        Camerapopen()
-                    } else if (val == '3') {
-                        Galleryopen()
-                    }
-                }}
-            />
+        visible={mediaOptions}
+        onRequestClose={() => {
+          setMediaOptions(false)
+        }}
+        selectedOption={(val) => {
+          if (val == '2') {
+            Camerapopen()
+          } else if (val == '3') {
+            Galleryopen()
+          }
+        }}
+      />
       <KeyboardAwareScrollView
         contentContainerStyle={{ paddingVertical: 35 }}
         showsVerticalScrollIndicator={false}>
@@ -173,7 +272,7 @@ const Camerapopen = async () => {
         <View style={{ alignSelf: 'center', alignItems: 'center' }}>
           <TouchableOpacity style={styles.addImage} disabled={(current?.profileImage !== null || selectedImage)} onPress={() => { addOrUpdateProfileLocalImage(false) }}>
             <Image source={(current?.profileImage == null && !selectedImage) ? Icons.Add :
-              { uri: selectedImage? selectedImage?.uri: IMAGES_URL + current?.profileImage }} style={(current?.profileImage == null && !selectedImage) ? styles.addIcon : {
+              { uri: selectedImage ? selectedImage?.uri : IMAGES_URL + current?.profileImage }} style={(current?.profileImage == null && !selectedImage) ? styles.addIcon : {
                 height: 150,
                 width: 150,
                 borderRadius: 150,
