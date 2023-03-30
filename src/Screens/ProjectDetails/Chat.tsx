@@ -20,7 +20,7 @@ import Colors, { colors } from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Icons } from '../../Assets/Images/Index';
-import { windowWidth } from '../../Constants/Constants';
+import { windowHeight, windowWidth } from '../../Constants/Constants';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Message, MessageRoom } from '../../Schemas/MessageRoomSchema';
 import { s, vs } from 'react-native-size-matters';
@@ -29,6 +29,7 @@ import moment from 'moment-timezone';
 import ChatMessage from '../../Components/ChatMessage';
 import { useIsFocused } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
+import { Dimensions } from 'react-native';
 
 const Chat = ({ navigation }) => {
 
@@ -41,6 +42,7 @@ const Chat = ({ navigation }) => {
   const insets = useSafeAreaInsets()
 
   const [loading, setLoading] = useState(true)
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [room, setRoom] = useState<MessageRoom>()
   const [isAutoResendable, setIsAutoResendable] = useState<Boolean>(true)
   const [messageInput, setMessageInput] = useState<string>('')
@@ -48,6 +50,9 @@ const Chat = ({ navigation }) => {
   const [isRoom, setIsRoom] = useState(false)
   const messageInputRef = useRef()
   const isFocused = useIsFocused()
+
+  const { height, width } = Dimensions.get('window');
+  const isIPhone8 = height === 667 && width === 375;
 
   const styles = StyleSheet.create({
     mainContainer: {
@@ -95,17 +100,6 @@ const Chat = ({ navigation }) => {
       width: (windowWidth * 40) / 100,
 
     },
-    closeContainer: {
-      height: s(20),
-      width: s(20),
-      borderRadius: s(20),
-      justifyContent: 'center',
-      alignItems: 'center',
-      alignSelf: 'center',
-      backgroundColor: AppColors.DarkGrey,
-      zIndex: 999
-    },
-
     bottomContainer: {
       width: '100%',
       height: 70,
@@ -136,8 +130,8 @@ const Chat = ({ navigation }) => {
       alignItems: 'center',
     },
     sendIcon: {
-      height: 25,
-      width: 25
+      height: 20,
+      width: 20
     }
 
   })
@@ -193,9 +187,9 @@ const Chat = ({ navigation }) => {
           } else {
             setIsRoom(true)
             const roomDetails = documentSnapshot?.data()
-            console.log({ roomDetails });
+            // console.log({ roomDetails });
             roomDetails?.MessageRoomDetails?.Messages?.reverse()
-            console.log('Room', roomDetails?.MessageRoomDetails.Messages);
+            // console.log('Room', roomDetails?.MessageRoomDetails.Messages);
             setRoom(roomDetails)
             setTimeout(() => {
               setLoading(false)
@@ -204,6 +198,26 @@ const Chat = ({ navigation }) => {
         })
     }
   }, [])
+
+  useEffect(() => {
+    if (isFocused) {
+      const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (event) => {
+        const keyboardHeight = event.endCoordinates.height;
+        setKeyboardHeight(windowHeight - keyboardHeight);
+        console.log('/././././././././', windowHeight - keyboardHeight);
+
+      });
+
+      const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+        setKeyboardHeight(0);
+      });
+
+      return () => {
+        keyboardDidShowListener.remove();
+        keyboardDidHideListener.remove();
+      };
+    }
+  }, []);
 
   const onSendMessage = async () => {
 
@@ -241,34 +255,23 @@ const Chat = ({ navigation }) => {
   }
 
   return (
-    <View style={[AppStyles.CommonScreenStyles]}>
-
-
-      {/* <View style={styles.inputContainer}>
-          <TextInput
-            multiline={true}
-            placeholder={'Type your message here...'}
-            style={styles.input}
-          />
-          <View style={styles.send}>
-            <Image source={Icons.Send} style={styles.sendIcon} resizeMode={'contain'} />
-          </View>
-        </View> */}
+    <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
 
       {
         loading ?
           <Loader loading={loading} />
           :
           isRoom ?
-            <KeyboardAvoidingView
-              style={styles.mainContainer}
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              keyboardVerticalOffset={Platform.OS === 'ios' ? -13 : -vs(105)}
-            >
+            // <KeyboardAvoidingView
+            //   style={styles.mainContainer}
+            //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            //   keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -vs(105)}
+            // >
+            <View style={styles.mainContainer} >
               <View style={styles.content}>
                 <FlatList
-                  style={{ flex: 1, zIndex: 2 }}
-                  contentContainerStyle={{ paddingHorizontal: '2%', zIndex: 3, paddingBottom: vs(28), paddingTop: vs(32) }}
+                  // style={{ flex: 1, zIndex: 2 }}
+                  contentContainerStyle={{ paddingHorizontal: '2%', zIndex: 3, paddingBottom: '10%', paddingTop: vs(32) }}
                   data={room?.MessageRoomDetails?.Messages}
                   keyExtractor={(i, _i) => 'message' + _i}
                   inverted={true}
@@ -282,17 +285,14 @@ const Chat = ({ navigation }) => {
               <View style={{
                 width: '100%',
                 backgroundColor: AppColors.White,
-                paddingBottom: (Platform.OS == 'ios') ? insets.bottom - (windowWidth * 3) / 100 : vs(9),
+                paddingBottom: (Platform.OS === 'ios' && isIPhone8) ? vs(9) : (Platform.OS == 'ios') ? insets.bottom - (windowWidth * 3) / 100 : vs(9),
                 paddingVertical: vs(9),
                 paddingHorizontal: s(13),
               }}>
 
                 {
                   isExpired ?
-                    // <Button
-                    //   text={LangProvider.ChatClosed[languageIndex]}
-                    //   btnStyle={{ backgroundColor: '#FFA800' }}
-                    // />
+
                     null
                     :
                     <View
@@ -305,7 +305,7 @@ const Chat = ({ navigation }) => {
                       <View style={{
                         width: '100%',
                         flexDirection: 'row',
-                        borderRadius: Platform.OS === 'ios' ? vs(15) : vs(20),
+                        borderRadius: Platform.OS === 'ios' ? vs(20) : vs(20),
                         backgroundColor: AppColors.Background,
                         paddingHorizontal: vs(12),
                         paddingVertical: Platform.OS == 'ios' ? vs(7) : 0,
@@ -363,8 +363,8 @@ const Chat = ({ navigation }) => {
 
 
               </View>
-
-            </KeyboardAvoidingView>
+            </View>
+            // </KeyboardAvoidingView>
             :
             <Text style={{
               fontFamily: Fonts?.SemiBold,
