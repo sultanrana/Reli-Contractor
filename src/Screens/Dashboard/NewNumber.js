@@ -19,7 +19,7 @@ import { setUserData } from '../../Redux/Actions';
 
 const NewNumber = ({ navigation }) => {
 
-    const { userData } = useSelector(state => state.Index)
+    const { userData, token } = useSelector(state => state.Index)
 
     const [inputs, setInputs] = useState({
         number: userData != null ? userData?.phoneNumber : ''

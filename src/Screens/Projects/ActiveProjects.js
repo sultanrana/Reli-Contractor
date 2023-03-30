@@ -18,25 +18,28 @@ import { handleGetAllActiveProjects } from '../../API/Config';
 import Loader from '../../Components/Loader';
 import { vs } from 'react-native-size-matters';
 import moment from 'moment-timezone';
+import { useIsFocused } from '@react-navigation/native';
 
 const ActiveProjects = ({ navigation }) => {
 
+  const { id, details } = useSelector(({ Projects }) => Projects)
+  const { token } = useSelector(({ Index }) => Index)
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
   const [loading, setLoading] = useState(true)
   const [projectData, setProjectData] = useState([])
-  const { id, details } = useSelector(({ Projects }) => Projects)
-  const { token } = useSelector(({ Index }) => Index)
-
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    handleGetAllActiveProjects(token).then(({ data }) => {
-      setProjectData(data?.length > 0 ? data : [])
-    }).finally(() => {
-      setLoading(false)
-    })
+    if (isFocused) {
+      handleGetAllActiveProjects(token).then(({ data }) => {
+        setProjectData(data?.length > 0 ? data : [])
+      }).finally(() => {
+        setLoading(false)
+      })
+    }
   }, [])
 
   const renderDateItem = ({ item, index }) => {

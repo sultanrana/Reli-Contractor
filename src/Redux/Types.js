@@ -19,6 +19,8 @@ const OPTIONS = 'OPTIONS'
 const STAFF_LIST = 'STAFFLIST'
 const STAFF_CURRENT = 'STAFF_CURRENT'
 
+const FCM='FCM'
+
 export {
   AUTH_TOKEN,
   USER_DATA,
@@ -37,5 +39,7 @@ export {
   OPTIONS,
 
   STAFF_CURRENT,
-  STAFF_LIST
+  STAFF_LIST,
+
+  FCM
 };

@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import * as Progress from 'react-native-progress';
 import { Text, View, StyleSheet, useColorScheme, FlatList } from 'react-native';
+import firestore from '@react-native-firebase/firestore'
+import moment from 'moment-timezone';
+import { useIsFocused } from '@react-navigation/native';
+import { vs } from 'react-native-size-matters';
+import SimpleToast from 'react-native-simple-toast';
+
 import ContainedButton from '../../Components/ContainedButton'
 import { FontSize } from '../../Theme/FontSize';
 import Colors from '../../Theme/Colors';
@@ -18,9 +24,7 @@ import Loader from '../../Components/Loader'
 import { ProjectStatuses } from '../../Constants/ProjectStatus';
 import { References } from '../../Constants/References';
 import { setProjectDetails } from '../../Redux/Actions';
-import { useIsFocused } from '@react-navigation/native';
-import SimpleToast from 'react-native-simple-toast';
-import { vs } from 'react-native-size-matters';
+import { Message, MessageRoom } from '../../Schemas/MessageRoomSchema';
 
 const Overview = ({ navigation }) => {
 
@@ -41,7 +45,7 @@ const Overview = ({ navigation }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   const { id, details } = useSelector(({ Projects }) => Projects)
-  const { token, userData } = useSelector(({ Index }) => Index)
+  const { token, userData, fcmToken } = useSelector(({ Index }) => Index)
 
 
   const isAdmin = (userData?.accountType == 'admin_contractor')
@@ -80,6 +84,37 @@ const Overview = ({ navigation }) => {
   }
 
   const isFocused = useIsFocused()
+
+  const newRoom = new MessageRoom({
+    ProjectID: id,
+    Created: new Date(),
+    Expired: false,
+    ID: '',
+    LastOpened: new Date(),
+    Messages: [
+      new Message({
+        Body: `Order created on ${moment().format('hh:mm A, ddd, DD MMM YYYY')}`,
+        DateTime: new Date(),
+        Milliseconds: moment().valueOf(),
+        ReceiverID: '',
+        SenderID: userData?._id,
+        Shown: true,
+        SYSTEM: true,
+      })
+    ],
+    Contractor: {
+      ID: userData?._id,
+      Image: '',
+      IsTyping: false,
+      FCM: fcmToken
+    },
+    Customer: {
+      ID: '',
+      Image: '',
+      IsTyping: false,
+      FCM: ''
+    }
+  })
 
   useEffect(() => {
     setIsButtonDisabled(false)
@@ -126,14 +161,13 @@ const Overview = ({ navigation }) => {
 
   }, [selectedDateIndex, projectData?.orderStatus, projectData?.requestStatus])
 
-
   const loadData = () => {
     handleGetProjectDetails(token, id).then(({ data }) => {
       if (data[0]?.orderStatusDate != null && data[0]?.orderStatusDate != undefined && data[0]?.orderStatusDate != '' && (data[0]?.orderStatus !== ProjectStatuses.Pending && data[0]?.orderStatus !== ProjectStatuses.Unassigned)) {
         data[0].dateSelection = new Array(data[0]?.orderStatusDate?.split('T')[0])
       } else if (data[0]?.orderStatus !== ProjectStatuses.Unassigned && data[0]?.orderStatus !== ProjectStatuses.Pending) {
         data[0].dateSelection = new Array(data[0]?.dateSelection[0])
-      } 
+      }
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
       setProjectData(data?.length > 0 ? data[0] : null)
       console.log('Details', data[0]);
@@ -274,7 +308,9 @@ const Overview = ({ navigation }) => {
   const onAcceptProject = async () => {
     setLoading(true)
     handleChangeProjectStatusRequest(token, id, 'Accepted').finally(() => {
-      loadData()
+      firestore().collection(`Chats-test`).doc(newRoom.MessageRoomDetails.ProjectID).set(newRoom).finally(() => {
+        loadData()
+      })
     })
   }
 
@@ -292,9 +328,9 @@ const Overview = ({ navigation }) => {
     }
 
     if ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
-      newStatus = isAdmin? ProjectStatuses.Scheduled: ProjectStatuses.Ordered
+      newStatus = isAdmin ? ProjectStatuses.Scheduled : ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
-      newStatus = isAdmin? ProjectStatuses.Assigned: ProjectStatuses.Ordered
+      newStatus = isAdmin ? ProjectStatuses.Assigned : ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
       newStatus = ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
@@ -474,21 +510,25 @@ const Overview = ({ navigation }) => {
     <View style={[AppStyles.ProjectDetailsScreen]}>
       {/* <Progress.Bar animated progress={0.5} height={5} width={screenWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} /> */}
 
-      <Loader loading={loading} />
+      {
+        loading ?
+          <Loader loading={loading} />
+          :
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={(projectData?.orderdetails != null) ? (projectData?.orderdetails) : []}
+            renderItem={({ item }) => {
+              return (
+                <ServiceContainer Details={item} />
+              )
+            }}
+            keyExtractor={(item, index) => 'ser' + index}
+            ListHeaderComponent={listHeaderComponent}
+            ListFooterComponent={listFooterComponent}
+            contentContainerStyle={{ paddingBottom: '10%' }}
+          />
+      }
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={(projectData?.orderdetails != null) ? (projectData?.orderdetails) : []}
-        renderItem={({ item }) => {
-          return (
-            <ServiceContainer Details={item} />
-          )
-        }}
-        keyExtractor={(item, index) => 'ser' + index}
-        ListHeaderComponent={listHeaderComponent}
-        ListFooterComponent={listFooterComponent}
-        contentContainerStyle={{ paddingBottom: '10%' }}
-      />
       <Popup
         visible={popupVisible}
         onRequestClose={() => setPopupVisible(false)}

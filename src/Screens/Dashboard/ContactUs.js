@@ -24,8 +24,11 @@ const ContactUs = ({ navigation }) => {
     const [openSubject, setOpenSubject] = useState(false);
 
     const [subjectList, setSubjectList] = useState([
-        { label: 'Subject 1', value: 'Subject 1' },
-        { label: 'Subject 2', value: 'Subject 2' }
+        { label: 'General', value: 'General' },
+        { label: 'Billing', value: 'Billing' },
+        { label: 'Warranty', value: 'Warranty' },
+        { label: 'Request a Feature', value: 'Request a Feature' },
+        { label: 'Report a Technical Issue', value: 'Report a Technical Issue' }
     ])
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme)
@@ -85,7 +88,7 @@ const ContactUs = ({ navigation }) => {
                         setItems={setSubjectList}
                         listMode="SCROLLVIEW"
                         dropDownMaxHeight={50}
-                        onChangeValue={(val)=>{
+                        onChangeValue={(val) => {
                             // setSubject(val)
                             handleError(null, 'subject')
                         }}

@@ -45,6 +45,8 @@ const LogoOver =
                 borderBottomWidth: 1,
                 borderBottomColor: AppColors.DateBackground,
                 paddingTop: StatusbarHeight + ((windowHeight * 2) / 100),
+                // position:'absolute',
+                top:0
                 // backgroundColor: 'pink'
             },
             image: {

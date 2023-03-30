@@ -27,7 +27,7 @@ const Home = ({ navigation }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const { claim, actionNeeded } = useSelector(state => state.Projects)
   const { token } = useSelector(state => state.Index)
@@ -52,7 +52,6 @@ const Home = ({ navigation }) => {
 
   const getProjects = async () => {
     // setIsLoading(is => ((!actionNeeded || !claim) && !is))
-    setIsLoading(is => (!is))
     handleGetDashboardData(token).then(({ data }) => {
       console.log(data[0]?.actionNeededOrders);
       const { actionNeededOrders, claimOrders } = data[0]
@@ -127,14 +126,17 @@ const Home = ({ navigation }) => {
   return (
     <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
-      <Loader loading={isLoading} />
-      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
-        {
-          !(claim?.length == 0 && actionNeeded?.length == 0 && !isLoading) ?
+
+
+      {
+        (Data[0]?.data.length == 0 && Data[1]?.data.length == 0) ?
+          <Loader loading={isLoading} />
+          :
+          <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
             <SectionList
               stickySectionHeadersEnabled={false}
               showsVerticalScrollIndicator={false}
-              sections={(Data[0]?.data.length > 0 || Data[1]?.data.length>0 ) ? Data: []}
+              sections={(Data[0]?.data.length > 0 || Data[1]?.data.length > 0) ? Data : []}
               keyExtractor={(item, index) => 'ci' + index}
               renderItem={({ section: { renderItem } }) => { renderItem }}
               renderSectionHeader={({ section: { title } }) => (
@@ -150,36 +152,27 @@ const Home = ({ navigation }) => {
               SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
               contentContainerStyle={{ paddingBottom: 10 }}
               ListEmptyComponent={() => {
-               if(!isLoading){
-                return (
-                  <Text style={{
-                    fontFamily: Fonts.Light,
-                    fontSize: FontSize.large,
-                    color: AppColors.DarkGrey,
-                    marginTop: vs(150),
-                    textAlign: 'center',
-                    alignSelf: 'center',
-                  }}>
-                    {'No Projects Found'}
-                  </Text>
-                )
-               }
-               return null
+                if (!isLoading) {
+                  return (
+                    <Text style={{
+                      fontFamily: Fonts.Light,
+                      fontSize: FontSize.large,
+                      color: AppColors.DarkGrey,
+                      marginTop: vs(150),
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                    }}>
+                      {'No Projects Found'}
+                    </Text>
+                  )
+                }
+                return null
               }}
-            /> :
-            <Text allowFontScaling={false} style={{
-              fontFamily: Fonts.Light,
-              fontSize: FontSize.medium,
-              color: AppColors.DarkGrey,
-              marginTop: vs(50),
-              textAlign: 'center',
-              width: '100%'
-            }}>
-              {'No Projects'}
-            </Text>
-        }
+            />
 
-      </View>
+          </View>
+      }
+
     </View>
 
 

@@ -22,7 +22,7 @@ import { setUserData } from '../../Redux/Actions';
 
 const Location = ({ navigation }) => {
 
-    const { userData } = useSelector(state => state.Index)
+    const { userData,token } = useSelector(state => state.Index)
     const { location } = useSelector(state => state.Location)
 
     const [isLoading, setIsLoading] = useState(false);
@@ -147,30 +147,27 @@ const Location = ({ navigation }) => {
             info != null ? info.coords.latitude : location.coords.latitude,
         ).then((res) => {
             if (res.code === 200) {
-                // dispatch(setUserData({
-                //     ...userData,
-                //     address: address,
-                //     appartment: apartment,
-                //     willingRange: travel,
-                //     zipCode: zip,
-                //     state: state,
-                //     city: city,
-                //     location: {
-                //         ...userData?.location,
-                //         coordinates: [
-                //             info != null ? info.coords.latitude : location.coords.latitude,
-                //             info != null ? info.coords.latitude : location.coords.latitude,
-                //         ]
-                //     }
-                // }))
-                SimpleToast.show('Location updated successfully')
-                dispatch(setUserData(res?.data?.userData))
+                dispatch(setUserData({
+                    ...userData,
+                    address: address,
+                    appartment: apartment,
+                    willingRange: travel,
+                    zipCode: zip,
+                    state: state,
+                    city: city,
+                    location: {
+                        ...userData?.location,
+                        coordinates: [
+                            info != null ? info.coords.latitude : location.coords.latitude,
+                            info != null ? info.coords.latitude : location.coords.latitude,
+                        ]
+                    }
+                }))
                 setTimeout(() => {
                     navigation.pop()
                 }, 1000);
             }
         }).catch((err) => {
-            SimpleToast.show('Something went wrong')
             console.log(err);
         }).finally(() => {
             setIsLoading(false)

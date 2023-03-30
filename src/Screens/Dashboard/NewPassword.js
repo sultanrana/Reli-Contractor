@@ -19,7 +19,7 @@ import { REGEX_PASS_1, REGEX_PASS_2, REGEX_PASS_3 } from '../../Constants/Consta
 
 const NewPassword = ({ navigation }) => {
 
-    const { userData } = useSelector(state => state.Index)
+    const { userData, token } = useSelector(state => state.Index)
 
     const [inputs, setInputs] = useState({
         password: ''

@@ -194,7 +194,7 @@ const Edit = ({ navigation }) => {
 
   const onUpdateStaff = async () => {
     setIsButtonLoading(true)
-    handleUpdateStaffMember(token, current?._id, {
+    handleUpdateStaffMember(current?._id, {
       firstName: firstName,
       lastName: lastName,
       email: email,

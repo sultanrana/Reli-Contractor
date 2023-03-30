@@ -12,8 +12,15 @@ import {
     OPTIONS,
     STAFF_LIST,
     STAFF_CURRENT,
+    FCM,
 
 } from './Types'
+
+
+const setFcm = (payload) => ({
+    type: FCM,
+    payload: payload
+})
 
 const setAuthToken = (payload) => ({
     type: AUTH_TOKEN,
@@ -83,4 +90,4 @@ const logout = () => ({
     payload: null
 })
 
-export {setAuthToken, setUserData, setCompaniesData, logout, setActionNeededProjects, setClaimProjects, setProjectDetails, setProjectID, setOptions, setPaidTransactions, setUnpaidTransactions, setStaffList, setCurrentStaff }
+export { setFcm, setAuthToken, setUserData, setCompaniesData, logout, setActionNeededProjects, setClaimProjects, setProjectDetails, setProjectID, setOptions, setPaidTransactions, setUnpaidTransactions, setStaffList, setCurrentStaff }

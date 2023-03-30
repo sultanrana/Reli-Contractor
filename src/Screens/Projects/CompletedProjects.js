@@ -12,25 +12,29 @@ import Loader from '../../Components/Loader'
 import { vs } from 'react-native-size-matters';
 import { FontSize } from '../../Theme/FontSize';
 import Fonts from '../../Assets/Fonts/Index';
+import { useIsFocused } from '@react-navigation/native';
 
 const CompletedProjects = ({ navigation }) => {
 
+  const { id, details } = useSelector(({ Projects }) => Projects)
+  const { token } = useSelector(({ Index }) => Index)
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
   const [loading, setLoading] = useState(true)
   const [projectData, setProjectData] = useState([])
-  const { id, details } = useSelector(({ Projects }) => Projects)
-  const { token } = useSelector(({ Index }) => Index)
+  const isFocused = useIsFocused()
 
 
   useEffect(() => {
-    handleGetAllCompletedProjects(token).then(({ data }) => {
-      setProjectData(data?.length > 0? data: [])
-    }).finally(()=>{
-      setLoading(false)
-    })
+    if (isFocused) {
+      handleGetAllCompletedProjects(token).then(({ data }) => {
+        setProjectData(data?.length > 0 ? data : [])
+      }).finally(() => {
+        setLoading(false)
+      })
+    }
   }, [])
 
 
@@ -68,7 +72,7 @@ const CompletedProjects = ({ navigation }) => {
   ]
   return (
     <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background, paddingTop: 10 }]}>
-      <Loader loading={loading}/>
+      <Loader loading={loading} />
       <SectionList
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}

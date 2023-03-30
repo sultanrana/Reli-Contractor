@@ -1,11 +1,15 @@
 type CustomerDataInMessageRoomType = {
     ID: String,
     Image: String,
+    IsTyping: Boolean,
+    FCM: String
 }
 
 type ContractorDataInMessageRoomType = {
     ID: String,
     Image: String,
+    IsTyping: Boolean,
+    FCM: String,
     UserType: String,       //Admin or Standard Contractor
 }
 
@@ -23,7 +27,7 @@ type MessageRoomType = {
     Created: Date,          //Using new Date()
     Expired: Boolean,       //FALSE BY DEFAULT
     ID: String,             //ROOM ID -> ORDER ID IN THIS CASE
-    OrderID: String,        //ORDER ID
+    ProjectID: String,        //ORDER ID
     Customer: CustomerDataInMessageRoomType,
     Contractor: ContractorDataInMessageRoomType,
     Messages: Array<MessageType>
@@ -34,8 +38,8 @@ type MessageRoomType = {
 const NewMessageRoom: MessageRoomType = {
     Created: new Date(),
     Expired: false,
+    ProjectID: '',
     ID: '',
-    OrderID: '',
     Messages: [],
     Customer: {
         ID: '',

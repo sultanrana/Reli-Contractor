@@ -13,10 +13,11 @@ import { showMessage } from 'react-native-flash-message';
 import { ProjectStatuses } from '../Constants/ProjectStatus';
 
 //Login
-export const handleLogin = async (email, password) => {
+export const handleLogin = async (email, password, fcm) => {
     const formData = new URLSearchParams();
     formData.append('email', email);
     formData.append('password', password);
+    formData.append('fcmToken', fcm);
 
     try {
         const response = await fetch.post(
@@ -131,9 +132,9 @@ export const handleChangePassword = async (userId, password) => {
     try {
         const response = await fetch.put(
             API_URL + '/' + `${Endpoints.AuthProfile.ChangePassword}/${userId}`,
+            null,
             formData.toString(),
             'Change Password',
-            null,
             ContentTypes.XUrlEncodedFormData,
         )
 
@@ -169,9 +170,9 @@ export const handleUpdateNumber = async (userId, number) => {
     try {
         const response = await fetch.put(
             API_URL + '/' + `${Endpoints.AuthProfile.UpdatePhoneNumber}/${userId}`,
+            null,
             formData.toString(),
             'Change Number',
-            null,
             ContentTypes.XUrlEncodedFormData,
         )
 
@@ -205,13 +206,12 @@ export const handleUpdateUserDetails = async (userId, fName, lName, email) => {
     formData.append('firstName', fName);
     formData.append('lastName', lName);
     formData.append('email', email);
-
     try {
         const response = await fetch.put(
-            API_URL + '/' + `${Endpoints.AuthProfile.UpdateAccountDetail}/${userId}`,
+            API_URL + `${Endpoints.AuthProfile.UpdateAccountDetail}/${userId}`,
+            null,
             formData.toString(),
             'Update_User_Details',
-            null,
             ContentTypes.XUrlEncodedFormData,
         )
 
@@ -254,20 +254,30 @@ export const handleUpdateUserLocation = async (userId, address, apartment, dista
     try {
         const response = await fetch.put(
             API_URL + '/' + `${Endpoints.AuthProfile.UpdateLocation}/${userId}`,
+            null,
             formData.toString(),
             'Update_User_Location',
-            null,
             ContentTypes.XUrlEncodedFormData,
         )
 
         if (response?.code === 200) {
+            showMessage({
+                message: 'Location updated successfully',
+                type: 'success',
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: e?.message,
+            type: 'danger',
+        })
         console.log(e);
         throw e
     }
@@ -946,7 +956,7 @@ export const handleUpdateOptions = async (authToken, uid, {
 
 }
 
-export const handleUpdateStaffMember = async (authToken, staffID, {
+export const handleUpdateStaffMember = async (staffID, {
     firstName, lastName, email, phoneNumber, accountType, userType, image
 }) => {
 
@@ -964,9 +974,9 @@ export const handleUpdateStaffMember = async (authToken, staffID, {
 
         const response = await fetch.put(
             API_URL + `${Endpoints.Dashboard.UpdateStaff}/${staffID}`,
+            null,
             formData,
             Endpoints.Dashboard.UpdateStaff,
-            authToken,
             `${ContentTypes.MultipartFormData};boundary=${formData._boundary}`,
         )
 

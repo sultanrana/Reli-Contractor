@@ -13,12 +13,12 @@ import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import Overview from '../ProjectDetails/Overview'
-import Message from '../ProjectDetails/Message'
 import Service from '../ProjectDetails/Service'
 import Assignment from '../ProjectDetails/Assignment'
 import Finances from '../ProjectDetails/Finances'
 import { windowWidth } from '../../Constants/Constants';
 import { useSelector } from 'react-redux';
+import Chat from '../ProjectDetails/Chat';
 
 const Tabs = createMaterialTopTabNavigator()
 
@@ -35,6 +35,13 @@ const ProjectDetails = ({ navigation }) => {
 
       <Tabs.Navigator
         pageMargin={2}
+        // style={{
+        //   position: 'absolute',
+        //   top: 150,
+        //   left: 0,
+        //   right: 0,
+        //   zIndex: 1,
+        // }}
         screenOptions={{
           lazy: true,
           tabBarScrollEnabled: true,
@@ -48,11 +55,13 @@ const ProjectDetails = ({ navigation }) => {
             backgroundColor: AppColors.Primary,
           },
           tabBarLabelStyle: {
-            textTransform: 'none'
+            textTransform: 'none',
+            // zIndex:9999
+
           }
         }}>
         <Tabs.Screen name='Overview' component={Overview} />
-        <Tabs.Screen name='Message' component={Message} />
+        <Tabs.Screen name='Message' component={Chat} />
         <Tabs.Screen name='Service' component={Service} />
         {
           (userData?.accountType == 'admin_contractor') &&

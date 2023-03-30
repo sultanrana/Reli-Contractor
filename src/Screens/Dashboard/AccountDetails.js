@@ -20,7 +20,7 @@ import { setUserData } from '../../Redux/Actions';
 
 const AccountDetails = ({ navigation }) => {
 
-    const { userData } = useSelector(state => state.Index)
+    const { userData, token } = useSelector(state => state.Index)
     const dispatch = useDispatch()
 
     const [inputs, setInputs] = useState({
@@ -70,8 +70,8 @@ const AccountDetails = ({ navigation }) => {
                 if (res.code === 200) {
                     dispatch(setUserData({
                         ...userData,
-                        firstName: inputs.firstname, 
-                        lastName: inputs.lastname, 
+                        firstName: inputs.firstname,
+                        lastName: inputs.lastname,
                         email: inputs.email
                     }))
                     setTimeout(() => {

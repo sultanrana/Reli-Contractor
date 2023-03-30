@@ -4,7 +4,7 @@ import { Message } from '../Schemas/MessageRoomSchema'
 import { vs, s } from 'react-native-size-matters'
 import moment from 'moment-timezone'
 import { useSelector } from 'react-redux'
-import { windowWidth } from '../Helpers/Utils'
+import { windowWidth } from '../Constants/Constants'
 import { GetStyles } from '../Theme/AppStyles'
 import Colors from '../Theme/Colors'
 import Fonts from '../Assets/Fonts/Index'
@@ -17,20 +17,22 @@ const ChatMessage = ({ Item }) => {
     const AppStyles = GetStyles(scheme || 'light')
     const AppColors = Colors(scheme)
 
+    const {  userData } = useSelector(state => state.Index)
+
     const [textShown, setTextShown] = useState(false);
     const [lengthMore, setLengthMore] = useState(false);
     const toggleNumberOfLines = () => {
         setTextShown(!textShown);
     }
 
-    const {
-        loginUserData,
-    } = useSelector(({ Auth }) => Auth)
+    // const {
+    //     loginUserData,
+    // } = useSelector(({ Auth }) => Auth)
 
     const messageItem = new Message(Item?.MessageDetails)
     const { MessageDetails, isSentByMe } = messageItem
     const { Body, SYSTEM, ImagePaths, DocPaths } = MessageDetails
-    const isMine = isSentByMe(loginUserData?.user_id)
+    const isMine = isSentByMe(userData?._id,)
 
     var str = moment(MessageDetails.Milliseconds).format('hh:mm A, DD MMM YY')
 

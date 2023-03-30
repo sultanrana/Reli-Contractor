@@ -12,8 +12,11 @@ import Loader from '../../Components/Loader'
 import { vs } from 'react-native-size-matters';
 import Fonts from '../../Assets/Fonts/Index';
 import { FontSize } from '../../Theme/FontSize';
+import { useIsFocused } from '@react-navigation/native';
 
 const AvailableProjects = ({ navigation }) => {
+  const { token } = useSelector(({ Index }) => Index)
+  const { id, details } = useSelector(({ Projects }) => Projects)
 
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
@@ -21,16 +24,18 @@ const AvailableProjects = ({ navigation }) => {
 
   const [loading, setLoading] = useState(true)
   const [projectData, setProjectData] = useState([])
-  const { id, details } = useSelector(({ Projects }) => Projects)
-  const { token } = useSelector(({ Index }) => Index)
+  const isFocused = useIsFocused()
 
 
   useEffect(() => {
-    handleGetAllAvailableProjects(token).then(({ data }) => {
-      setProjectData(data?.length > 0 ? data : [])
-    }).finally(() => {
-      setLoading(false)
-    })
+    if (isFocused) {
+      handleGetAllAvailableProjects(token).then(({ data }) => {
+        setProjectData(data?.length > 0 ? data : [])
+      }).finally(() => {
+        setLoading(false)
+      })
+    }
+
   }, [])
 
   const renderServiceItem = ({ item, index }) => {

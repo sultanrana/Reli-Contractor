@@ -32,7 +32,6 @@ const DateSchedule = ({ item, index, selectedDateIndex, setSelectedDateIndex, cl
             width: windowWidth / 3.79,
             borderRadius: 10,
             paddingTop: 8,
-
             borderColor: isSelected? AppColors.Primary: AppColors.White,
             borderWidth: isSelected? 2: 0,
         },

@@ -14,12 +14,13 @@ import { Icons } from '../../Assets/Images/Index';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { handleLogin } from '../../API/Config';
 import { setAuthToken, setUserData } from '../../Redux/Actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Keyboard } from 'react-native';
 
 const LoginSecondary = ({ navigation, route }) => {
 
+  const { fcmToken } = useSelector(state => state.Index)
   const [inputs, setInputs] = useState({
     password: '',
   })
@@ -48,7 +49,7 @@ const LoginSecondary = ({ navigation, route }) => {
     }
     if (valid) {
       setIsLoading(true)
-      handleLogin(email, inputs.password).then(async (data) => {
+      handleLogin(email, inputs.password, fcmToken).then(async (data) => {
         if (data) {
           await AsyncStorage.setItem('token', '' + data?.token).then(() => {
             dispatch(setUserData(data?.userData))

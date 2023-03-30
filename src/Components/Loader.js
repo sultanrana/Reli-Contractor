@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     container: {
         position: "absolute",
         // justifyContent: "space-evenly",
-        backgroundColor: '#00000040',
+        backgroundColor: '#00000025',
         top: 0, left: 0, bottom: 0, right: 0,
         flexDirection: 'row',
         alignItems: 'center'
