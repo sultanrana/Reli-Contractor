@@ -86,11 +86,11 @@ const Finances = ({ navigation }) => {
         bottom: 10,
         width: '30%'
       }}>
-        <ContainedButton
+        {/* <ContainedButton
           label="Claim"
           style={{  }}
 
-        />
+        /> */}
       </View>
     </View>
   );

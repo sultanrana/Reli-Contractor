@@ -48,7 +48,7 @@ const Splash = ({ navigation }) => {
 
             if (enabled) {
                 const fcmtoken = await messaging().getToken()
-                // console.log('Device Token:', fcmtoken);
+                console.log('Device Token:', fcmtoken);
                 dispatch(setFcm(fcmtoken))
             }
         } catch (error) {

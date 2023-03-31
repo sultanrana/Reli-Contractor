@@ -124,8 +124,8 @@ const ProjectDetails = ({ navigation }) => {
 
       <KeyboardAvoidingView
         style={styles.mainContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={(Platform.OS === 'ios' && isIPhone8) ? 0 : Platform.OS === 'ios' ? -vs(7) : -vs(105)}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={(Platform.OS === 'ios' && isIPhone8) ? 0 : Platform.OS === 'ios' ? -vs(7) : 0}
       >
         <Tabs.Navigator
           pageMargin={2}
