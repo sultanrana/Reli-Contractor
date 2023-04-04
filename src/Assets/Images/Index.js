@@ -27,11 +27,15 @@ const Icons = {
 const Images = {
     Logo: require('./Logo.png'),
     DummyUser: require('./dummy_user.png'),
-    Window:require('./window.png'),
-    SideWindow:require('./sideWindow.png'),
     InteriorDoor:require('./interiorDoor.png'),
+    SideWindow:require('./sideWindow.png'),
+    // Window:require('./window.png'),
     SlidingDoor:require('./slidingDoor.png'),
 
+    //
+    Door:require('./Door-3d.png'),
+    GlassDoor:require('./SlidingGlassDoor-3d.png'),
+    Window:require('./Window-3d.png'),
     //
     Dummy1:require('./dummyProfile1.png'),
     Dummy2:require('./dummyProfile2.png'),

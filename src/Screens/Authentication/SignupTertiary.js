@@ -16,6 +16,7 @@ import SelectService from '../../Components/SelectService';
 import { setUserLocation } from '../../Redux/UserLocation';
 import { showMessage } from 'react-native-flash-message';
 import { vs } from 'react-native-size-matters';
+import { Images } from '../../Assets/Images/Index';
 
 // const servicesList = [
 //   {
@@ -33,7 +34,7 @@ import { vs } from 'react-native-size-matters';
 //     title: 'Interior Doors',
 //     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU'
 //   },
- 
+
 
 // ];
 
@@ -48,23 +49,27 @@ const SignupTertiary = ({ navigation, route }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
 
-  const {companies} = useSelector(state=>state.CompaniesData)
+  const { companies } = useSelector(state => state.CompaniesData)
 
   const selectedCompany = companies.filter(c => c?._id === company)[0]
 
-  console.log({selectedCompany});
+  console.log({ selectedCompany });
 
   const servicesList = selectedCompany?.services?.map((item, index) => ({
     key: `${item}`,
     title: `${item}`.toUpperCase(),
-    image: (item === 'window') ? 'https://icon-library.com/images/open-windows-icon/open-windows-icon-9.jpg': ((item === 'door') ? 'https://cdn3.vectorstock.com/i/1000x1000/82/97/glass-door-icon-image-vector-19068297.jpg' : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7feXDTg1C4M-etlgJPBLw58boVDIMis4-HoHfElg5N0_rbeLuyvi_4WwuxfuhrjE-R4&usqp=CAU')
-  })) 
+    image: (item === 'window') ? Images.Window
+      :
+      (item === 'door') ? Images.Door
+        :
+        Images.GlassDoor
+  }))
 
   const checkIsPermission = () => {
     if (services.length === 0) {
       showMessage({
-        message:'*Please choose at least one service',
-        type:'danger'
+        message: '*Please choose at least one service',
+        type: 'danger'
       })
       return;
     } else {
@@ -173,7 +178,7 @@ const SignupTertiary = ({ navigation, route }) => {
         showMessage({
           message: data?.message,
           type: 'success',
-      })
+        })
         setServices([])
         setTimeout(() => {
           navigation.reset({
@@ -198,7 +203,7 @@ const SignupTertiary = ({ navigation, route }) => {
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
       <LogoOver navigation={navigation} shouldShowBack={true} />
-      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, {paddingBottom: '37%'}]}>
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { paddingBottom: '37%' }]}>
 
         <FlatList
           scrollEnabled={true}

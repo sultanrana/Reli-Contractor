@@ -12,7 +12,7 @@ import OutlinedButton from '../../Components/OutlinedButton';
 import ContainedButton from '../../Components/ContainedButton';
 import { FontSize } from '../../Theme/FontSize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { logout } from '../../Redux/Actions';
+import { logout, setAuthToken } from '../../Redux/Actions';
 import { handleDeleteAccount } from '../../API/Config';
 import { Alert } from 'react-native';
 
@@ -34,6 +34,7 @@ const About = ({ navigation }) => {
     setIsLoading(true)
     await AsyncStorage.removeItem('token').then(() => {
       dispatch(logout())
+      dispatch(setAuthToken(null))
       setTimeout(() => {
         setIsLoading(false)
         navigation.reset({
@@ -68,17 +69,18 @@ const About = ({ navigation }) => {
   const onDeleteAccount = () => {
     handleDeleteAccount(userData?._id).then((res) => {
       SimpleToast.show(res?.message)
+      dispatch(logout())
+      dispatch(setAuthToken(null))
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      setIsLoading(false)
       setTimeout(() => {
         navigation.reset({
           index: 0,
           routes: [{ name: References.AuthenticationStack }],
         })
       }, 250);
-    }).catch((err) => {
-      SimpleToast.show('Something went wrong')
-      console.log(err);
-    }).finally(() => {
-      setIsLoading(false)
     })
   }
 

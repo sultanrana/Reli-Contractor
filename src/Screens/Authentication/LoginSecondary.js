@@ -17,6 +17,9 @@ import { setAuthToken, setUserData } from '../../Redux/Actions';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Keyboard } from 'react-native';
+import { useRef } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 const LoginSecondary = ({ navigation, route }) => {
 
@@ -30,8 +33,16 @@ const LoginSecondary = ({ navigation, route }) => {
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const dispatch = useDispatch()
+  const passRef = useRef()
+  const isFocused = useIsFocused()
 
   const { email } = route?.params || ''
+
+  useEffect(() => {
+    if (isFocused) {
+      passRef?.current?.focus()
+    }
+  }, [])
 
   const handleOnChange = (text, input) => {
     setInputs(prevState => ({ ...prevState, [input]: text }))
@@ -113,6 +124,7 @@ const LoginSecondary = ({ navigation, route }) => {
           }
 
           <InputField
+            fieldRef={passRef}
             title="Password"
             value={inputs.password}
             onChangeText={(val) => {
