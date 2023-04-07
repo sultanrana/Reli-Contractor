@@ -2,13 +2,9 @@ import React, { useEffect, useState } from 'react';
 import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList } from 'react-native';
-import ContainedButton from '../../Components/ContainedButton'
-import InputField from '../../Components/InputField'
-import LogoOver from '../../Components/LogoOver';
 
 import { FontSize } from '../../Theme/FontSize';
 import Colors, { colors } from '../../Theme/Colors';
-import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import NotificationDetail from '../../Components/NotificationDetail';
@@ -79,7 +75,7 @@ const Read = ({ navigation }) => {
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.White }]}>
 
-      <Loader loading={loading}/>
+      {/* <Loader loading={loading}/> */}
 
       <FlatList
         showsVerticalScrollIndicator={false}

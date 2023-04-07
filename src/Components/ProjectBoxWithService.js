@@ -28,10 +28,12 @@ const ProjectBoxWithService =
         subtitle1,
         subtitle2,
         imageURL1,
+        Item,
         imageURL2
 
     }) => {
 
+        // console.log(Item.orderdetails[0].property);
         const scheme = useColorScheme()
         const AppColors = Colors(scheme)
         const AppStyles = GetStyles(scheme)
@@ -117,12 +119,14 @@ const ProjectBoxWithService =
                             </Text>
                         }
                         {(subtitle1 !== '') &&
-                            <Text allowFontScaling={false} style={{
-                                fontFamily: Fonts.Light,
-                                fontSize: FontSize.small,
-                                color: AppColors.Text,
-                                textAlignVertical: 'center'
-                            }}>
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontFamily: Fonts.Light,
+                                    fontSize: FontSize.small,
+                                    color: AppColors.Text,
+                                    textAlignVertical: 'center'
+                                }}>
                                 {subtitle1}
                             </Text>
                         }

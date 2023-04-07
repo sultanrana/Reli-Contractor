@@ -469,8 +469,10 @@ const Overview = ({ navigation }) => {
           />
         }
         <View style={styles.locationContainer}>
-          <Text allowFontScaling={false} style={styles.title}>{'Location: '}
-            <Text allowFontScaling={false} style={[styles.title, { fontFamily: Fonts.Regular }]}>{'[Required from backend]'}</Text>
+          <Text
+            numberOfLines={1}
+            allowFontScaling={false} style={styles.title}>{'Location: '}
+            <Text allowFontScaling={false} style={[styles.title, { fontFamily: Fonts.Regular }]}>{projectData?.orderdetails[0]?.property?.addressOne}</Text>
           </Text>
         </View>
         <View style={styles.paymentContainer}>

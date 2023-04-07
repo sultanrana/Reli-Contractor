@@ -33,13 +33,11 @@ const ActiveProjects = ({ navigation }) => {
   const isFocused = useIsFocused()
 
   useEffect(() => {
-    if (isFocused) {
       handleGetAllActiveProjects(token).then(({ data }) => {
         setProjectData(data?.length > 0 ? data : [])
       }).finally(() => {
         setLoading(false)
       })
-    }
   }, [])
 
   const renderDateItem = ({ item, index }) => {
@@ -53,7 +51,7 @@ const ActiveProjects = ({ navigation }) => {
         navigation={navigation}
         id={item?._id}
         title={details?.serviceName}
-        subtitle1={'-'}
+        subtitle1={item?.orderdetails[0]?.property?.addressOne}
         subtitle2={dateMap}
         imageURL1={Images.House}
         calenderData={{

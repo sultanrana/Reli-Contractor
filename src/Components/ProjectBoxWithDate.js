@@ -164,12 +164,14 @@ const ProjectBoxWithDate =
                             </Text>
                         }
                         {(subtitle1 !== '') &&
-                            <Text allowFontScaling={false} style={{
-                                fontFamily: Fonts.Light,
-                                fontSize: FontSize.small,
-                                color: AppColors.Text,
-                                textAlignVertical: 'center'
-                            }}>
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontFamily: Fonts.Light,
+                                    fontSize: FontSize.small,
+                                    color: AppColors.Text,
+                                    textAlignVertical: 'center'
+                                }}>
                                 {subtitle1}
                             </Text>
                         }

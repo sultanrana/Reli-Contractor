@@ -47,29 +47,6 @@ const Unread = ({ navigation }) => {
     }
   }, [isFocused])
 
-  const Data = [
-
-
-    {
-      title: "New Project, Window Replacement",
-      location: '1234, House Costa, Mesa CA29481',
-      time: '30m',
-      type: 'new'
-    },
-    {
-      title: "New Project, Window Replacement",
-      location: '1234, House Costa, Mesa CA29481',
-      time: '30m',
-      type: 'new'
-    },
-    {
-      title: "Reminder: Order Materials",
-      location: '1234, House Costa, Mesa CA29481',
-      time: '45m',
-      type: 'reminder'
-    },
-  ]
-
   const renderNotification = ({ item }) => {
     return (
       <NotificationDetail Details={item} />
@@ -79,7 +56,7 @@ const Unread = ({ navigation }) => {
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { backgroundColor: AppColors.White }]}>
 
-      <Loader loading={loading}/>
+      {/* <Loader loading={loading}/> */}
 
       <FlatList
         showsVerticalScrollIndicator={false}

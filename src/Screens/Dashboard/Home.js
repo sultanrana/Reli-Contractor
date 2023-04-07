@@ -53,7 +53,9 @@ const Home = ({ navigation }) => {
   const getProjects = async () => {
     // setIsLoading(is => ((!actionNeeded || !claim) && !is))
     handleGetDashboardData(token).then(({ data }) => {
-      console.log(data[0]?.actionNeededOrders);
+      // console.log('./././././',data);
+      // console.log('./././././',data[0]?.actionNeededOrders);
+      // console.log('./././././',data[0]?.claimOrders);
       const { actionNeededOrders, claimOrders } = data[0]
       dispatch(setActionNeededProjects(actionNeededOrders))
       dispatch(setClaimProjects(claimOrders))
@@ -73,7 +75,7 @@ const Home = ({ navigation }) => {
         navigation={navigation}
         id={item?._id}
         title={details?.serviceName}
-        subtitle1={'-'}
+        subtitle1={item?.orderdetails[0]?.property?.addressOne}
         subtitle2={dateMap}
         imageURL1={Images.House}
         imageURL2={details?.images?.length > 0 ? IMAGES_URL + details?.images[0] : ''}
@@ -97,7 +99,7 @@ const Home = ({ navigation }) => {
         navigation={navigation}
         id={item?._id}
         title={details?.serviceName}
-        subtitle1={'-'}
+        subtitle1={item?.orderdetails[0]?.property?.addressOne}
         subtitle2={dateMap}
         imageURL1={Images.House}
         clickable
@@ -112,67 +114,79 @@ const Home = ({ navigation }) => {
 
   const Data = [
     {
-      title: (claim?.length > 0) ? 'Claim Projects' : '',
+      title: 'Claim Projects',
       renderItem: renderServiceItem,
       data: claim ? claim : []
     },
     {
-      title: (actionNeeded?.length > 0) ? 'Action Needed' : '',
+      title: 'Action Needed',
       renderItem: renderDateItem,
       data: actionNeeded ? actionNeeded : []
     }
   ]
+
+  const EmptySectionMessage = () => <Text style={{
+    fontFamily: Fonts.Light,
+    fontSize: FontSize.large,
+    color: AppColors.DarkGrey,
+    marginTop: '25%',
+    marginBottom: '35%',
+    textAlign: 'center',
+    alignSelf: 'center',
+  }}>
+    {'No Projects Found'}
+  </Text>;
 
   return (
     <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
 
 
-      {
-        (Data[0]?.data.length == 0 && Data[1]?.data.length == 0) ?
-          <Loader loading={isLoading} />
-          :
-          <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
-            <SectionList
-              stickySectionHeadersEnabled={false}
-              showsVerticalScrollIndicator={false}
-              sections={(Data[0]?.data.length > 0 || Data[1]?.data.length > 0) ? Data : []}
-              keyExtractor={(item, index) => 'ci' + index}
-              renderItem={({ section: { renderItem } }) => { renderItem }}
-              renderSectionHeader={({ section: { title } }) => (
-                <Text allowFontScaling={false} style={{
-                  fontFamily: Fonts.SemiBold,
-                  fontSize: FontSize.xxlarge,
-                  color: AppColors.TextTitle,
-                }}>
-                  {title}
-                </Text>
-              )}
-              ItemSeparatorComponent={() => (<View style={{ marginVertical: 4 }} />)}
-              SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
-              contentContainerStyle={{ paddingBottom: 10 }}
-              ListEmptyComponent={() => {
-                if (!isLoading) {
-                  return (
-                    <Text style={{
-                      fontFamily: Fonts.Light,
-                      fontSize: FontSize.large,
-                      color: AppColors.DarkGrey,
-                      marginTop: vs(150),
-                      textAlign: 'center',
-                      alignSelf: 'center',
-                    }}>
-                      {'No Projects Found'}
-                    </Text>
-                  )
-                }
-                return null
-              }}
-            />
 
-          </View>
-      }
+      <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
+        <SectionList
+          stickySectionHeadersEnabled={false}
+          showsVerticalScrollIndicator={false}
+          sections={Data}
+          keyExtractor={(item, index) => 'ci' + index}
+          renderItem={({ section: { renderItem } }) => { renderItem }}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text allowFontScaling={false} style={{
+              fontFamily: Fonts.SemiBold,
+              fontSize: FontSize.xxlarge,
+              color: AppColors.TextTitle,
+            }}>
+              {title}
+            </Text>
+          )}
+          ItemSeparatorComponent={() => (<View style={{ marginVertical: 4 }} />)}
+          SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
+          contentContainerStyle={{ paddingBottom: 10 }}
+          renderSectionFooter={({ section: { data } }) =>
+            data.length === 0 && <EmptySectionMessage />
 
+          }
+        // ListEmptyComponent={() => {
+        //   if (!isLoading) {
+        //     return (
+        //       <Text style={{
+        //         fontFamily: Fonts.Light,
+        //         fontSize: FontSize.large,
+        //         color: AppColors.DarkGrey,
+        //         marginTop: vs(300),
+        //         textAlign: 'center',
+        //         alignSelf: 'center',
+        //       }}>
+        //         {'No Projects Found'}
+        //       </Text>
+        //     )
+        //   }
+        //   return null
+        // }}
+        />
+      </View>
+
+      <Loader loading={isLoading} />
     </View>
 
 

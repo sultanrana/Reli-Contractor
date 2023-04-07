@@ -28,13 +28,11 @@ const AvailableProjects = ({ navigation }) => {
 
 
   useEffect(() => {
-    if (isFocused) {
-      handleGetAllAvailableProjects(token).then(({ data }) => {
-        setProjectData(data?.length > 0 ? data : [])
-      }).finally(() => {
-        setLoading(false)
-      })
-    }
+    handleGetAllAvailableProjects(token).then(({ data }) => {
+      setProjectData(data?.length > 0 ? data : [])
+    }).finally(() => {
+      setLoading(false)
+    })
 
   }, [])
 
@@ -47,10 +45,11 @@ const AvailableProjects = ({ navigation }) => {
 
     return (
       <ProjectBoxWithService
+        Item={item}
         navigation={navigation}
         id={item?._id}
         title={details?.serviceName}
-        subtitle1={'-'}
+        subtitle1={item?.orderdetails[0]?.property?.addressOne}
         subtitle2={dateMap}
         imageURL1={Images.House}
         imageURL2={details?.images?.length > 0 ? IMAGES_URL + details?.images[0] : ''}

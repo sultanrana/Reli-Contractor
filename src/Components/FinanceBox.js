@@ -51,7 +51,7 @@ const FinanceBox =
                 shadowOpacity: 0.16,
                 // shadowRadius: 6,
                 height: 104,
-                alignSelf:'center'
+                alignSelf: 'center'
             },
             image: {
                 width: 90,
@@ -69,7 +69,7 @@ const FinanceBox =
                     flexDirection: 'row',
                     width: '100%',
                     padding: 4,
-                    height: 104
+                    height: 104,
                 }}>
                     <View style={{ width: '25%', justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: AppColors.Background, elevation: 1 }}>
                         <Image source={Icons.Cart} style={{
@@ -80,66 +80,79 @@ const FinanceBox =
                     </View>
                     <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
                         <View style={{
-                            flexDirection: 'row',
-                            marginVertical: 4
+                            marginVertical: 4,
                         }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.large,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Window Project: '}</Text>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.large,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                            }}>{windowProject}</Text>
-                        </View>
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.large,
+                                    fontFamily: Fonts.SemiBold,
+                                    color: AppColors.TextTitle,
+                                }}>{'Window Project: '}
+                                <Text
+                                    numberOfLines={1}
+                                    allowFontScaling={false} style={{
+                                        fontSize: FontSize.large,
+                                        fontFamily: Fonts.Regular,
+                                        color: AppColors.TextTitle,
+                                    }}>{windowProject}</Text>
+                            </Text>
 
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Ordered: '}</Text>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                            }}>{ordered}</Text>
-                        </View>
-
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Scheduled: '}</Text>
-                            <Text  allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                            }}>{scheduled}</Text>
                         </View>
 
 
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
-                            }}>{'Completed: '}</Text>
-                            <Text allowFontScaling={false} style={{
+                            }}>{'Ordered: '}
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                }}>{ordered}</Text>
+                        </Text>
+
+
+
+
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
+                                fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
-                            }}>{completed}</Text>
-                        </View>
+                            }}>{'Scheduled: '}
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                }}>{scheduled}</Text>
+                        </Text>
+
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
+                                fontSize: FontSize.medium,
+                                fontFamily: Fonts.SemiBold,
+                                color: AppColors.TextTitle,
+                            }}>{'Completed: '}
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                }}>{completed}</Text>
+
+                        </Text>
+
 
 
                     </View>
@@ -164,62 +177,71 @@ const FinanceBox =
                     </View>
                     <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
                         <View style={{
-                            flexDirection: 'row',
                             marginVertical: 4
                         }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.large,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Property ID: '}</Text>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.large,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                            }}>{propertyID}</Text>
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.large,
+                                    fontFamily: Fonts.SemiBold,
+                                    color: AppColors.TextTitle,
+                                }}>{'Property ID: '}
+                                <Text
+                                    numberOfLines={1}
+                                    allowFontScaling={false} style={{
+                                        fontSize: FontSize.large,
+                                        fontFamily: Fonts.Regular,
+                                        color: AppColors.TextTitle,
+                                    }}>{propertyID}</Text>
+                            </Text>
+
                         </View>
 
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
+
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
                             }}>{address1}</Text>
-                        </View>
 
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
+
+
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
                             }}>{address2}</Text>
-                        </View>
+
 
                         <View style={{
                             flexDirection: 'row',
                             width: '100%',
                             justifyContent: 'space-between'
                         }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                                alignSelf: 'flex-start',
-                                width: '65%',
-                                textAlign: 'left',
-                            }}>{address3}</Text>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                                textAlign: 'right',
-                                width: '35%'
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                    alignSelf: 'flex-start',
+                                    width: '65%',
+                                    textAlign: 'left',
+                                }}>{address3}</Text>
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                    textAlign: 'right',
+                                    width: '35%'
 
-                            }}>{address4}</Text>
+                                }}>{address4}</Text>
                         </View>
                     </View>
                 </View>
@@ -243,44 +265,53 @@ const FinanceBox =
                     </View>
                     <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
                         <View style={{
-                            flexDirection: 'row',
                             marginVertical: 4
                         }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.large,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Materials'}</Text>
-                        </View>
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Total: '}</Text>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
-                                color: AppColors.TextTitle,
-                            }}>{total}</Text>
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.large,
+                                    fontFamily: Fonts.SemiBold,
+                                    color: AppColors.TextTitle,
+                                }}>{'Materials'}</Text>
                         </View>
 
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
-                            }}>{'Windows: '}</Text>
-                            <Text allowFontScaling={false} style={{
+                            }}>{'Total: '}
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                }}>{total}</Text>
+                        </Text>
+
+
+
+
+                        <Text
+                            numberOfLines={1}
+                            allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
-                                fontFamily: Fonts.Regular,
+                                fontFamily: Fonts.SemiBold,
                                 color: AppColors.TextTitle,
-                            }}>{windows}</Text>
-                        </View>
+                            }}>{'Windows: '}
+                            <Text
+                                numberOfLines={1}
+                                allowFontScaling={false} style={{
+                                    fontSize: FontSize.medium,
+                                    fontFamily: Fonts.Regular,
+                                    color: AppColors.TextTitle,
+                                }}>{windows}</Text>
+                        </Text>
+
+
                     </View>
                 </View>
             )
@@ -303,7 +334,6 @@ const FinanceBox =
                     </View>
                     <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
                         <View style={{
-                            flexDirection: 'row',
                             marginVertical: 4
                         }}>
                             <Text allowFontScaling={false} style={{
@@ -312,20 +342,20 @@ const FinanceBox =
                                 color: AppColors.TextTitle,
                             }}>{'Labor'}</Text>
                         </View>
-                        <View style={{
-                            flexDirection: 'row',
-                        }}>
-                            <Text allowFontScaling={false} style={{
-                                fontSize: FontSize.medium,
-                                fontFamily: Fonts.SemiBold,
-                                color: AppColors.TextTitle,
-                            }}>{'Total: '}</Text>
+
+
+                        <Text allowFontScaling={false} style={{
+                            fontSize: FontSize.medium,
+                            fontFamily: Fonts.SemiBold,
+                            color: AppColors.TextTitle,
+                        }}>{'Total: '}
                             <Text allowFontScaling={false} style={{
                                 fontSize: FontSize.medium,
                                 fontFamily: Fonts.Regular,
                                 color: AppColors.TextTitle,
                             }}>{total}</Text>
-                        </View>
+                        </Text>
+
                     </View>
                 </View>
             )

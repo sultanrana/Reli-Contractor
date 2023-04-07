@@ -137,8 +137,8 @@ const Chat = ({ navigation }) => {
   })
 
   useEffect(() => {
-    if (isFocused) {
-      messageInputRef?.current?.focus()
+    // if (isFocused) {
+      // messageInputRef?.current?.focus()
       firestore()
         .collection(`Chats-test`)
         .doc(id)
@@ -196,7 +196,7 @@ const Chat = ({ navigation }) => {
             }, 1000);
           }
         })
-    }
+    // }
   }, [])
 
   useEffect(() => {
