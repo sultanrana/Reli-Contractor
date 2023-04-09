@@ -26,7 +26,7 @@ const TabItemSimple = ({ navigation, icon, path, index, activeIndex, reset = fal
             }]}>
 
             <Image source={icon} style={{
-                tintColor: (index === activeIndex) ? appColors.Primary : appColors.Text,
+                tintColor: (index === activeIndex) ? appColors.Primary : '#979797',
                 height: 20,
                 width: 20
 
