@@ -65,9 +65,12 @@ export const handleRegister = async (email, password, fName, lName, type, addres
     formData.append('lat', lat);
     formData.append('lng', long);
     for (var i = 0; i < services.length; i++) {
+        // console.log(services[i]);
         formData.append('services[]', services[i]);
     }
 
+    // console.log(formData);
+    // return
     try {
         const response = await fetch.post(
             API_URL + '/' + Endpoints.AuthProfile.Signup,
@@ -506,6 +509,28 @@ export const handleGetAllCompanies = async () => {
             API_URL + `${Endpoints.AuthProfile.ListOfAllCompanies}`,
             'Company Listing',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmI0Mzg5MjdmMWE0MTNhMDVmMDI2OCIsImlhdCI6MTY2ODU0MTYxNywiZXhwIjoxNzAwMDc3NjE3fQ.8mX3JqRFwskaISPHJBYKIWUDQ7Z-hPPsq0AwKgxxotw'
+        )
+
+        if (response?.code === 200) {
+            return response
+        } else if (response?.code === 400) {
+            SimpleToast.show(response?.message)
+            return null
+        }
+    } catch (e) {
+        SimpleToast.show(e?.message)
+        console.log(e);
+        throw e
+    }
+
+}
+
+export const handleGetAllServices = async () => {
+    try {
+        const response = await fetch.get(
+            API_URL + `${Endpoints.AuthProfile.ListOfAllServices}`,
+            'Company Services',
+            null
         )
 
         if (response?.code === 200) {

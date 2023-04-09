@@ -74,10 +74,17 @@ const ActiveProjects = ({ navigation }) => {
   return (
     <View style={[AppStyles.HorizontalStyle, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background, paddingTop: 10 }]}>
       <Loader loading={loading} />
+
       <SectionList
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}
         sections={Data}
+        keyExtractor={(item, index) => 'ci' + index}
+        renderItem={({ section: { renderItem } }) => { renderItem }}
+        ItemSeparatorComponent={() => {
+          return <View style={{ marginVertical: 4 }} />
+        }}
+        contentContainerStyle={{ paddingBottom: 10 }}
         renderSectionFooter={({ section }) => {
           if (section.data.length == 0 && !loading) {
             return (
@@ -96,27 +103,7 @@ const ActiveProjects = ({ navigation }) => {
             <></>
           )
         }}
-        keyExtractor={(item, index) => 'ci' + index}
-        renderItem={({ section: { renderItem } }) => { renderItem }}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text allowFontScaling={false} style={{
-            fontFamily: Fonts.SemiBold,
-            fontSize: FontSize.xxlarge,
-            color: AppColors.TextTitle,
-            // marginTop:50
-          }}>
-            {title}
-          </Text>
-        )}
-        ItemSeparatorComponent={() => {
-          return <View style={{ marginVertical: 4 }} />
-        }}
-        SectionSeparatorComponent={() => {
-          return <View style={{ marginTop: 8 }} />
-        }}
-        contentContainerStyle={{ paddingBottom: 10 }}
       />
-
     </View>
   );
 

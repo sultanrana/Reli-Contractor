@@ -1,4 +1,4 @@
-import { ACTION_NEEDED_PROJECTS, CLAIM_PROJECTS, PROJECT_DETAILS, PROJECT_ID } from "../Types";
+import { ACTION_NEEDED_PROJECTS, CLAIM_PROJECTS, ON_LOGOUT, PROJECT_DETAILS, PROJECT_ID } from "../Types";
 
 
 const initialState = {
@@ -10,6 +10,9 @@ const initialState = {
 
 const ProjectsReducer = (state = initialState, action = {}) => {
     switch (action.type) {
+
+        case ON_LOGOUT:
+            return initialState;
 
         case CLAIM_PROJECTS:
             return {

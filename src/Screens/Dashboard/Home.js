@@ -20,6 +20,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { API_URL, IMAGES_URL } from '../../API/Constants';
 import moment from 'moment-timezone';
 import { vs } from 'react-native-size-matters';
+import OutlinedButton from '../../Components/OutlinedButton';
 
 const Home = ({ navigation }) => {
 
@@ -28,6 +29,7 @@ const Home = ({ navigation }) => {
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
   const [isLoading, setIsLoading] = useState(true)
+  const [sectionOne, setSectionOne] = useState([])
 
   const { claim, actionNeeded } = useSelector(state => state.Projects)
   const { token } = useSelector(state => state.Index)
@@ -57,8 +59,9 @@ const Home = ({ navigation }) => {
       // console.log('./././././',data[0]?.actionNeededOrders);
       // console.log('./././././',data[0]?.claimOrders);
       const { actionNeededOrders, claimOrders } = data[0]
+      setSectionOne(claimOrders)
+      dispatch(setClaimProjects(claimOrders.length > 3 ? claimOrders.slice(0, 3) : claimOrders))
       dispatch(setActionNeededProjects(actionNeededOrders))
-      dispatch(setClaimProjects(claimOrders))
     }).finally(() => {
       setIsLoading(false)
     })
@@ -114,12 +117,12 @@ const Home = ({ navigation }) => {
 
   const Data = [
     {
-      title: 'Claim Projects',
+      title: claim ? 'Claim Projects' : '',
       renderItem: renderServiceItem,
       data: claim ? claim : []
     },
     {
-      title: 'Action Needed',
+      title: actionNeeded ? 'Action Needed' : '',
       renderItem: renderDateItem,
       data: actionNeeded ? actionNeeded : []
     }
@@ -137,9 +140,37 @@ const Home = ({ navigation }) => {
     {'No Projects Found'}
   </Text>;
 
+  const renderSectionFooter = ({ section }) => {
+    // console.log({section});
+    if (Data[0].data.length === 0 && Data[0].data.length === 0 && isLoading) {
+      return <Loader loading={isLoading} />
+    }
+
+    if (section.data.length === 0 && !isLoading) {
+      return <EmptySectionMessage />
+    }
+
+    if (section.data[0] === 0 && !isLoading) {
+      return <EmptySectionMessage />
+    }
+
+    if (section.title === 'Claim Projects' && sectionOne.length > Data[0].data.length) {
+      return (
+        <OutlinedButton
+          label={'View More'}
+          rightIcon={false}
+          navigation={navigation}
+        // onPress={()=>{}}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
+
 
 
 
@@ -162,8 +193,8 @@ const Home = ({ navigation }) => {
           ItemSeparatorComponent={() => (<View style={{ marginVertical: 4 }} />)}
           SectionSeparatorComponent={() => (<View style={{ marginTop: 8 }} />)}
           contentContainerStyle={{ paddingBottom: 10 }}
-          renderSectionFooter={({ section: { data } }) =>
-            data.length === 0 && <EmptySectionMessage />
+          renderSectionFooter={
+            renderSectionFooter
 
           }
         // ListEmptyComponent={() => {
@@ -186,7 +217,7 @@ const Home = ({ navigation }) => {
         />
       </View>
 
-      <Loader loading={isLoading} />
+
     </View>
 
 

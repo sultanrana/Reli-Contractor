@@ -47,7 +47,10 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
                             label === 'Change Password' ?
                                 navigation.navigate(References.NewPassword)
                                 :
-                                navigation.navigate(References.NewNumber)
+                                label === 'Load More' ?
+                                    navigation.navigate(References.ProjectsStack)
+                                    :
+                                    navigation.navigate(References.NewNumber)
                 )
             }}
             activeOpacity={0.8}

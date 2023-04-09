@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions, SafeAreaView, Platform } from 'react-native';
 import SimpleToast from 'react-native-simple-toast';
 import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
@@ -11,7 +11,7 @@ import Colors, { colors } from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import { handleRegister } from '../../API/Config';
+import { handleGetAllServices, handleRegister } from '../../API/Config';
 import SelectService from '../../Components/SelectService';
 import { setUserLocation } from '../../Redux/UserLocation';
 import { showMessage } from 'react-native-flash-message';
@@ -43,6 +43,7 @@ const SignupTertiary = ({ navigation, route }) => {
   const { email, password, firstname, lastname, address, apartment, travel, accountType, company } = route?.params || ''
   const { location } = useSelector(state => state.Location)
   const [services, setServices] = useState([])
+  const [selectedServices, setSelectedServices] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const scheme = useColorScheme()
@@ -53,17 +54,30 @@ const SignupTertiary = ({ navigation, route }) => {
 
   const selectedCompany = companies.filter(c => c?._id === company)[0]
 
-  console.log({ selectedCompany });
+  // console.log({ selectedCompany });
+  useEffect(() => {
+    getServices()
+  }, [])
 
-  const servicesList = selectedCompany?.services?.map((item, index) => ({
-    key: `${item}`,
-    title: `${item}`.toUpperCase(),
-    image: (item === 'window') ? Images.Window
-      :
-      (item === 'door') ? Images.Door
-        :
-        Images.GlassDoor
-  }))
+
+
+  const getServices = async () => {
+    // setIsLoading(is => ((!actionNeeded || !claim) && !is))
+    handleGetAllServices().then(({ data }) => {
+      // console.log('./././././', data);
+      setServices(data)
+    })
+  }
+
+  // servicesList = selectedCompany?.services?.map((item, index) => ({
+  //   key: `${item}`,
+  //   title: `${item}`.toUpperCase(),
+  //   image: (item === 'window') ? Images.Window
+  //     :
+  //     (item === 'door') ? Images.Door
+  //       :
+  //       Images.GlassDoor
+  // }))
 
   const checkIsPermission = () => {
     if (services.length === 0) {
@@ -169,7 +183,7 @@ const SignupTertiary = ({ navigation, route }) => {
       travel,
       info != null ? info.coords.latitude : location.coords.latitude,
       info != null ? info.coords.latitude : location.coords.latitude,
-      services,
+      selectedServices,
       accountType,
       company
     ).then(async (data) => {
@@ -179,7 +193,7 @@ const SignupTertiary = ({ navigation, route }) => {
           message: data?.message,
           type: 'success',
         })
-        setServices([])
+        setSelectedServices([])
         setTimeout(() => {
           navigation.reset({
             index: 0,
@@ -208,7 +222,7 @@ const SignupTertiary = ({ navigation, route }) => {
         <FlatList
           scrollEnabled={true}
           showsVerticalScrollIndicator={false}
-          data={servicesList}
+          data={services}
           style={{
             width: '100%',
             alignSelf: 'center',
@@ -219,19 +233,19 @@ const SignupTertiary = ({ navigation, route }) => {
               imageURL={item?.image}
               Index={index}
               selectedService={(data) => {
-                let tempArray = services
+                let tempArray = selectedServices
                 // console.log(data);
                 if (typeof data === 'number') {
                   console.log('if');
-                  tempArray.push(servicesList[data])
+                  tempArray.push(services[data])
                   console.log(',,,,,,,,,,,,,,,,,', tempArray);
-                  setServices(tempArray)
+                  setSelectedServices(tempArray)
                 } else {
                   console.log('else');
                   tempArray = tempArray.filter((item, index) => {
-                    return item.key != data.key
+                    return item._id != data._id
                   })
-                  setServices(tempArray)
+                  setSelectedServices(tempArray)
                   console.log(',,,,,,,,,,,,,,,,,', tempArray);
                 }
               }}

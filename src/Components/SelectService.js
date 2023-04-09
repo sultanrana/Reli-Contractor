@@ -72,7 +72,7 @@ const SelectService = ({
                             resizeMode={'contain'} />
                     </Animatable.View>
                 }
-                <Image source={Index == 0 ? Images.Window : Index == 1 ? Images.SlidingDoor : Images.InteriorDoor}
+                <Image source={Item.name=='Windows' ?  Images.Window : Item.name=='Sliding Glass Doors' ? Images.GlassDoor : Images.Door}
                     resizeMode='contain'
                     resizeMethod='resize'
                     style={{
@@ -94,7 +94,7 @@ const SelectService = ({
                     fontFamily: Fonts.Bold,
                     textAlign: 'center',
                     textAlignVertical: 'center'
-                }}>{Item?.title}</Text>
+                }}>{Item?.name}</Text>
             </View>
 
         </TouchableOpacity>

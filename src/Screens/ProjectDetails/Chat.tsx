@@ -138,64 +138,70 @@ const Chat = ({ navigation }) => {
 
   useEffect(() => {
     // if (isFocused) {
-      // messageInputRef?.current?.focus()
-      firestore()
-        .collection(`Chats-test`)
-        .doc(id)
-        .onSnapshot(documentSnapshot => {
-          if (!documentSnapshot.exists) {
-            // const thisRoom = new MessageRoom({
-            //   ProjectID: id,
-            //   ID: '',
-            //   Created: new Date(),
-            //   Expired: false,
-            //   Messages: [
-            //     new Message({
-            //       Body: `Order created on ${moment().format('hh:mm A, ddd, DD MMM YYYY')}`,
-            //       DateTime: new Date(),
-            //       Milliseconds: moment().valueOf(),
-            //       ReceiverID: '',
-            //       SenderID: userData?._id,
-            //       Shown: true,
-            //       SYSTEM: true,
-            //     })
-            //   ],
-            //   Contractor: {
-            //     ID: userData?._id,
-            //     Image: '',
-            //     IsTyping: false,
-            //     FCM: fcmToken
-            //   },
-            //   Customer: {
-            //     ID: '',
-            //     Image: '',
-            //     IsTyping: false,
-            //     FCM: ''
-            //   },
-            // })
-            // firestore()
-            //   .collection(`Chats-test`)
-            //   .doc(id)
-            //   .set(thisRoom)
-            //   .then(() => {
-            //     console.log('posted');
-            //   })
-            setIsRoom(false)
-            setTimeout(() => {
-              setLoading(false)
-            }, 1000);
-          } else {
-            setIsRoom(true)
-            const roomDetails = documentSnapshot?.data()
-            // console.log({ roomDetails });
-            roomDetails?.MessageRoomDetails?.Messages?.reverse()
-            // console.log('Room', roomDetails?.MessageRoomDetails.Messages);
-            setRoom(roomDetails)
-            setTimeout(() => {
-              setLoading(false)
-            }, 1000);
-          }
-        })
+    // messageInputRef?.current?.focus()
+    if (details?.orderStatus == 'Completed') {
+      setIsExpired(true)
+    }
+    firestore()
+      .collection(`Chats-test`)
+      .doc(id)
+      .onSnapshot(documentSnapshot => {
+        if (!documentSnapshot.exists) {
+          console.log('if');
+
+          // const thisRoom = new MessageRoom({
+          //   ProjectID: id,
+          //   ID: '',
+          //   Created: new Date(),
+          //   Expired: false,
+          //   Messages: [
+          //     new Message({
+          //       Body: `Order created on ${moment().format('hh:mm A, ddd, DD MMM YYYY')}`,
+          //       DateTime: new Date(),
+          //       Milliseconds: moment().valueOf(),
+          //       ReceiverID: '',
+          //       SenderID: userData?._id,
+          //       Shown: true,
+          //       SYSTEM: true,
+          //     })
+          //   ],
+          //   Contractor: {
+          //     ID: userData?._id,
+          //     Image: '',
+          //     IsTyping: false,
+          //     FCM: fcmToken
+          //   },
+          //   Customer: {
+          //     ID: '',
+          //     Image: '',
+          //     IsTyping: false,
+          //     FCM: ''
+          //   },
+          // })
+          // firestore()
+          //   .collection(`Chats-test`)
+          //   .doc(id)
+          //   .set(thisRoom)
+          //   .then(() => {
+          //     console.log('posted');
+          //   })
+          setIsRoom(false)
+          setTimeout(() => {
+            setLoading(false)
+          }, 1000);
+        } else {
+          console.log('else');
+          setIsRoom(true)
+          const roomDetails = documentSnapshot?.data()
+          // console.log({ roomDetails });
+          roomDetails?.MessageRoomDetails?.Messages?.reverse()
+          // console.log('Room', roomDetails?.MessageRoomDetails.Messages);
+          setRoom(roomDetails)
+          setTimeout(() => {
+            setLoading(false)
+          }, 1000);
+        }
+      })
     // }
   }, [])
 
@@ -204,7 +210,6 @@ const Chat = ({ navigation }) => {
       const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (event) => {
         const keyboardHeight = event.endCoordinates.height;
         setKeyboardHeight(windowHeight - keyboardHeight);
-        console.log('/././././././././', windowHeight - keyboardHeight);
 
       });
 
@@ -293,7 +298,16 @@ const Chat = ({ navigation }) => {
                 {
                   isExpired ?
 
-                    null
+                    <Text style={{
+                      fontFamily: Fonts?.Medium,
+                      fontSize: FontSize.medium,
+                      color: AppColors.Black,
+                      textAlign: 'center',
+                      alignSelf: 'center',
+                      paddingHorizontal: '12%'
+                    }}>
+                      {'This project has been completed! 🎉'}
+                    </Text>
                     :
                     <View
                       style={{
@@ -354,10 +368,6 @@ const Chat = ({ navigation }) => {
                         </View>
 
                       </View>
-
-
-
-
                     </View>
                 }
 

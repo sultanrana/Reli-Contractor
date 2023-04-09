@@ -40,7 +40,7 @@ const LoginSecondary = ({ navigation, route }) => {
 
   useEffect(() => {
     if (isFocused) {
-      passRef?.current?.focus()
+      // passRef?.current?.focus()
     }
   }, [])
 

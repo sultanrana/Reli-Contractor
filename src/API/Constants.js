@@ -27,6 +27,7 @@ export const Endpoints = {
         CheckEmail: 'checkEmail',
         ResendVerifyOTP: 'resendVerifyOTP',
         ListOfAllCompanies: 'listOfCompanies',
+        ListOfAllServices: 'getAllServices',
     },
     Dashboard: {
         ContactUs: 'contactUs',

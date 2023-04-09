@@ -6,7 +6,7 @@ import moment from 'moment-timezone'
 import { useSelector } from 'react-redux'
 import { windowWidth } from '../Constants/Constants'
 import { GetStyles } from '../Theme/AppStyles'
-import Colors from '../Theme/Colors'
+import Colors, { colors } from '../Theme/Colors'
 import Fonts from '../Assets/Fonts/Index'
 import { FontSize } from '../Theme/FontSize'
 
@@ -31,7 +31,8 @@ const ChatMessage = ({ Item }) => {
 
     const messageItem = new Message(Item?.MessageDetails)
     const { MessageDetails, isSentByMe } = messageItem
-    const { Body, SYSTEM, ImagePaths, DocPaths } = MessageDetails
+    // console.log({MessageDetails});
+    const { Body, SYSTEM } = MessageDetails
     const isMine = isSentByMe(userData?._id,)
 
     var str = moment(MessageDetails.Milliseconds).format('hh:mm A, DD MMM YY')
@@ -62,7 +63,7 @@ const ChatMessage = ({ Item }) => {
                         numberOfLines={textShown ? undefined : 8}
                         style={{
                             textAlign: 'left',
-                            color: SYSTEM ? '#A47C32' : isMine ? '#E0E0E0' : '#0C1016',
+                            color: SYSTEM ? '#A47C32' : isMine ? colors.Black : '#0C1016',
                             fontFamily: Fonts.Regular,
                             fontSize: SYSTEM ? FontSize.small : FontSize.medium,
 

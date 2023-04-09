@@ -36,6 +36,7 @@ const Overview = ({ navigation }) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const [loading, setLoading] = useState(true)
+  const [isFirstTime, setIsFirstTime] = useState(true)
   const [projectData, setProjectData] = useState(null)
   const [selectedDateIndex, setSelectedDateIndex] = useState(-1)
 
@@ -100,6 +101,7 @@ const Overview = ({ navigation }) => {
         SenderID: userData?._id,
         Shown: true,
         SYSTEM: true,
+        
       })
     ],
     Contractor: {
@@ -170,9 +172,11 @@ const Overview = ({ navigation }) => {
       }
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
       setProjectData(data?.length > 0 ? data[0] : null)
-      console.log('Details', data[0]);
+      // console.log('Details', data[0].requestStatus);
+      // console.log('Details', data[0].orderStatus);
     }).finally(() => {
       setLoading(false)
+      setIsFirstTime(false)
     })
   }
 
@@ -236,7 +240,6 @@ const Overview = ({ navigation }) => {
     },
     reminderContainer: {
       width: '100%',
-      marginTop: 16
     },
     reminderTitle: {
       fontFamily: Fonts.SemiBold,
@@ -308,6 +311,7 @@ const Overview = ({ navigation }) => {
   const onAcceptProject = async () => {
     setLoading(true)
     handleChangeProjectStatusRequest(token, id, 'Accepted').finally(() => {
+      loadData()
       firestore().collection(`Chats-test`).doc(newRoom.MessageRoomDetails.ProjectID).set(newRoom).finally(() => {
         loadData()
       })
@@ -366,7 +370,7 @@ const Overview = ({ navigation }) => {
         <Text allowFontScaling={false} style={styles.mainTitle}>{projectDetails?.serviceName}</Text>
         <View style={styles.projectStatusContainer}>
           <Text allowFontScaling={false} style={styles.title}>{'Project Status: '}
-            <Text allowFontScaling={false} style={{ fontFamily: Fonts.Regular }}>{projectData?.orderStatus}</Text>
+            <Text allowFontScaling={false} style={{ fontFamily: Fonts.Regular }}>{projectData?.requestStatus == 'Pending' ? projectData?.requestStatus : (projectData?.requestStatus == 'Accepted' && projectData?.orderStatus == 'Pending') ? projectData?.requestStatus : projectData?.orderStatus}</Text>
           </Text>
 
           <View style={styles.progressMainCon}>
@@ -385,39 +389,42 @@ const Overview = ({ navigation }) => {
             </View>
             <Progress.Bar animated progress={step / STEP_MAX} height={2.5} width={windowWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} />
           </View>
-          <Text allowFontScaling={false} style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
-          <View style={{ width: '100%', marginVertical: 16, flexDirection: 'row' }}>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={projectData?.dateSelection}
-              renderItem={({ item, index }) => (
-                <DateSchedule {...{ index, selectedDateIndex, setSelectedDateIndex, item, clickable: (projectData?.requestStatus === 'Accepted' && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === 'Accepted')) }} />
-              )}
-              keyExtractor={(item, index) => 'sch' + index}
-              ItemSeparatorComponent={() => {
-                return <View style={{ width: vs(8) }} />
-              }}
-              contentContainerStyle={{
-                width: projectData?.dateSelection?.length > 1 ? '100%' : '40%'
-              }}
-            />
+          {
+            projectData?.orderStatus != 'Pending' &&
+            <Text allowFontScaling={false} style={[styles.title, { marginTop: 16 }]}>{'Scheduling Windows:'}</Text>
+          }
+          <View style={{ width: '100%', marginVertical: 16 }}>
+            {
+              projectData?.requestStatus != 'Pending' &&
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={projectData?.dateSelection}
+                renderItem={({ item, index }) => (
+                  <DateSchedule {...{ index, selectedDateIndex, setSelectedDateIndex, item, clickable: (projectData?.requestStatus === 'Accepted' && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned || projectData?.orderStatus === 'Accepted')) }} />
+                )}
+                keyExtractor={(item, index) => 'sch' + index}
+                ItemSeparatorComponent={() => {
+                  return <View style={{ width: vs(8) }} />
+                }}
+                contentContainerStyle={{
+                  width: projectData?.dateSelection?.length > 1 ? '100%' : '40%'
+                }}
+              />}
 
             {
               projectData?.dateSelection?.length < 2 && projectData?.assignedorder != null && projectData?.assignedorder != undefined &&
 
               <View style={{
-                width: '60%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: vs(8)
+                width: '100%',
+                marginTop: vs(5)
               }}>
                 <Text allowFontScaling={false} style={{
                   fontFamily: Fonts.SemiBold,
                   fontSize: FontSize.large,
                   color: AppColors.BackgroundInverse
                 }}>
-                  {`Project assigned to:\n`}
+                  {`Assigned to: `}
                   <Text allowFontScaling={false} style={{
                     fontFamily: Fonts.Medium,
                     fontSize: FontSize.medium,
@@ -513,22 +520,26 @@ const Overview = ({ navigation }) => {
       {/* <Progress.Bar animated progress={0.5} height={5} width={screenWidth - 70} borderColor={'transparent'} unfilledColor={AppColors.DarkGrey} color={Colors('light').Primary} /> */}
 
       {
-        loading ?
+        (loading && isFirstTime) ?
           <Loader loading={loading} />
           :
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={(projectData?.orderdetails != null) ? (projectData?.orderdetails) : []}
-            renderItem={({ item }) => {
-              return (
-                <ServiceContainer Details={item} />
-              )
-            }}
-            keyExtractor={(item, index) => 'ser' + index}
-            ListHeaderComponent={listHeaderComponent}
-            ListFooterComponent={listFooterComponent}
-            contentContainerStyle={{ paddingBottom: '10%' }}
-          />
+          <>
+            <Loader loading={loading} />
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={(projectData?.orderdetails != null) ? (projectData?.orderdetails) : []}
+              renderItem={({ item }) => {
+                return (
+                  <ServiceContainer Details={item} />
+                )
+              }}
+              keyExtractor={(item, index) => 'ser' + index}
+              ListHeaderComponent={listHeaderComponent}
+              ListFooterComponent={listFooterComponent}
+              contentContainerStyle={{ paddingBottom: '10%' }}
+            />
+          </>
+
       }
 
       <Popup
