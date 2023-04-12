@@ -172,7 +172,7 @@ const Overview = ({ navigation }) => {
       }
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
       setProjectData(data?.length > 0 ? data[0] : null)
-      // console.log('Details', data[0].requestStatus);
+      console.log('Details', data);
       // console.log('Details', data[0].orderStatus);
     }).finally(() => {
       setLoading(false)

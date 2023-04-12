@@ -120,13 +120,14 @@ const ProjectDetails = ({ navigation }) => {
 
   return (
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack bgWhite />
+
 
       <KeyboardAvoidingView
         style={styles.mainContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={(Platform.OS === 'ios' && isIPhone8) ? 0 : Platform.OS === 'ios' ? -vs(7) : 0}
       >
+        <LogoOver navigation={navigation} shouldShowBack bgWhite />
         <Tabs.Navigator
           pageMargin={2}
           // style={{

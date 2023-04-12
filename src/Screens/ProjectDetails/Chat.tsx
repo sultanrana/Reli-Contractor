@@ -30,6 +30,7 @@ import ChatMessage from '../../Components/ChatMessage';
 import { useIsFocused } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
 import { Dimensions } from 'react-native';
+import NotificationController from '../../Helpers/NotificationController';
 
 const Chat = ({ navigation }) => {
 
@@ -139,6 +140,8 @@ const Chat = ({ navigation }) => {
   useEffect(() => {
     // if (isFocused) {
     // messageInputRef?.current?.focus()
+    console.log({ details: details.orderdetails });
+
     if (details?.orderStatus == 'Completed') {
       setIsExpired(true)
     }
@@ -147,8 +150,6 @@ const Chat = ({ navigation }) => {
       .doc(id)
       .onSnapshot(documentSnapshot => {
         if (!documentSnapshot.exists) {
-          console.log('if');
-
           // const thisRoom = new MessageRoom({
           //   ProjectID: id,
           //   ID: '',
@@ -190,7 +191,6 @@ const Chat = ({ navigation }) => {
             setLoading(false)
           }, 1000);
         } else {
-          console.log('else');
           setIsRoom(true)
           const roomDetails = documentSnapshot?.data()
           // console.log({ roomDetails });
@@ -226,6 +226,16 @@ const Chat = ({ navigation }) => {
 
   const onSendMessage = async () => {
 
+    const data = {
+      fcmToken: 'd36A0BbjRLGx0mwJBbB-Lj:APA91bGlq8Cm3MpH36KhazDqGLWHg2cNz0iXukd7ng0129vy5WR0LWOCQ2mxd4VuUSt5WN3VfD2E6OW-4V21UW4XbFRzQloRbEAondbGXV_IiUq7Fk-PbZDa1fkgLEtrhtIAh4RdeGhp',
+      title: 'New Message',
+      message: messageInput,
+      details: {
+        projectId: id
+      }
+
+    }
+
     if (isAutoResendable) {
       setIsAutoResendable(false)
 
@@ -249,6 +259,9 @@ const Chat = ({ navigation }) => {
         .update({ 'MessageRoomDetails.Messages': firestore.FieldValue.arrayUnion(newMessage) })
         .finally(() => {
           setIsAutoResendable(true)
+          // setTimeout(() => {
+          //   NotificationController.sendNotificationWithFCM(data)
+          // }, 7500);
         })
     }
   }
