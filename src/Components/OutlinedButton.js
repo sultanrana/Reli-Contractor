@@ -47,7 +47,7 @@ const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIc
                             label === 'Change Password' ?
                                 navigation.navigate(References.NewPassword)
                                 :
-                                label === 'Load More' ?
+                                label === 'View More' ?
                                     navigation.navigate(References.ProjectsStack)
                                     :
                                     navigation.navigate(References.NewNumber)

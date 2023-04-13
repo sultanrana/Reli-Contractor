@@ -30,7 +30,6 @@ import ChatMessage from '../../Components/ChatMessage';
 import { useIsFocused } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
 import { Dimensions } from 'react-native';
-import NotificationController from '../../Helpers/NotificationController';
 
 const Chat = ({ navigation }) => {
 

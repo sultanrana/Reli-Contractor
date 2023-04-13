@@ -52,7 +52,7 @@ const Staff = ({ navigation }) => {
     <View style={[AppStyles.Screen, AppStyles.CommonScreenStyles, { backgroundColor: AppColors.White }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
       <Loader loading={isLoading} />
-      <View style={[AppStyles.HorizontalStyle, { paddingTop: 16 }]}>
+      <View style={[AppStyles.HorizontalStyle, {}]}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={list}
@@ -65,7 +65,7 @@ const Staff = ({ navigation }) => {
             />
           )}
           keyExtractor={(item, index) => 'stf' + index}
-          contentContainerStyle={{ paddingBottom: '30%' }}
+          contentContainerStyle={{ paddingTop: 16 , paddingBottom: '50%' }}
           style={{
             flexGrow: 0,
           }}

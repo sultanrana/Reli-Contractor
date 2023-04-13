@@ -41,9 +41,7 @@ const Home = ({ navigation }) => {
   }, [])
   const isFocused = useIsFocused()
   useEffect(() => {
-    if (isFocused) {
-      getProjects()
-    }
+    getProjects()
   }, [isFocused])
 
   const getUserDetails = () => {
@@ -132,8 +130,8 @@ const Home = ({ navigation }) => {
     fontFamily: Fonts.Light,
     fontSize: FontSize.large,
     color: AppColors.DarkGrey,
-    marginTop: '25%',
-    marginBottom: '35%',
+    marginTop: Data[1].data.length > 0 ? '10%' : '25%',
+    marginBottom: Data[1].data.length > 0 ? '10%' : '35%',
     textAlign: 'center',
     alignSelf: 'center',
   }}>
@@ -142,9 +140,9 @@ const Home = ({ navigation }) => {
 
   const renderSectionFooter = ({ section }) => {
     // console.log({section});
-    if (Data[0].data.length === 0 && Data[0].data.length === 0 && isLoading) {
-      return <Loader loading={isLoading} />
-    }
+    // if (Data[0].data.length === 0 && Data[0].data.length === 0 && isLoading) {
+    //   return <Loader loading={isLoading} />
+    // }
 
     if (section.data.length === 0 && !isLoading) {
       return <EmptySectionMessage />
