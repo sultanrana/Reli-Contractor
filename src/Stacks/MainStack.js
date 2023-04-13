@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
 import { useColorScheme, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-// import PushNotification, { Importance } from 'react-native-push-notification';
+import PushNotification, { Importance } from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
 
 
@@ -36,28 +36,28 @@ const MainStack = () => {
         }, 350);
     };
 
-    // const configureNotifications = () => {
-    //     PushNotification.configure({
-    //         onNotification: function (notification) {
-    //             // console.log({ notification });
-    //             if (notification.userInteraction) {
-    //                 console.log("notification.userInteraction", notification);
-    //                 goToScreen()
-    //             }
+    const configureNotifications = () => {
+        PushNotification.configure({
+            onNotification: function (notification) {
+                // console.log({ notification });
+                if (notification.userInteraction) {
+                    console.log("notification.userInteraction", notification);
+                    goToScreen()
+                }
 
-    //             // notification.finish(PushNotificationIOS.FetchResult.NoData);
-    //         },
-    //         onAction: function (notification) {
-    //             console.log("ACTION:", notification.action);
-    //             console.log("NOTIFICATION:", notification);
+                // notification.finish(PushNotificationIOS.FetchResult.NoData);
+            },
+            onAction: function (notification) {
+                console.log("ACTION:", notification.action);
+                console.log("NOTIFICATION:", notification);
 
-    //             setTimeout(() => {
-    //                 routeNameRef?.current?.navigate(References.ProjectDetails)
-    //             }, 350);
-    //         },
-    //     });
+                setTimeout(() => {
+                    routeNameRef?.current?.navigate(References.ProjectDetails)
+                }, 350);
+            },
+        });
 
-    // }
+    }
 
     const messageListener = async () => {
         PushNotification.createChannel(
@@ -140,7 +140,7 @@ const MainStack = () => {
     }
 
     useEffect(() => {
-        // configureNotifications()
+        configureNotifications()
         messageListener()
     }, [])
 

@@ -172,7 +172,7 @@ const Overview = ({ navigation }) => {
       }
       dispatch(setProjectDetails(data?.length > 0 ? data[0] : null))
       setProjectData(data?.length > 0 ? data[0] : null)
-      console.log('Details', data);
+      // console.log('Details', data[0].user);
       // console.log('Details', data[0].orderStatus);
     }).finally(() => {
       setLoading(false)
@@ -482,6 +482,7 @@ const Overview = ({ navigation }) => {
             <Text allowFontScaling={false} style={[styles.title, { fontFamily: Fonts.Regular }]}>{projectData?.orderdetails[0]?.property?.addressOne}</Text>
           </Text>
         </View>
+        
         <View style={styles.paymentContainer}>
           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '23%' }}>
             <Text allowFontScaling={false} style={styles.title}>{'Paid: '}</Text>

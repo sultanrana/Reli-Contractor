@@ -30,6 +30,7 @@ import ChatMessage from '../../Components/ChatMessage';
 import { useIsFocused } from '@react-navigation/native';
 import Loader from '../../Components/Loader';
 import { Dimensions } from 'react-native';
+import NotificationController from '../../Helpers/NotificationController';
 
 const Chat = ({ navigation }) => {
 
@@ -139,7 +140,7 @@ const Chat = ({ navigation }) => {
   useEffect(() => {
     // if (isFocused) {
     // messageInputRef?.current?.focus()
-    console.log({ details: details.orderdetails });
+    // console.log({ details: details.user[0].fcmToken });
 
     if (details?.orderStatus == 'Completed') {
       setIsExpired(true)
@@ -226,7 +227,7 @@ const Chat = ({ navigation }) => {
   const onSendMessage = async () => {
 
     const data = {
-      fcmToken: 'd36A0BbjRLGx0mwJBbB-Lj:APA91bGlq8Cm3MpH36KhazDqGLWHg2cNz0iXukd7ng0129vy5WR0LWOCQ2mxd4VuUSt5WN3VfD2E6OW-4V21UW4XbFRzQloRbEAondbGXV_IiUq7Fk-PbZDa1fkgLEtrhtIAh4RdeGhp',
+      fcmToken: details?.user[0]?.fcmToken ? details?.user[0]?.fcmToken : '',
       title: 'New Message',
       message: messageInput,
       details: {
@@ -258,9 +259,7 @@ const Chat = ({ navigation }) => {
         .update({ 'MessageRoomDetails.Messages': firestore.FieldValue.arrayUnion(newMessage) })
         .finally(() => {
           setIsAutoResendable(true)
-          // setTimeout(() => {
-          //   NotificationController.sendNotificationWithFCM(data)
-          // }, 7500);
+          NotificationController.sendNotificationWithFCM(data)
         })
     }
   }

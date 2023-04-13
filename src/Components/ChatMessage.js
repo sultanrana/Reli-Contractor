@@ -17,7 +17,7 @@ const ChatMessage = ({ Item }) => {
     const AppStyles = GetStyles(scheme || 'light')
     const AppColors = Colors(scheme)
 
-    const {  userData } = useSelector(state => state.Index)
+    const { userData } = useSelector(state => state.Index)
 
     const [textShown, setTextShown] = useState(false);
     const [lengthMore, setLengthMore] = useState(false);
@@ -51,11 +51,29 @@ const ChatMessage = ({ Item }) => {
             <View style={{
                 maxWidth: SYSTEM ? (windowWidth / 1.3) : (windowWidth / 1.2),
                 alignItems: SYSTEM ? 'center' : isMine ? 'flex-end' : 'flex-start',
+                // backgroundColor: 'pink'
+
             }}>
+                {
+                    !SYSTEM &&
+                    <Text
+                        onTextLayout={onTextLayout}
+                        numberOfLines={textShown ? undefined : 1}
+                        style={{
+                            textAlign: 'left',
+                            color: colors.Black,
+                            fontFamily: Fonts.Regular,
+                            fontSize: FontSize.small,
+                            marginBottom: 3
+
+                        }} >{userData?.firstName}</Text>
+                }
                 <View style={{
-                    backgroundColor: SYSTEM ? '#FFF2D9' : isMine ? AppColors.Primary : '#FDECDF',
+                    backgroundColor: SYSTEM ? '#FFF2D9' : isMine ? '#E0E0E0' : '#FDECDF',
                     padding: 8,
-                    borderRadius: 8,
+                    borderTopLeftRadius: 7,
+                    borderBottomLeftRadius:7,
+                    borderBottomRightRadius:7
                 }}>
 
                     <Text
