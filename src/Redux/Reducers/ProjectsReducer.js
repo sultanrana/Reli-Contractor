@@ -1,11 +1,12 @@
-import { ACTION_NEEDED_PROJECTS, CLAIM_PROJECTS, ON_LOGOUT, PROJECT_DETAILS, PROJECT_ID } from "../Types";
+import { ACTION_NEEDED_PROJECTS, CLAIM_PROJECTS, DETAILS_TAB, ON_LOGOUT, PROJECT_DETAILS, PROJECT_ID } from "../Types";
 
 
 const initialState = {
     claim: null,
     actionNeeded: null,
     details: null,
-    id: null
+    id: null,
+    tab: null
 };
 
 const ProjectsReducer = (state = initialState, action = {}) => {
@@ -37,6 +38,11 @@ const ProjectsReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 details: action.payload,
+            };
+        case DETAILS_TAB:
+            return {
+                ...state,
+                tab: action.payload,
             };
 
         default:

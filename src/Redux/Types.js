@@ -20,6 +20,7 @@ const STAFF_LIST = 'STAFFLIST'
 const STAFF_CURRENT = 'STAFF_CURRENT'
 
 const FCM='FCM'
+const DETAILS_TAB='DETAILS_TAB'
 
 export {
   AUTH_TOKEN,
@@ -41,5 +42,6 @@ export {
   STAFF_CURRENT,
   STAFF_LIST,
 
-  FCM
+  FCM,
+  DETAILS_TAB
 };

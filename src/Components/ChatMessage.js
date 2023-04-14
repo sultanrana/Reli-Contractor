@@ -13,11 +13,13 @@ import { FontSize } from '../Theme/FontSize'
 
 const ChatMessage = ({ Item }) => {
 
+    const { id, details } = useSelector(state => state.Projects)
+    const { userData } = useSelector(state => state.Index)
+
     const scheme = useColorScheme()
     const AppStyles = GetStyles(scheme || 'light')
     const AppColors = Colors(scheme)
 
-    const { userData } = useSelector(state => state.Index)
 
     const [textShown, setTextShown] = useState(false);
     const [lengthMore, setLengthMore] = useState(false);
@@ -66,14 +68,14 @@ const ChatMessage = ({ Item }) => {
                             fontSize: FontSize.small,
                             marginBottom: 3
 
-                        }} >{userData?.firstName}</Text>
+                        }} >{isMine ? userData?.firstName : `${details?.user[0]?.firstName} ${details?.user[0]?.lastName}`}</Text>
                 }
                 <View style={{
                     backgroundColor: SYSTEM ? '#FFF2D9' : isMine ? '#E0E0E0' : '#FDECDF',
                     padding: 8,
                     borderTopLeftRadius: 7,
-                    borderBottomLeftRadius:7,
-                    borderBottomRightRadius:7
+                    borderBottomLeftRadius: 7,
+                    borderBottomRightRadius: 7
                 }}>
 
                     <Text

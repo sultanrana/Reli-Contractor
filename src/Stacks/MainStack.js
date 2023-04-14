@@ -3,6 +3,7 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import { useColorScheme, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import PushNotification, { Importance } from 'react-native-push-notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
 
 
@@ -17,14 +18,16 @@ import NewNumber from '../Screens/Dashboard/NewNumber';
 import NewPassword from '../Screens/Dashboard/NewPassword';
 import ContactUs from '../Screens/Dashboard/ContactUs';
 import Colors from '../Theme/Colors';
-import { setProjectID } from '../Redux/Actions';
-import { useDispatch } from 'react-redux';
+import { setDetailsTab, setProjectID } from '../Redux/Actions';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator()
 
 const MainStack = () => {
 
 
+    const { tab } = useSelector(state => state.Projects)
     const scheme = useColorScheme()
     const AppColors = Colors(scheme)
     const routeNameRef = useRef()
@@ -39,25 +42,44 @@ const MainStack = () => {
     const configureNotifications = () => {
         PushNotification.configure({
             onNotification: function (notification) {
-                // console.log({ notification });
+                console.log({ notification });
                 if (notification.userInteraction) {
                     console.log("notification.userInteraction", notification);
                     goToScreen()
                 }
 
-                // notification.finish(PushNotificationIOS.FetchResult.NoData);
             },
             onAction: function (notification) {
                 console.log("ACTION:", notification.action);
                 console.log("NOTIFICATION:", notification);
+                goToScreen()
 
-                setTimeout(() => {
-                    routeNameRef?.current?.navigate(References.ProjectDetails)
-                }, 350);
             },
         });
 
     }
+
+    const onRemoteNotification = (notification) => {
+        const isClicked = notification.getData().userInteraction === 1;
+
+        if (isClicked) {
+            goToScreen()
+        } else {
+            // Do something else with push notification
+        }
+        // Use the appropriate result based on what you needed to do for this notification
+        const result = PushNotificationIOS.FetchResult.NoData;
+        notification.finish(result);
+    };
+
+    const showNotification = (remoteMessage) => {
+        PushNotification.localNotification({
+            channelId: "Reli-Contractor",
+            title: remoteMessage.notification.title,
+            message: remoteMessage.notification.body,
+        });
+
+    };
 
     const messageListener = async () => {
         PushNotification.createChannel(
@@ -75,21 +97,18 @@ const MainStack = () => {
 
         messaging().onMessage(async (remoteMessage) => {
             console.log("Notification msg****", remoteMessage);
+            dispatch(setProjectID(remoteMessage.data.projectId))
 
             // PushNotificationIOS.addEventListener(type, onRemoteNotification);
             // return () => {
             //   PushNotificationIOS.removeEventListener(type);
             // };
+            let cS = await AsyncStorage.getItem('currentScreen')
+            console.log({ cS });
             if (remoteMessage) {
-                PushNotification.localNotification({
-                    channelId: "Reli-Contractor",
-                    title: remoteMessage.notification.title,
-                    message: remoteMessage.notification.body,
-                });
-                dispatch(setProjectID(remoteMessage.data.projectId))
-                // setTimeout(() => {
-                //     routeNameRef?.current?.navigate(References.ProjectDetails)
-                // }, 350);
+                if (cS != 'Message') {
+                    showNotification(remoteMessage)
+                }
             }
 
         });
@@ -144,10 +163,34 @@ const MainStack = () => {
         messageListener()
     }, [])
 
+    useEffect(() => {
+        const type = 'notification';
+        PushNotificationIOS.addEventListener(type, onRemoteNotification);
+        if (tab != 'Message') {
+            PushNotificationIOS.removeEventListener(type);
+        }
+        return () => {
+            PushNotificationIOS.removeEventListener(type);
+        };
+    }, []);
+
+    useEffect(() => {
+        // console.log({ tab });
+    }, [tab])
+
+
     return (
         <NavigationContainer
             ref={routeNameRef}
-        >
+            onReady={() => {
+                // routeNameRef.current = navigationRef.getCurrentRoute().name;
+                // console.log('................', routeNameRef.current.getCurrentRoute().name)
+            }}
+            onStateChange={(state) => {
+                // console.log('................', routeNameRef.current.getCurrentRoute().name)
+                dispatch(setDetailsTab(routeNameRef.current.getCurrentRoute().name))
+                AsyncStorage.setItem('currentScreen', routeNameRef.current.getCurrentRoute().name)
+            }}>
             {/* <StatusBar barStyle='light-content' translucent backgroundColor={AppColors.Background} /> */}
             <Stack.Navigator
                 screenOptions={{
