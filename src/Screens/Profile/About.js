@@ -32,7 +32,8 @@ const About = ({ navigation }) => {
 
   const onLogout = async () => {
     setIsLoading(true)
-    await AsyncStorage.removeItem('token').then(() => {
+    await AsyncStorage.removeItem('token').then(async () => {
+      await AsyncStorage.removeItem('newMsg')
       dispatch(logout())
       dispatch(setAuthToken(null))
       setTimeout(() => {
@@ -66,7 +67,8 @@ const About = ({ navigation }) => {
     )
   }
 
-  const onDeleteAccount = () => {
+  const onDeleteAccount = async () => {
+    await AsyncStorage.removeItem('newMsg')
     handleDeleteAccount(userData?._id).then((res) => {
       SimpleToast.show(res?.message)
       dispatch(logout())
