@@ -32,8 +32,14 @@ const Notification = ({ style, title, onPress, labelStyle, radioBtnState = () =>
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 3,
+        },
+        radioMainContainer: {
+            height: 28,
+            width: 60,
+            justifyContent: 'center',
+            alignItems: 'flex-end',
             position: 'absolute',
-            right: 15
+            right: 15,
         },
         radioDot: {
             height: 14,
@@ -49,14 +55,17 @@ const Notification = ({ style, title, onPress, labelStyle, radioBtnState = () =>
             style={[styles.mainContainer, style]} >
             <Text allowFontScaling={false} style={[styles.titleText, labelStyle]}>{title}</Text>
             <TouchableOpacity
-                style={styles.radioBtnContainer}
+                style={styles.radioMainContainer}
                 activeOpacity={0.8}
                 onPress={() => setIsActive(!isActive)}
             >
-                <View style={styles.radioDot}>
-
-                </View>
-
+                <TouchableOpacity
+                    style={styles.radioBtnContainer}
+                    activeOpacity={0.8}
+                    onPress={() => setIsActive(!isActive)}
+                >
+                    <View style={styles.radioDot} />
+                </TouchableOpacity>
             </TouchableOpacity>
         </View>
 
