@@ -9,11 +9,11 @@ import {
     PROJECT_DETAILS,
     UNPAID_TRANSACTIONS,
     PAID_TRANSACTIONS,
-    OPTIONS,
     STAFF_LIST,
     STAFF_CURRENT,
     FCM,
     DETAILS_TAB,
+    REMINDERS,
 
 } from './Types'
 
@@ -76,11 +76,6 @@ const setPaidTransactions = (payload) => ({
     payload: payload
 })
 
-const setOptions = (payload) => ({
-    type: OPTIONS,
-    payload: payload
-})
-
 const setStaffList = (payload) => ({
     type: STAFF_LIST,
     payload: payload
@@ -96,6 +91,11 @@ const logout = () => ({
     payload: null
 })
 
+const setReminders = (payload) => ({
+    type: REMINDERS,
+    payload: payload
+})
+
 export {
     setFcm,
     setAuthToken,
@@ -106,10 +106,10 @@ export {
     setClaimProjects,
     setProjectDetails,
     setProjectID,
-    setOptions,
     setPaidTransactions,
     setUnpaidTransactions,
     setStaffList,
     setCurrentStaff,
-    setDetailsTab
+    setDetailsTab,
+    setReminders
 }

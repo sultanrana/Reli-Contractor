@@ -922,7 +922,7 @@ export const handleGetListOfTransactions = async (authToken) => {
 
 }
 
-export const handleGetListOfOptions = async (authToken, uid) => {
+export const handleGetNotificationStatus = async (authToken, uid) => {
     try {
         const response = await fetch.get(
             API_URL + `${Endpoints.Dashboard.StatusBitsList}/${uid}`,
@@ -944,9 +944,17 @@ export const handleGetListOfOptions = async (authToken, uid) => {
 
 }
 
-export const handleUpdateOptions = async (authToken, uid, {
-    newMessageFromCustomerNoti, newOrder, upcomingDelivery, newMessageFromCustomerEmail, projectUpdates, cancellation, rescheduleRequest, reminders
-}) => {
+export const handleUpdateNotificationStatus = async (
+    uid,
+    newMessageFromCustomerNoti,
+    newOrder,
+    upcomingDelivery,
+    newMessageFromCustomerEmail,
+    projectUpdates,
+    cancellation,
+    rescheduleRequest,
+    reminders
+) => {
 
     try {
         const formData = new URLSearchParams();
@@ -959,22 +967,35 @@ export const handleUpdateOptions = async (authToken, uid, {
         formData.append('rescheduleRequest', rescheduleRequest);
         formData.append('reminders', reminders);
 
-        const response = await fetch.post(
+        // console.log(formData);
+        // return
+
+        const response = await fetch.put(
             API_URL + `${Endpoints.Dashboard.StatusBitsUpdate}/${uid}`,
+            null,
             formData.toString(),
-            Endpoints.Dashboard.StatusBitsUpdate,
-            authToken,
+            'handleUpdateNotificationStatus',
             ContentTypes.XUrlEncodedFormData,
         )
 
         if (response?.code === 200) {
+            showMessage({
+                message: 'Reminders are updated',
+                type: 'success'
+            })
             return response
         } else if (response?.code === 400) {
-            SimpleToast.show(response?.message)
+            showMessage({
+                message: 'Something went wrong',
+                type: 'danger'
+            })
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        showMessage({
+            message: 'Something went wrong',
+            type: 'danger'
+        })
         console.log(e);
         throw e
     }

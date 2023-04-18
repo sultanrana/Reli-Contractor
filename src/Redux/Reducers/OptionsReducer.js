@@ -1,4 +1,4 @@
-import { OPTIONS } from "../Types";
+import { REMINDERS } from "../Types";
 
 const initialState = {
     options: null
@@ -7,7 +7,7 @@ const initialState = {
 const OptionsReducer = (state = initialState, action = {}) => {
     switch (action.type) {
 
-        case OPTIONS:
+        case REMINDERS:
             return {
                 ...state,
                 options: action.payload,

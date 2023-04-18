@@ -11,38 +11,59 @@ import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithService from '../../Components/ProjectBoxWithService';
 import ProjectBoxWithDate from '../../Components/ProjectBoxWithDate';
 import { Images } from '../../Assets/Images/Index';
-import { handleGetDashboardData, handleUserProfile } from '../../API/Config';
+import { handleGetDashboardData, handleGetNotificationStatus, handleUserProfile } from '../../API/Config';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActionNeededProjects, setClaimProjects, setUserData } from '../../Redux/Actions';
+import { setActionNeededProjects, setClaimProjects, setReminders, setUserData } from '../../Redux/Actions';
 import Loader from '../../Components/Loader';
 import { useIsFocused } from '@react-navigation/native';
 import { API_URL, IMAGES_URL } from '../../API/Constants';
 import moment from 'moment-timezone';
 import { vs } from 'react-native-size-matters';
 import OutlinedButton from '../../Components/OutlinedButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({ navigation }) => {
 
-  const dispatch = useDispatch()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
   const AppColors = Colors(scheme)
   const [isLoading, setIsLoading] = useState(true)
   const [sectionOne, setSectionOne] = useState([])
+  const isFocused = useIsFocused()
+  const dispatch = useDispatch()
 
   const { claim, actionNeeded } = useSelector(state => state.Projects)
   const { token } = useSelector(state => state.Index)
+  const { userData } = useSelector(state => state.Index)
 
-
-
-  useEffect(() => {
-    getUserDetails()
-  }, [])
-  const isFocused = useIsFocused()
   useEffect(() => {
     getProjects()
-  }, [isFocused])
+    getUserDetails()
+    if (userData) {
+      getStatuses()
+    }
+  }, [isFocused, userData])
+
+
+  const getStatuses = async () => {
+    handleGetNotificationStatus(token, userData?._id).then(async ({ data }) => {
+      // console.log('./././././', data);
+      await AsyncStorage.setItem('newMsg', JSON.stringify(data?.newMessageFromCustomerNoti))
+      const body = {
+        newMessageFromCustomerNoti: data?.newMessageFromCustomerNoti,
+        newOrder: data?.newOrder,
+        upcomingDelivery: data?.upcomingDelivery,
+        newMessageFromCustomerEmail: data?.newMessageFromCustomerEmail,
+        projectUpdates: data?.projectUpdates,
+        cancellation: data?.cancellation,
+        rescheduleRequest: data?.rescheduleRequest,
+        reminders: data?.reminders
+      }
+      dispatch(setReminders(body))
+
+    })
+  }
 
   const getUserDetails = () => {
     handleUserProfile().then((res) => {

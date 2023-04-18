@@ -28,6 +28,8 @@ const MainStack = () => {
 
 
     const { tab } = useSelector(state => state.Projects)
+    const { options } = useSelector(state => state.Options)
+
     const scheme = useColorScheme()
     const AppColors = Colors(scheme)
     const routeNameRef = useRef()
@@ -104,9 +106,11 @@ const MainStack = () => {
             //   PushNotificationIOS.removeEventListener(type);
             // };
             let cS = await AsyncStorage.getItem('currentScreen')
+            let nM = await AsyncStorage.getItem('newMsg')
             console.log({ cS });
+            console.log(nM);
             if (remoteMessage) {
-                if (cS != 'Message') {
+                if (cS != 'Message' && nM=='true') {
                     showNotification(remoteMessage)
                 }
             }
@@ -174,9 +178,9 @@ const MainStack = () => {
         };
     }, []);
 
-    useEffect(() => {
-        // console.log({ tab });
-    }, [tab])
+    // useEffect(() => {
+    //     console.log({ tab });
+    // }, [tab])
 
 
     return (
