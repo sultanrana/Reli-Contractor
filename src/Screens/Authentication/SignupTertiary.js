@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, Dimensions, SafeAreaView, Platform } from 'react-native';
-import SimpleToast from 'react-native-simple-toast';
 import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service'
 import { useDispatch, useSelector } from 'react-redux';
@@ -216,7 +215,7 @@ const SignupTertiary = ({ navigation, route }) => {
     <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <LogoOver navigation={navigation} shouldShowBack={true}  border={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { paddingBottom: '37%' }]}>
 
         <FlatList

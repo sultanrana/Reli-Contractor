@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
@@ -25,7 +24,9 @@ const ResetPassword = ({ navigation, route }) => {
   const [inputs, setInputs] = useState({
     password: ''
   })
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    password: null
+  })
   const [isPassVisible, setIsPassVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const scheme = useColorScheme()
@@ -46,11 +47,9 @@ const ResetPassword = ({ navigation, route }) => {
     if (!inputs.password) {
       handleError('*Please provide your password', 'password')
       valid = false
-    } else if (inputs.password.length < 6) {
-      handleError('*Password should contain at least 6 characters', 'password')
-      valid = false
-    } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password)) == false) {
-      handleError(`*Password doesn't match the criteria of 1 uppercase, 1 lowercase & number`, 'password')
+    } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password) && inputs.password.length > 6) == false) {
+      handleError('*Please make sure the password meets all of the criteria below:\n- At least 1 lowercase letter\n- At least 1 UPPERCASE letter\n- At least 1 number\n- At least 6 characters', 
+      'password')
       valid = false
     }
 
@@ -101,7 +100,7 @@ const ResetPassword = ({ navigation, route }) => {
     <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} />
+      <LogoOver navigation={navigation} shouldShowBack={false} border={false} />
       <View style={[AppStyles.HorizontalStyle]}>
         <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
           Set Password

@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-
+import React from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList, FlatList } from 'react-native';
 
 import { FontSize } from '../../Theme/FontSize';
-import Colors, { colors } from '../../Theme/Colors';
+import Colors from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
-import ProjectBoxWithService from '../../Components/ProjectBoxWithService';
-import ContainedButton from '../../Components/ContainedButton';
-import FinanceBox from '../../Components/FinanceBox';
 import { useSelector } from 'react-redux';
 import { Icons } from '../../Assets/Images/Index';
 

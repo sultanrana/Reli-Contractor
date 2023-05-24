@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, useColorScheme, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
 
 import { FontSize } from '../Theme/FontSize';
-import Colors, { colors } from '../Theme/Colors';
+import Colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
 import { windowWidth } from '../Constants/Constants';

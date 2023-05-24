@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Text, View, Image, Keyboard, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 
@@ -12,6 +11,7 @@ import Colors from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { handleContactUs } from '../../API/Config';
+import { dynamicSize, dynamicVerticalSize } from '../../Helpers/Resposive';
 
 const ContactUs = ({ navigation }) => {
 
@@ -108,24 +108,28 @@ const ContactUs = ({ navigation }) => {
                             height: 20,
                             tintColor: AppColors.Primary
                         }}
-                        dropDownContainerStyle={{
-                            backgroundColor: AppColors.White,
-                            // borderColor: valueRequired ? colors.Reddish : "#4B5563",
-                            width: "100%",
-                            alignSelf: 'center',
-                        }}
+                        
                         arrowIconContainerStyle={{
                             backgroundColor: AppColors.White,
                             justifyContent: 'center',
                         }}
-                        style={{
-                            // borderColor: valueRequired ? colors.Reddish : colors.grayish,
+                        dropDownContainerStyle={{
                             backgroundColor: AppColors.White,
                             width: "100%",
-                            minHeight: 40,
-                            height: 56,
                             alignSelf: 'center',
-                            borderRadius: 8
+                            borderWidth: dynamicSize(1),
+                            borderColor: Colors(scheme).DarkGrey,
+                        }}
+                        style={{
+                            backgroundColor: AppColors.White,
+                            width: "100%",
+                            alignSelf: 'center',
+                            borderWidth: dynamicSize(1),
+                            borderColor: Colors(scheme).DarkGrey,
+                            paddingHorizontal: dynamicSize(12),
+                            elevation: 0,
+                            borderRadius: dynamicSize(10),
+                            height: dynamicVerticalSize(55)
                         }}
                         containerStyle={{
                             marginTop: 3,

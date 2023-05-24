@@ -22,6 +22,7 @@ import { handleUpdateStaffMember } from '../../API/Config';
 import { ShowErrorMessage, ShowSuccessMessage } from '../../Components/InfoMsg';
 import MediaOptions from '../../Components/MediaOptions';
 import { Media } from '../../Helpers/MediaProvider';
+import { dynamicSize, dynamicVerticalSize } from '../../Helpers/Resposive';
 
 const Edit = ({ navigation }) => {
 
@@ -351,26 +352,27 @@ const Edit = ({ navigation }) => {
             height: 20,
             tintColor: AppColors.Primary
           }}
-          dropDownContainerStyle={{
-            backgroundColor: AppColors.White,
-            // borderColor: valueRequired ? colors.Reddish : "#4B5563",
-            width: "100%",
-            alignSelf: 'center',
-          }}
           arrowIconContainerStyle={{
             backgroundColor: AppColors.White,
             justifyContent: 'center',
           }}
-          style={{
-            // borderColor: valueRequired ? colors.Reddish : colors.grayish,
-            borderWidth: 0.75,
-            borderColor: AppColors.Black,
+          dropDownContainerStyle={{
             backgroundColor: AppColors.White,
             width: "100%",
-            minHeight: 40,
-            height: 56,
             alignSelf: 'center',
-            borderRadius: 8
+            borderWidth: dynamicSize(1),
+            borderColor: Colors(scheme).DarkGrey,
+          }}
+          style={{
+            backgroundColor: AppColors.White,
+            width: "100%",
+            alignSelf: 'center',
+            borderWidth: dynamicSize(1),
+            borderColor: Colors(scheme).DarkGrey,
+            paddingHorizontal: dynamicSize(12),
+            elevation: 0,
+            borderRadius: dynamicSize(10),
+            height: dynamicVerticalSize(55)
           }}
           containerStyle={{
             marginTop: 3,
@@ -381,62 +383,6 @@ const Edit = ({ navigation }) => {
             fontSize: 14,
           }}
         />
-
-        {/* <View style={{ marginVertical: 12 }} /> */}
-        {/* <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Status'}</Text>
-        <DropDownPicker
-          closeAfterSelecting={true}
-          open={openStatus}
-          setOpen={setOpenStatus}
-          value={status}
-          setValue={setStatus}
-          items={statusList}
-          setItems={setStatusList}
-          listMode="SCROLLVIEW"
-          dropDownMaxHeight={50}
-          // scrollViewProps={{
-          //     nestedScrollEnabled: true,
-          // }}
-          placeholder={"Employee Status"}
-          placeholderStyle={{ color: AppColors.Grey }}
-          arrowIconStyle={{
-            width: 20,
-            height: 20,
-            tintColor: AppColors.Grey,
-            alignSelf: 'center',
-          }}
-          tickIconStyle={{
-            width: 20,
-            height: 20,
-            tintColor: AppColors.Primary
-          }}
-          dropDownContainerStyle={{
-            backgroundColor: AppColors.White,
-            // borderColor: valueRequired ? colors.Reddish : "#4B5563",
-            width: "100%",
-            alignSelf: 'center',
-          }}
-          arrowIconContainerStyle={{
-            backgroundColor: AppColors.White,
-            justifyContent: 'center',
-          }}
-          style={{
-            backgroundColor: AppColors.White,
-            width: "100%",
-            minHeight: 40,
-            height: 56,
-            alignSelf: 'center',
-            borderRadius: 8
-          }}
-          containerStyle={{
-            marginTop: 3,
-            zIndex: 999
-          }}
-          textStyle={{
-            color: AppColors.Black,
-            fontSize: 14,
-          }}
-        /> */}
 
         <View style={{ marginVertical: 12 }} />
         <ContainedButton

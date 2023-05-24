@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import SimpleToast from 'react-native-simple-toast';
 import {
   Text,
   View,

@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, FlatList, SafeAreaView, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
-import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
 
 import { FontSize } from '../../Theme/FontSize';
-import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
@@ -28,7 +25,7 @@ const ThankyouForSignup = ({ navigation, route }) => {
 
   return (
     <View style={[AppStyles.CommonScreenStyles,]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} />
+      <LogoOver navigation={navigation} shouldShowBack={false}  border={false} />
 
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle, { justifyContent: 'center' }]}>
         <KeyboardAwareScrollView contentContainerStyle={{ height: '100%', justifyContent:'center'}} showsVerticalScrollIndicator={false} >

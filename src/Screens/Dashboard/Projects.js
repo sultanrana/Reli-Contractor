@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, Dimensions, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'

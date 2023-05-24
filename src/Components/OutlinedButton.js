@@ -5,23 +5,25 @@ import colors from '../Theme/Colors'
 import { FontSize } from '../Theme/FontSize'
 import { Icons } from '../Assets/Images/Index'
 import { References } from '../Constants/References'
+import { dynamicSize, getFontSize } from '../Helpers/Resposive'
 
 const OutlinedButton = ({ style, onPress, navigation, labelStyle, label, rightIcon, scheme = 'light' }) => {
 
     const styles = StyleSheet.create({
         mainContainer: {
-            height: 56,
             alignItems: 'center',
             borderWidth: 1,
             borderColor: colors(scheme).Border,
             flexDirection: 'row',
-            borderRadius: 10,
             paddingHorizontal: 20,
-            justifyContent: rightIcon ? 'space-between' : 'center'
+            justifyContent: rightIcon ? 'space-between' : 'center',
+            height: dynamicSize(64),
+            borderRadius: dynamicSize(10),
         },
         btnText: {
-            fontFamily: Fonts.Medium,
-            fontSize: FontSize.xlarge,
+            fontSize: getFontSize(18),
+            fontFamily: Fonts.SemiBold,
+            fontWeight: '500',
             color: colors(scheme).Border,
         },
         btnImage: {

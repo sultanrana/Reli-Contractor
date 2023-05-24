@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions, Keyboard } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
@@ -18,6 +17,7 @@ import { FontSize } from '../../Theme/FontSize';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { vs } from 'react-native-size-matters';
 import { useSelector } from 'react-redux';
+import { dynamicSize, dynamicVerticalSize } from '../../Helpers/Resposive';
 
 
 const SignupPrimary = ({ navigation }) => {
@@ -53,9 +53,8 @@ const SignupPrimary = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   useEffect(() => {
-    console.log({ companies });
-    if (companies && companies?.length > 0) {
 
+    if (companies && companies?.length > 0) {
       const newCompaniesArr = companies.map(({ companyName, _id }) => ({
         label: companyName,
         value: _id
@@ -63,6 +62,14 @@ const SignupPrimary = ({ navigation }) => {
       setPickerCompanies(newCompaniesArr)
     }
   }, [])
+
+  useEffect(() => {
+    if (!!opeCompany) {
+      setOpenAccountType(false)
+    } else if (!!openAccountType) {
+      setOpenCompany(false)
+    }
+  }, [openAccountType, opeCompany])
 
   useEffect(() => {
     if (selectedCompany != '') {
@@ -120,10 +127,13 @@ const SignupPrimary = ({ navigation }) => {
     if (valid) {
       setIsLoading(true)
       handleEmailCheck(inputs.email).then((res) => {
-        if (res) {
+        if (!!res) {
           setTimeout(() => {
             navigation.navigate(References.SignupSecondary, { ...inputs, accountType: selectedAccountType, company: selectedCompany });
           }, 250);
+        } else {
+          handleError('*Email is already registered', 'email')
+          valid = false
         }
       }).finally(() => {
         setIsLoading(false)
@@ -133,7 +143,7 @@ const SignupPrimary = ({ navigation }) => {
 
   return (
     <View style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <LogoOver navigation={navigation} shouldShowBack={true} border={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView
           enableOnAndroid={true}
@@ -257,28 +267,30 @@ const SignupPrimary = ({ navigation }) => {
                   height: 20,
                   tintColor: AppColors.Primary
                 }}
-                dropDownContainerStyle={{
-                  backgroundColor: AppColors.White,
-                  // borderColor: valueRequired ? colors.Reddish : "#4B5563",
-                  width: "100%",
-                  alignSelf: 'center'
-                }}
                 arrowIconContainerStyle={{
                   backgroundColor: AppColors.White,
                   justifyContent: 'center',
                 }}
-                style={{
-                  // borderColor: valueRequired ? colors.Reddish : colors.grayish,
-                  backgroundColor: AppColors.White,
-                  width: "100%",
-                  minHeight: 40,
-                  height: 56,
-                  alignSelf: 'center',
-                  borderRadius: 8,
-                  borderWidth: 0.75
-                }}
                 containerStyle={{
                   marginTop: 4,
+                }}
+                dropDownContainerStyle={{
+                  backgroundColor: AppColors.White,
+                  width: "100%",
+                  alignSelf: 'center',
+                  borderWidth: dynamicSize(1),
+                  borderColor: Colors(scheme).DarkGrey,
+                }}
+                style={{
+                  backgroundColor: AppColors.White,
+                  width: "100%",
+                  alignSelf: 'center',
+                  borderWidth: dynamicSize(1),
+                  borderColor: Colors(scheme).DarkGrey,
+                  paddingHorizontal: dynamicSize(12),
+                  elevation: 0,
+                  borderRadius: dynamicSize(10),
+                  height: dynamicVerticalSize(55)
                 }}
                 textStyle={{
                   color: AppColors.Black,
@@ -325,25 +337,27 @@ const SignupPrimary = ({ navigation }) => {
                   height: 20,
                   tintColor: AppColors.Primary
                 }}
-                dropDownContainerStyle={{
-                  backgroundColor: AppColors.White,
-                  // borderColor: valueRequired ? colors.Reddish : "#4B5563",
-                  width: "100%",
-                  alignSelf: 'center',
-                }}
                 arrowIconContainerStyle={{
                   backgroundColor: AppColors.White,
                   justifyContent: 'center',
                 }}
-                style={{
-                  // borderColor: valueRequired ? colors.Reddish : colors.grayish,
+                dropDownContainerStyle={{
                   backgroundColor: AppColors.White,
                   width: "100%",
-                  minHeight: 40,
-                  height: 56,
                   alignSelf: 'center',
-                  borderRadius: 8,
-                  borderWidth: 0.75,
+                  borderWidth: dynamicSize(1),
+                  borderColor: Colors(scheme).DarkGrey,
+                }}
+                style={{
+                  backgroundColor: AppColors.White,
+                  width: "100%",
+                  alignSelf: 'center',
+                  borderWidth: dynamicSize(1),
+                  borderColor: Colors(scheme).DarkGrey,
+                  paddingHorizontal: dynamicSize(12),
+                  elevation: 0,
+                  borderRadius: dynamicSize(10),
+                  height: dynamicVerticalSize(55)
                 }}
                 containerStyle={{
                   marginTop: 4,
@@ -367,7 +381,7 @@ const SignupPrimary = ({ navigation }) => {
 
 
 
-            <View style={{ width: '100%', marginTop: vs(60), alignSelf: 'center' }}>
+            <View style={{ width: '100%', marginTop: dynamicVerticalSize(60), alignSelf: 'center' }}>
 
               <ContainedButton
                 onPress={onSubmit}

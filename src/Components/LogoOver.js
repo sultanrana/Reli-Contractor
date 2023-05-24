@@ -1,34 +1,19 @@
 import React from 'react';
-import SimpleToast from 'react-native-simple-toast';
-
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    TextInput,
-    TouchableOpacity,
-    useColorScheme,
-    Platform,
-} from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, useColorScheme, Platform } from 'react-native';
 import colors from '../Theme/Colors';
-import Fonts from '../Assets/Fonts/Index';
-import { FontSize } from '../Theme/FontSize';
-import { Icons, Images } from '../Assets/Images/Index';
+import { Icons } from '../Assets/Images/Index';
 import { deviceHeight, StatusbarHeight, windowHeight, windowWidth } from '../Constants/Constants';
 import { SvgXml } from 'react-native-svg';
 
 let headerHeight = deviceHeight - windowHeight + StatusbarHeight;
 headerHeight += (Platform.OS === 'ios') ? 70 : -6
 
-// console.log('.......', Platform.OS, headerHeight);
-
 const LogoOver =
     ({
         navigation,
-        // scheme = 'light',
         isBack = false,
-        shouldShowBack = true
+        shouldShowBack = true,
+        border = true
 
     }) => {
 
@@ -42,12 +27,10 @@ const LogoOver =
             mainContainer: {
                 width: windowWidth,
                 height: headerHeight + StatusbarHeight,
-                borderBottomWidth: 1,
+                borderBottomWidth: !!border ? 1: 0,
                 borderBottomColor: AppColors.DateBackground,
                 paddingTop: StatusbarHeight + ((windowHeight * 2) / 100),
-                // position:'absolute',
                 top:0
-                // backgroundColor: 'pink'
             },
             image: {
                 width: (windowWidth * 20) / 100,

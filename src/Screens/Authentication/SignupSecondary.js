@@ -1,20 +1,17 @@
-import React, { useRef, useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Text, View, TouchableOpacity, useColorScheme } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
 import LogoOver from '../../Components/LogoOver';
 import RangeSlider from '../../Components/Slider/Index';
 import { FontSize } from '../../Theme/FontSize';
-import { LayoutStyles } from '../../Theme/Layout';
 import Colors from '../../Theme/Colors';
 import { References } from '../../Constants/References';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import { Keyboard } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
+import { dynamicSize, dynamicVerticalSize, getFontSize } from '../../Helpers/Resposive';
 
 const SignupSecondary = ({ navigation, route }) => {
 
@@ -24,15 +21,16 @@ const SignupSecondary = ({ navigation, route }) => {
     apartment: '',
     travel: '0',
   })
-  const [errors, setErrors] = useState({})
-  const [address, setAddress] = useState('');
-  const [apartment, setApartment] = useState('');
-  const [travel, setTravel] = useState(0);
+  const [errors, setErrors] = useState({
+    address: null,
+    apartment: null,
+    travel: null,
+  })
+  const [isKO, setIsKO] = useState(false)
   const addressRef = useRef()
   const unitRef = useRef()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
-  const AppColors = Colors(scheme)
 
 
   const handleOnChange = (text, input) => {
@@ -42,22 +40,20 @@ const SignupSecondary = ({ navigation, route }) => {
   const handleError = (errorMsg, input) => {
     setErrors(prevState => ({ ...prevState, [input]: errorMsg }))
   }
+
   const onSubmit = () => {
     let valid = true
     Keyboard.dismiss()
-    if (!inputs.address) {
+    if (!!!inputs.address) {
       handleError('*Please provide valid address', 'address')
       valid = false
     }
-    if (!inputs.apartment) {
+    if (!!!inputs.apartment) {
       handleError('*Please provide valid apartment', 'apartment')
       valid = false
     }
     if (inputs.travel === '0') {
-      showMessage({
-        message: '*Please choose a distance',
-        type: 'danger',
-      })
+      handleError('*Travel Radius is required to continue the sign up process', 'travel')
       valid = false
     }
     if (valid) {
@@ -76,17 +72,46 @@ const SignupSecondary = ({ navigation, route }) => {
 
   }
 
+  const renderBottom = useCallback(() => {
+    return (
+      <View style={[AppStyles.HorizontalStyle, { width: '100%', marginTop: dynamicSize(24), bottom: 0, flex: 1 }]}>
+        <ContainedButton
+          onPress={onSubmit}
+          label="Continue"
+        />
+
+        <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+          <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+            Already have an account?
+            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }, [scheme, onSubmit, isKO])
+
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', () => {
+      setIsKO(true)
+    })
+    Keyboard.addListener('keyboardDidHide', () => {
+      setIsKO(false)
+    })
+    return () => {
+      Keyboard.removeAllListeners()
+    }
+  }, [])
+
   return (
     <View style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <LogoOver navigation={navigation} shouldShowBack={true} border={false} />
       <View style={[AppStyles.HorizontalStyle]}>
 
         <KeyboardAwareScrollView
           enableOnAndroid={true}
-          // extraHeight={130} extraScrollHeight={130}
-          // contentContainerStyle={{ paddingBottom: 10, }}
-          showsVerticalScrollIndicator={false} >
-          <>
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flexGrow: 1 }}>
+          <View>
             <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
             </Text>
@@ -127,7 +152,7 @@ const SignupSecondary = ({ navigation, route }) => {
               }}
             />
 
-            <Text allowFontScaling={false} style={{ textAlign: 'left', width: '100%', fontFamily: Fonts.Regular, color: AppColors.BlackGreyish, marginTop:20 }}>
+            <Text allowFontScaling={false} style={{ fontSize: getFontSize(13), color: Colors(scheme).Black, fontFamily: Fonts.SemiBold, fontWeight: '500', marginTop: 20 }}>
               Willing to travel
             </Text>
 
@@ -136,27 +161,34 @@ const SignupSecondary = ({ navigation, route }) => {
               to={150}
               step={5}
               distance={(val) => {
-                handleOnChange(JSON.stringify(val), 'travel')
+                handleOnChange(`${val}`, 'travel')
+                handleError(null, 'travel')
               }}
             />
 
-          </>
+            {
+              (!!errors?.travel) &&
+              <Text
+                allowFontScaling={false}
+                style={{ fontSize: FontSize.small, color: 'red', fontFamily: Fonts.Medium, marginTop: dynamicSize(8) }}>
+                {`* Travel Radius is required to continue the sign up process`}
+              </Text>
+            }
 
+            <View style={{
+              marginVertical: dynamicVerticalSize(16)
+            }}>
+
+              {
+                renderBottom()
+              }
+
+            </View>
+          </View>
         </KeyboardAwareScrollView>
-      </View>
-      <View style={[AppStyles.HorizontalStyle, { width: '100%', position: 'absolute', bottom: '4%', alignSelf: 'center' }]}>
-        <ContainedButton
-          onPress={onSubmit}
-          label="Continue"
-        />
 
-        <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-          <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-            Already have an account?
-            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-          </Text>
-        </TouchableOpacity>
       </View>
+
     </View>
   );
 

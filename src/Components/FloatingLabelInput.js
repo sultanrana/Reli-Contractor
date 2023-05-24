@@ -1,14 +1,9 @@
 import React from 'react';
-import SimpleToast from 'react-native-simple-toast';
-
 import {
   StyleSheet,
   useColorScheme,
-  View,
 } from 'react-native';
 import Colors from '../Theme/Colors';
-import Fonts from '../Assets/Fonts/Index';
-import { FontSize } from '../Theme/FontSize';
 import { TextInput } from 'react-native-paper';
 
 const FloatingLabelInput =

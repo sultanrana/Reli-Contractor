@@ -4,6 +4,7 @@ import { s, vs, ms, mvs } from 'react-native-size-matters';
 import Fonts from "../Assets/Fonts/Index";
 import Colors from "./Colors";
 import { FontSize } from "./FontSize";
+import { dynamicVerticalSize, getFontSize } from "../Helpers/Resposive";
 
 const CommonStyles = StyleSheet.create({
     AuthScreens: {
@@ -39,11 +40,14 @@ const LightStyles = StyleSheet.create({
         // paddingBottom: 8
     },
     AuthScreenTitle: {
-        margin: 24,
-        fontSize: FontSize.xxxlarge,
+        marginHorizontal: 24,
+        marginTop: 24,
+        marginBottom: dynamicVerticalSize(10),
+        fontSize: getFontSize(20),
         fontFamily: Fonts.SemiBold,
         color: Colors('light').TextTitle,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: '600'
     },
 })
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
@@ -20,6 +19,7 @@ import { Keyboard } from 'react-native';
 import { useRef } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { useEffect } from 'react';
+import { dynamicSize, dynamicVerticalSize, getFontSize } from '../../Helpers/Resposive';
 
 const LoginSecondary = ({ navigation, route }) => {
 
@@ -82,13 +82,13 @@ const LoginSecondary = ({ navigation, route }) => {
 
   const styles = StyleSheet.create({
     emailTextView: {
-      height: 40,
-      borderRadius: 50,
+      height: dynamicVerticalSize(53),
+      minWidth: dynamicSize(108),
+      borderRadius: dynamicSize(25),
       backgroundColor: '#FDECDF',
       alignItems: 'center',
       justifyContent: 'center',
-      opacity: 0.5,
-      marginBottom: 20,
+      marginBottom: dynamicVerticalSize(24),
       alignSelf: 'center',
       padding: 8,
       paddingHorizontal: 16,
@@ -96,16 +96,16 @@ const LoginSecondary = ({ navigation, route }) => {
 
     },
     emailText: {
+      fontWeight: '400',
       textAlign: 'center',
+      fontSize: getFontSize(18),
       color: Colors(scheme).Primary,
-      fontFamily: Fonts.SemiBold,
-      fontSize: 14,
     },
   });
 
   return (
     <View pointerEvents={isLoading ? 'none' : 'auto'} style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <LogoOver navigation={navigation} shouldShowBack={true} border={false}/>
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
 
         <KeyboardAwareScrollView
@@ -145,7 +145,6 @@ const LoginSecondary = ({ navigation, route }) => {
               Keyboard.dismiss()
             }}
           />
-          <View style={{ marginVertical: 10 }} />
           <ContainedButton
             onPress={onSubmit}
             label="Continue"
@@ -154,7 +153,7 @@ const LoginSecondary = ({ navigation, route }) => {
 
 
           <TouchableOpacity onPress={() => navigation.navigate(References.ForgotPassword)} style={{ alignSelf: 'center' }}>
-            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular }}>
+            <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, marginTop: 24, fontFamily: Fonts.Regular, fontSize: getFontSize(16), fontWeight: '500' }}>
               Forgot Password
             </Text>
           </TouchableOpacity>

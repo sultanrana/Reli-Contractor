@@ -11,6 +11,7 @@ import { References } from '../Constants/References'
 import { useDispatch, useSelector } from 'react-redux';
 import { handleGetAllCompanies } from '../API/Config';
 import { setCompaniesData, setFcm } from '../Redux/Actions';
+import { dynamicSize, dynamicVerticalSize, getFontSize } from '../Helpers/Resposive';
 
 
 const Splash = ({ navigation }) => {
@@ -60,29 +61,27 @@ const Splash = ({ navigation }) => {
     return (
         <View style={{ height: '100%', flexDirection: 'column', width: '100%', backgroundColor: Colors(scheme).Primary, alignItems: 'center', justifyContent: 'center' }}>
 
-            <View style={{ flex: 1, flexDirection: 'column' }}>
+            
 
-            </View>
-
-            <View style={{ flex: 2, flexDirection: 'column', justifyContent: 'center' }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
 
                 <Image source={Images.Logo} style={{
-                    width: 200, height: 200, tintColor: 'white'
+                    width: dynamicSize(152), height: dynamicVerticalSize(52), tintColor: 'white'
                 }} resizeMode='contain' resizeMethod='resize' />
 
             </View>
 
 
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end', paddingVertical: 24 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end', position: 'absolute', bottom: dynamicVerticalSize(98), left: 0, right: 0 }}>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 
                     <Text allowFontScaling={false} style={{
-                        fontFamily: Fonts.SemiBold,
                         textAlignVertical: 'center',
                         marginHorizontal: 2,
                         color: Colors(scheme).White,
-                        fontSize: FontSize.xlarge
+                        fontSize: getFontSize(28),
+                        fontWeight: '600'
                     }}>
                         {'For Contractors'}
                     </Text>

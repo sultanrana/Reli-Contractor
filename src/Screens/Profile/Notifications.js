@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList } from 'react-native';
 
 

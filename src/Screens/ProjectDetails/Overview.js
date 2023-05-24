@@ -5,8 +5,6 @@ import firestore from '@react-native-firebase/firestore'
 import moment from 'moment-timezone';
 import { useIsFocused } from '@react-navigation/native';
 import { vs } from 'react-native-size-matters';
-import SimpleToast from 'react-native-simple-toast';
-
 import ContainedButton from '../../Components/ContainedButton'
 import { FontSize } from '../../Theme/FontSize';
 import Colors from '../../Theme/Colors';

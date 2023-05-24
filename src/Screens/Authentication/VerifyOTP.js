@@ -16,6 +16,7 @@ import { setAuthToken, setUserData } from '../../Redux/Actions';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { vs } from 'react-native-size-matters';
+import { dynamicSize } from '../../Helpers/Resposive';
 
 const VerifyOTP = ({ navigation, route }) => {
 
@@ -118,7 +119,7 @@ const VerifyOTP = ({ navigation, route }) => {
     <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} />
+      <LogoOver navigation={navigation}  border={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,]}>
         <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
           Enter Verification Code
@@ -142,8 +143,7 @@ const VerifyOTP = ({ navigation, route }) => {
             Keyboard.dismiss()
           }}
         />
-        <View style={{ marginTop:vs(12) }} />
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: !!(errors?.code)? 0: dynamicSize(-16) }}>
           <Text allowFontScaling={false} style={{
             fontSize: FontSize.medium,
             fontFamily: Fonts.Light,
@@ -177,7 +177,7 @@ const VerifyOTP = ({ navigation, route }) => {
               </TouchableOpacity>
           }
         </View>
-        <View style={{ marginVertical: 10 }} />
+        <View style={{ marginVertical: dynamicSize(8) }} />
         <ContainedButton
           onPress={verifyOTP}
           label="Continue"

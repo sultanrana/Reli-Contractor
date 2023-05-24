@@ -1,23 +1,17 @@
 import React from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import {
     StyleSheet,
     Text,
     View,
     Image,
-    TextInput,
-    TouchableOpacity,
     useColorScheme,
-    FlatList,
 } from 'react-native';
-import colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { FontSize } from '../Theme/FontSize';
-import { Icons, Images } from '../Assets/Images/Index';
+import { Icons } from '../Assets/Images/Index';
 import Colors from '../Theme/Colors';
 import { GetStyles } from '../Theme/AppStyles';
-import ContainedButton from './ContainedButton';
 
 const Types = {
     WindowProject: "WINDOW_PROJECT",

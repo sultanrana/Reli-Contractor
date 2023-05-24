@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Keyboard, Platform } from 'react-native';
-import SimpleToast from 'react-native-simple-toast';
 import { request, check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -136,7 +135,7 @@ const LoginPrimary = ({ navigation }) => {
 
   return (
     <View style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={false} />
+      <LogoOver navigation={navigation} shouldShowBack={false} border={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'} >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
@@ -159,7 +158,6 @@ const LoginPrimary = ({ navigation }) => {
             returnKeyType={'done'}
             onSubmitEditing={() => Keyboard.dismiss()}
           />
-          <View style={{ marginVertical: 10 }} />
           <ContainedButton
             onPress={() => {
               onSubmit()

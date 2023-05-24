@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
 
 import {
   StyleSheet,
@@ -12,6 +11,7 @@ import {
 import Colors from '../Theme/Colors';
 import Fonts from '../Assets/Fonts/Index';
 import { FontSize } from '../Theme/FontSize';
+import { dynamicSize, dynamicVerticalSize, getFontSize } from '../Helpers/Resposive';
 
 const InputField =
   ({
@@ -51,12 +51,12 @@ const InputField =
         flexDirection: 'row',
         width: '100%',
         backgroundColor: Colors(scheme).White,
-        borderWidth: 0.75,
-        borderColor: Colors(scheme).Black,
-        paddingHorizontal: 8,
+        borderWidth: dynamicSize(1),
+        borderColor: Colors(scheme).DarkGrey,
+        paddingHorizontal: dynamicSize(12),
         elevation: 0,
-        borderRadius: 8,
-        height: 56
+        borderRadius: dynamicSize(10),
+        height: dynamicVerticalSize(55)
       },
       icon: {
         height: '100%',
@@ -96,7 +96,7 @@ const InputField =
             margin: 4,
 
           }}>
-            <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{title}</Text>
+            <Text allowFontScaling={false} style={{ fontSize: getFontSize(13), color: Colors(scheme).Black, fontFamily: Fonts.SemiBold, fontWeight: '500', }}>{title}</Text>
           </View>
         }
         <View style={[styles.mainContainer, customStyle]}>

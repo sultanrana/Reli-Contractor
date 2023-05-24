@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView } from 'react-native';
-import ContainedButton from '../../Components/ContainedButton'
-import InputField from '../../Components/InputField'
+import React from 'react';
+import { View, useColorScheme } from 'react-native';
 import LogoOver from '../../Components/LogoOver';
-
-import { FontSize } from '../../Theme/FontSize';
 import Colors, { colors } from '../../Theme/Colors';
 import { References } from '../../Constants/References';
-import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import Edit from './Edit';
 import Schedule from './Schedule';

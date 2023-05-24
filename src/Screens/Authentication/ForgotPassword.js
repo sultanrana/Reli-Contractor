@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-
 import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SafeAreaView, Dimensions } from 'react-native';
 import ContainedButton from '../../Components/ContainedButton'
 import InputField from '../../Components/InputField'
@@ -14,6 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Keyboard } from 'react-native';
 import { handleForgotPassword } from '../../API/Config';
 import { EMAIL_REG } from '../../Constants/Constants';
+import { dynamicVerticalSize, getFontSize } from '../../Helpers/Resposive';
 
 
 const ForgotPassword = ({ navigation, route }) => {
@@ -89,7 +88,7 @@ const ForgotPassword = ({ navigation, route }) => {
     <View
       pointerEvents={isLoading ? 'none' : 'auto'}
       style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={true} />
+      <LogoOver navigation={navigation} shouldShowBack={true} border={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle,]}>
         <KeyboardAwareScrollView contentContainerStyle={{ height: '100%' }} showsVerticalScrollIndicator={false} >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
@@ -114,20 +113,17 @@ const ForgotPassword = ({ navigation, route }) => {
               Keyboard.dismiss()
             }}
           />
-          <View style={{ marginVertical: 10 }} />
           <ContainedButton
             onPress={forgotPassword}
             label="Continue"
             loading={isLoading}
           />
-          <View style={{ width: '100%', position: 'absolute', bottom: 50, alignSelf: 'center' }}>
+          <View style={{ width: '100%', position: 'absolute', bottom: dynamicVerticalSize(69), alignSelf: 'center' }}>
 
-            <TouchableOpacity style={{ alignSelf: 'center' }} onPress={
-              () => {
-                navigation.navigate(References.ContactUs)
-              }
-            }>
-              <Text allowFontScaling={false} style={{ color: AppColors.Primary, fontFamily: Fonts.Regular }}>
+            <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => {
+              navigation.navigate(References.ContactUs)
+            }}>
+              <Text allowFontScaling={false} style={{ color: AppColors.Primary, fontFamily: Fonts.Regular, fontSize: getFontSize(18), fontWeight: '500' }}>
                 Contact Support
               </Text>
             </TouchableOpacity>

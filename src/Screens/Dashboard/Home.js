@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import SimpleToast from 'react-native-simple-toast';
-import { Text, View, Image, StyleSheet, TouchableOpacity, useColorScheme, SectionList, SafeAreaView, } from 'react-native';
-
-// ------------------------------------------
+import { Text, View, useColorScheme, SectionList } from 'react-native';
 import LogoOver from '../../Components/LogoOver';
 import { FontSize } from '../../Theme/FontSize';
-import Colors, { colors } from '../../Theme/Colors';
+import Colors from '../../Theme/Colors';
 import Fonts from '../../Assets/Fonts/Index';
 import { GetStyles } from '../../Theme/AppStyles';
 import ProjectBoxWithService from '../../Components/ProjectBoxWithService';
@@ -15,13 +12,12 @@ import { handleGetDashboardData, handleGetNotificationStatus, handleUserProfile 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActionNeededProjects, setClaimProjects, setReminders, setUserData } from '../../Redux/Actions';
-import Loader from '../../Components/Loader';
 import { useIsFocused } from '@react-navigation/native';
-import { API_URL, IMAGES_URL } from '../../API/Constants';
+import { IMAGES_URL } from '../../API/Constants';
 import moment from 'moment-timezone';
-import { vs } from 'react-native-size-matters';
 import OutlinedButton from '../../Components/OutlinedButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { dynamicSize } from '../../Helpers/Resposive';
 
 const Home = ({ navigation }) => {
 
@@ -48,7 +44,6 @@ const Home = ({ navigation }) => {
 
   const getStatuses = async () => {
     handleGetNotificationStatus(token, userData?._id).then(async ({ data }) => {
-      // console.log('./././././', data);
       await AsyncStorage.setItem('newMsg', JSON.stringify(data?.newMessageFromCustomerNoti))
       const body = {
         newMessageFromCustomerNoti: data?.newMessageFromCustomerNoti,
@@ -72,11 +67,7 @@ const Home = ({ navigation }) => {
   }
 
   const getProjects = async () => {
-    // setIsLoading(is => ((!actionNeeded || !claim) && !is))
     handleGetDashboardData(token).then(({ data }) => {
-      // console.log('./././././',data);
-      // console.log('./././././',data[0]?.actionNeededOrders);
-      // console.log('./././././',data[0]?.claimOrders);
       const { actionNeededOrders, claimOrders } = data[0]
       setSectionOne(claimOrders)
       dispatch(setClaimProjects(claimOrders.length > 3 ? claimOrders.slice(0, 3) : claimOrders))
@@ -160,11 +151,6 @@ const Home = ({ navigation }) => {
   </Text>;
 
   const renderSectionFooter = ({ section }) => {
-    // console.log({section});
-    // if (Data[0].data.length === 0 && Data[0].data.length === 0 && isLoading) {
-    //   return <Loader loading={isLoading} />
-    // }
-
     if (section.data.length === 0 && !isLoading) {
       return <EmptySectionMessage />
     }
@@ -189,10 +175,6 @@ const Home = ({ navigation }) => {
   return (
     <View style={[AppStyles.CommonScreenStyles, { backgroundColor: AppColors.Background }]}>
       <LogoOver navigation={navigation} shouldShowBack={false} bgWhite />
-
-
-
-
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <SectionList
           stickySectionHeadersEnabled={false}
@@ -205,6 +187,7 @@ const Home = ({ navigation }) => {
               fontFamily: Fonts.SemiBold,
               fontSize: FontSize.xxlarge,
               color: AppColors.TextTitle,
+              marginTop: dynamicSize(16)
             }}>
               {title}
             </Text>
@@ -216,23 +199,6 @@ const Home = ({ navigation }) => {
             renderSectionFooter
 
           }
-        // ListEmptyComponent={() => {
-        //   if (!isLoading) {
-        //     return (
-        //       <Text style={{
-        //         fontFamily: Fonts.Light,
-        //         fontSize: FontSize.large,
-        //         color: AppColors.DarkGrey,
-        //         marginTop: vs(300),
-        //         textAlign: 'center',
-        //         alignSelf: 'center',
-        //       }}>
-        //         {'No Projects Found'}
-        //       </Text>
-        //     )
-        //   }
-        //   return null
-        // }}
         />
       </View>
 

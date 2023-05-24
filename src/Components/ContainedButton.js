@@ -1,24 +1,26 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, Image, View, ActivityIndicator } from 'react-native'
-import Fonts from '../Assets/Fonts/Index'
 import colors from '../Theme/Colors'
+import { dynamicSize, dynamicVerticalSize, getFontSize } from '../Helpers/Resposive'
+import Fonts from '../Assets/Fonts/Index'
 
 const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', disabled = false, loading = false, renderLeft }) => {
 
     const styles = StyleSheet.create({
         mainContainer: {
-            height: 56,
+            height: dynamicSize(64),
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: colors(scheme).Primary,
             flexDirection: 'row',
-            borderRadius: 10,
+            borderRadius: dynamicSize(10),
             elevation: 2
         },
         btnText: {
             color: colors(scheme).White,
-            fontSize: 15,
-            fontFamily: Fonts.SemiBold
+            fontSize: getFontSize(18),
+            fontFamily: Fonts.SemiBold,
+            fontWeight: '500'
         },
         btnImage: {
             height: 35,
@@ -44,7 +46,6 @@ const ContainedButton = ({ style, onPress, labelStyle, label, scheme = 'light', 
                 <ActivityIndicator size={'small'} color={'white'} style={{ marginRight: 16, marginLeft: 8 }} />
                 :
                 <Text allowFontScaling={false} style={[styles.btnText, labelStyle]}>{label}</Text>
-
             }
 
 

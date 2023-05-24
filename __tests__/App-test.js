@@ -4,7 +4,7 @@
 
 import 'react-native';
 import React from 'react';
-import SimpleToast from 'react-native-simple-toast';
+import  from 'react-native-simple-toast';
 
 import App from '../App';
 
