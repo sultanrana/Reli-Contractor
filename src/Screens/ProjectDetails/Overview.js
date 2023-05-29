@@ -117,6 +117,7 @@ const Overview = ({ navigation }) => {
   })
 
   useEffect(() => {
+    console.log('v details', details);
     setIsButtonDisabled(false)
 
     if (projectData?.requestStatus !== 'Accepted' && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
@@ -307,6 +308,7 @@ const Overview = ({ navigation }) => {
   }
 
   const onAcceptProject = async () => {
+    console.log('onAcceptProject');
     setLoading(true)
     handleChangeProjectStatusRequest(token, id, 'Accepted').finally(() => {
       loadData()
@@ -333,7 +335,7 @@ const Overview = ({ navigation }) => {
       newStatus = isAdmin ? ProjectStatuses.Scheduled : ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
       newStatus = isAdmin ? ProjectStatuses.Assigned : ProjectStatuses.Ordered
-    } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
+    } else if (projectData?.orderStatus === ProjectStatuses.Assigned || projectData?.orderStatus === 'Accepted') {
       newStatus = ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
       newStatus = ProjectStatuses.Enroute
