@@ -320,8 +320,12 @@ const Overview = ({ navigation }) => {
 
   const changeStatus = async () => {
     let newStatus = ''
+      console.log('yahan aya'  , projectData?.orderStatus);
+      console.log('yahan aya'  , ProjectStatuses?.Pending);
 
     if ((projectData?.requestStatus !== 'Accepted') && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
+      console.log('yahan aya nhi aya');
+
       onAcceptProject()
       return
     }
@@ -447,7 +451,7 @@ const Overview = ({ navigation }) => {
               disabled={isButtonDisabled}
             />
 
-          }
+            }
           <View style={styles.reminderContainer}>
             <Text allowFontScaling={false} style={styles.reminderTitle}>{'Reminder'}</Text>
             <Text allowFontScaling={false} style={styles.reminderDesc}>{'You must be able to schedule the project in a period listed above'}</Text>

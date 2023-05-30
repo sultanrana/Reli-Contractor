@@ -183,15 +183,15 @@ const Finances = ({ navigation }) => {
         borderRadius: 16,
         height: 104,
         marginTop: 10,
-      }}>
-        <View style={{ width: '25%', justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: AppColors.Background, elevation: 1 }}>
+      }}> */}
+        {/* <View style={{ width: '25%', justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: AppColors.Background, elevation: 1 }}>
           <Image source={Icons.Projects} style={{
             width: 48,
             height: 48,
             tintColor: AppColors.Primary
           }} />
-        </View>
-        <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
+        </View> */}
+        {/* <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
           <View style={{
             marginVertical: 4
           }}>
