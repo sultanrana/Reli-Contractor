@@ -117,6 +117,7 @@ const Overview = ({ navigation }) => {
   })
 
   useEffect(() => {
+    console.log('v details', details);
     setIsButtonDisabled(false)
 
     if (projectData?.requestStatus !== 'Accepted' && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {
@@ -307,6 +308,7 @@ const Overview = ({ navigation }) => {
   }
 
   const onAcceptProject = async () => {
+    console.log('onAcceptProject');
     setLoading(true)
     handleChangeProjectStatusRequest(token, id, 'Accepted').finally(() => {
       loadData()
@@ -318,8 +320,12 @@ const Overview = ({ navigation }) => {
 
   const changeStatus = async () => {
     let newStatus = ''
+      console.log('yahan aya'  , projectData?.orderStatus);
+      console.log('yahan aya'  , ProjectStatuses?.Pending);
 
     if ((projectData?.requestStatus !== 'Accepted') && (projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned)) {
+      console.log('yahan aya nhi aya');
+
       onAcceptProject()
       return
     }
@@ -333,7 +339,7 @@ const Overview = ({ navigation }) => {
       newStatus = isAdmin ? ProjectStatuses.Scheduled : ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Scheduled) {
       newStatus = isAdmin ? ProjectStatuses.Assigned : ProjectStatuses.Ordered
-    } else if (projectData?.orderStatus === ProjectStatuses.Assigned) {
+    } else if (projectData?.orderStatus === ProjectStatuses.Assigned || projectData?.orderStatus === 'Accepted') {
       newStatus = ProjectStatuses.Ordered
     } else if (projectData?.orderStatus === ProjectStatuses.Ordered) {
       newStatus = ProjectStatuses.Enroute
@@ -445,7 +451,7 @@ const Overview = ({ navigation }) => {
               disabled={isButtonDisabled}
             />
 
-          }
+            }
           <View style={styles.reminderContainer}>
             <Text allowFontScaling={false} style={styles.reminderTitle}>{'Reminder'}</Text>
             <Text allowFontScaling={false} style={styles.reminderDesc}>{'You must be able to schedule the project in a period listed above'}</Text>
