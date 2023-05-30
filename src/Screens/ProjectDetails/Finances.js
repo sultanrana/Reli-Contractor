@@ -219,7 +219,7 @@ const Finances = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={{
+      {/* <View style={{
         backgroundColor: '#FAFAFA',
         borderWidth: 1,
         borderColor: '#E0E0E0',
@@ -297,7 +297,7 @@ const Finances = ({ navigation }) => {
               }}>{details?.dateSelection[0]}</Text>
           </Text>
         </View>
-      </View>
+      </View> */}
 
       <View style={{
         backgroundColor: '#FAFAFA',
