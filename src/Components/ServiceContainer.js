@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet, useColorScheme, Dimensions, FlatList } from 'react-native';
-
+import React from 'react';
+import { Text, View, Image, StyleSheet, useColorScheme } from 'react-native';
 import { FontSize } from '../Theme/FontSize';
-import Colors, { colors } from '../Theme/Colors';
-import Fonts from '../Assets/Fonts/Index';
 import { GetStyles } from '../Theme/AppStyles';
 import { Images } from '../Assets/Images/Index';
-import { API_URL, IMAGES_URL } from '../API/Constants';
+import { IMAGES_URL } from '../API/Constants';
+import Colors from '../Theme/Colors';
+import Fonts from '../Assets/Fonts/Index';
 
 const ServiceContainer = ({ Details }) => {
 
@@ -14,14 +13,7 @@ const ServiceContainer = ({ Details }) => {
     const AppStyles = GetStyles(scheme)
     const AppColors = Colors(scheme)
 
-    function capitalizeFirstLetter(str) {
-
-        // converting first letter to uppercase
-        const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
-    
-        return capitalized;
-    }
-    
+    const capitalizeFirstLetter = str => !!str ? str.charAt(0).toUpperCase() + str.slice(1): `-`
 
     const styles = StyleSheet.create({
         serviceContainer: {
