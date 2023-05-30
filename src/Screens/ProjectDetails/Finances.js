@@ -195,7 +195,7 @@ const Finances = ({ navigation }) => {
                   fontSize: FontSize.large,
                   fontFamily: Fonts.Regular,
                   color: AppColors.TextTitle,
-                }}>{details?.orderdetails[0].property._id}</Text>
+                }}>{details?.orderdetails[0]?.property?._id}</Text>
             </Text>
 
           </View>
@@ -219,7 +219,7 @@ const Finances = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={{
+      {/* <View style={{
         backgroundColor: '#FAFAFA',
         borderWidth: 1,
         borderColor: '#E0E0E0',
@@ -230,15 +230,15 @@ const Finances = ({ navigation }) => {
         borderRadius: 16,
         height: 104,
         marginTop: 10,
-      }}>
-        <View style={{ width: '25%', justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: AppColors.Background, elevation: 1 }}>
+      }}> */}
+        {/* <View style={{ width: '25%', justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: AppColors.Background, elevation: 1 }}>
           <Image source={Icons.Projects} style={{
             width: 48,
             height: 48,
             tintColor: AppColors.Primary
           }} />
-        </View>
-        <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
+        </View> */}
+        {/* <View style={{ width: '75%', justifyContent: 'center', paddingHorizontal: 8 }}>
           <View style={{
             marginVertical: 4
           }}>
@@ -296,8 +296,8 @@ const Finances = ({ navigation }) => {
                 color: AppColors.TextTitle,
               }}>{details?.dateSelection[0]}</Text>
           </Text>
-        </View>
-      </View>
+        </View> */}
+      {/* </View> */}
 
       <View style={{
         backgroundColor: '#FAFAFA',
