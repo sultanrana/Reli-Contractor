@@ -37,7 +37,7 @@ const References = {
     ProjectDetails: 'ProjectDetails',
 
     //Notifications
-    UnReadNotifications: 'Unread',
+    UnReadNotifications: 'New',
     ReadNotifications: 'Read',
 
     //Account

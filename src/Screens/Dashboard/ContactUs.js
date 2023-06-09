@@ -159,7 +159,7 @@ const ContactUs = ({ navigation }) => {
                     onFocus={() => {
                         handleError(null, 'msg')
                     }}
-                    placeholder="Type your message here..."
+                    placeholder="Type your message..."
                     keyboardType='default'
                     multiline={true}
                     customStyle={{ height: 124 }}

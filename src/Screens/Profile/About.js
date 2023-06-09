@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logout, setAuthToken } from '../../Redux/Actions';
 import { handleDeleteAccount } from '../../API/Config';
 import { Alert } from 'react-native';
+import { getFontSize } from '../../Helpers/Resposive';
 
 const About = ({ navigation }) => {
 
@@ -25,10 +26,7 @@ const About = ({ navigation }) => {
   const { userData } = useSelector(state => state.Index)
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
-
-  // useEffect(() => {
-  //   console.log({userData});
-  // }, [])
+  
 
   const onLogout = async () => {
     setIsLoading(true)
@@ -93,6 +91,13 @@ const About = ({ navigation }) => {
       color: AppColors.Danger,
       alignSelf: 'center',
       marginTop: 25
+    },
+    Version: {
+      fontFamily: Fonts.Regular,
+      fontSize: getFontSize(14),
+      color: AppColors.DarkGrey,
+      alignSelf: 'center',
+      marginVertical: 16
     }
   })
 
@@ -161,6 +166,8 @@ const About = ({ navigation }) => {
         <TouchableOpacity onPress={showDeleteDialog}>
           <Text allowFontScaling={false} style={styles.DeleteBtn}>{'Delete Account'}</Text>
         </TouchableOpacity>
+
+        <Text allowFontScaling={false} style={styles.Version}>{'Version 1.0 (1)'}</Text>
       </>
     )
   }

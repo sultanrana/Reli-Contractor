@@ -121,10 +121,10 @@ const LoginPrimary = ({ navigation }) => {
     Keyboard.dismiss()
     let valid = true
     if (!inputs.email) {
-      handleError('*Please provide your email', 'email')
+      handleError('*Please enter your email to continue', 'email')
       valid = false
     } else if (EMAIL_REG.test(inputs.email) == false) {
-      handleError('*Please provide your email and try again', 'email')
+      handleError('*Please check your entry and try again', 'email')
       valid = false
     }
     if (valid) {
