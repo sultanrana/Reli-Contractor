@@ -48,7 +48,7 @@ const ResetPassword = ({ navigation, route }) => {
       handleError('*Please provide your password', 'password')
       valid = false
     } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password) && inputs.password.length > 6) == false) {
-      handleError('*Please make sure the password meets all of the criteria below:\n- At least 1 lowercase letter\n- At least 1 UPPERCASE letter\n- At least 1 number\n- At least 6 characters', 
+      handleError('*Please make sure the password meets all of the criteria below,\n- At least 1 lowercase letter\n- At least 1 UPPERCASE letter\n- At least 1 number\n- At least 6 characters', 
       'password')
       valid = false
     }

@@ -113,7 +113,7 @@ const LoginSecondary = ({ navigation, route }) => {
           keyboardShouldPersistTaps={'handled'}
         >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
-            Contractor Sign In
+            Contractor SignIn
           </Text>
           {email ?
             <View style={styles.emailTextView}>

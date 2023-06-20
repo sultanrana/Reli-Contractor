@@ -34,6 +34,7 @@ const SignupPrimary = ({ navigation }) => {
   const [selectedCompany, setSelectedCompany] = useState('')
 
   const { companies } = useSelector(state => state.CompaniesData)
+  const { location } = useSelector(state => state.Location)
 
 
   const [inputs, setInputs] = useState({
@@ -53,7 +54,6 @@ const SignupPrimary = ({ navigation }) => {
   const AppColors = Colors(scheme)
 
   useEffect(() => {
-
     if (companies && companies?.length > 0) {
       const newCompaniesArr = companies.map(({ companyName, _id }) => ({
         label: companyName,
@@ -83,7 +83,11 @@ const SignupPrimary = ({ navigation }) => {
   }, [selectedAccountType, selectedCompany])
 
   const handleOnChange = (text, input) => {
-    setInputs(prevState => ({ ...prevState, [input]: text }))
+    if (input === 'firstname' || input === 'lastname') {
+      setInputs(prevState => ({ ...prevState, [input]: text.replace(/\s/g, '') }))
+    } else {
+      setInputs(prevState => ({ ...prevState, [input]: text }))
+    }
   }
 
   const handleError = (errorMsg, input) => {
@@ -102,20 +106,17 @@ const SignupPrimary = ({ navigation }) => {
       valid = false
     }
     if (!inputs.email) {
-      handleError('*Please provide your email', 'email')
+      handleError('*Please enter your email to continue.', 'email')
       valid = false
     } else if (EMAIL_REG.test(inputs.email) == false) {
-      handleError('*Please provide your email and try again', 'email')
+      handleError('*Please check your entry and try again', 'email')
       valid = false
     }
     if (!inputs.password) {
       handleError('*Please provide your password', 'password')
       valid = false
-    } else if (inputs.password.length < 6) {
-      handleError('*Password should contain at least 6 characters', 'password')
-      valid = false
     } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password)) == false) {
-      handleError(`*Password doesn't match the criteria of 1 uppercase, 1 lowercase & number`, 'password')
+      handleError('*Please make sure the password meets all of the criteria below,\n- At least 1 lowercase letter\n- At least 1 UPPERCASE letter\n- At least 1 number\n- At least 6 characters', 'password')
       valid = false
     } else if (selectedAccountType == '') {
       handleError(`*Please select your account type`, 'accountType')

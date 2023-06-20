@@ -21,6 +21,7 @@ import Colors from '../Theme/Colors';
 import { setDetailsTab, setProjectID } from '../Redux/Actions';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WebviewComponent from '../Screens/Profile/WebView';
 
 const Stack = createStackNavigator()
 
@@ -110,7 +111,7 @@ const MainStack = () => {
             console.log({ cS });
             console.log(nM);
             if (remoteMessage) {
-                if (cS != 'Message' && nM=='true') {
+                if (cS != 'Message' && nM == 'true') {
                     showNotification(remoteMessage)
                 }
             }
@@ -239,6 +240,10 @@ const MainStack = () => {
                 <Stack.Screen
                     name={References.ContactUs}
                     component={ContactUs} />
+
+                <Stack.Screen
+                    name={References.WebView}
+                    component={WebviewComponent} />
 
             </Stack.Navigator>
         </NavigationContainer>

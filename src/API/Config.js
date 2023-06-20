@@ -483,7 +483,7 @@ export const handleDeleteAccount = async (userId) => {
     try {
         const response = await fetch.del(
             API_URL + '/' + `${Endpoints.AuthProfile.DeleteAccount}/${userId}`,
-            'Delete Account',
+            'Warning',
         )
 
         if (response?.code === 200) {

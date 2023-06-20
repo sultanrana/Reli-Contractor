@@ -26,7 +26,7 @@ const About = ({ navigation }) => {
   const { userData } = useSelector(state => state.Index)
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
-  
+
 
   const onLogout = async () => {
     setIsLoading(true)
@@ -46,16 +46,16 @@ const About = ({ navigation }) => {
 
   const showDeleteDialog = () => {
     Alert.alert(
-      "Delete Account!",
+      "Warning!",
       'Are you sure you want to delete your account?',
       [
         {
-          text: 'NO',
+          text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
-          text: 'YES',
+          text: 'Confirm',
           onPress: () => {
             onDeleteAccount()
           },
@@ -136,6 +136,7 @@ const About = ({ navigation }) => {
         <ContainedButton
           label="FAQ"
           style={{ marginTop: 29 }}
+          onPress={() => navigation.navigate(References.WebView, { title: 'FAQ' })}
         />
         <ContainedButton
           label="Contact Us"
@@ -145,10 +146,12 @@ const About = ({ navigation }) => {
         <OutlinedButton
           label={'Privacy'}
           style={{ marginTop: 16, }}
+          onPress={() => navigation.navigate(References.WebView, { title: 'Privacy Policy' })}
         />
         <OutlinedButton
           label={'Terms'}
           style={{ marginTop: 16, }}
+          onPress={() => navigation.navigate(References.WebView, { title: 'Terms & Conditions' })}
         />
         {/* <TouchableOpacity onPress={onLogout}>
           <Text allowFontScaling={false} style={[styles.DeleteBtn, {

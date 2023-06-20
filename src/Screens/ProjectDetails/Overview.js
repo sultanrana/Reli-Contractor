@@ -117,7 +117,8 @@ const Overview = ({ navigation }) => {
   })
 
   useEffect(() => {
-    console.log('v details', details);
+    // console.log('v details', details);
+    console.log('./././././',userData?.accountType);
     setIsButtonDisabled(false)
 
     if (projectData?.requestStatus !== 'Accepted' && ((projectData?.orderStatus === ProjectStatuses.Pending || projectData?.orderStatus === ProjectStatuses.Unassigned))) {

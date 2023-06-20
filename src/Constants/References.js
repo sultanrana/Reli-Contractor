@@ -49,6 +49,7 @@ const References = {
     NewNumber: 'NewNumber',
     NewPassword: 'NewPassword',
     ContactUs: 'ContactUs',
+    WebView: 'WebView',
 
     StaffTabs: 'Staff Details',
     ScheduleStaff: 'Schedule',

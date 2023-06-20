@@ -157,7 +157,7 @@ const SignupTertiary = ({ navigation, route }) => {
   };
 
   const onSubmit = (info = null) => {
-    console.log('creating account...');
+    console.log('creating account...',location);
     // console.log(
     //   email,
     //   password,

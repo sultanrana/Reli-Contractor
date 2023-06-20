@@ -139,7 +139,7 @@ const LoginPrimary = ({ navigation }) => {
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
         <KeyboardAwareScrollView keyboardShouldPersistTaps={'handled'} >
           <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
-            Contractor Sign In
+            Contractor SignIn
           </Text>
 
           <InputField
