@@ -118,13 +118,14 @@ const SignupPrimary = ({ navigation }) => {
     } else if ((REGEX_PASS_1.test(inputs.password) && REGEX_PASS_2.test(inputs.password) && REGEX_PASS_3.test(inputs.password)) == false) {
       handleError('*Please make sure the password meets all of the criteria below,\n- At least 1 lowercase letter\n- At least 1 UPPERCASE letter\n- At least 1 number\n- At least 6 characters', 'password')
       valid = false
-    } else if (selectedAccountType == '') {
-      handleError(`*Please select your account type`, 'accountType')
-      valid = false
-    } else if (selectedCompany == '') {
-      handleError(`*Please select your company`, 'company')
-      valid = false
-    }
+    } 
+    // else if (selectedAccountType == '') {
+    //   handleError(`*Please select your account type`, 'accountType')
+    //   valid = false
+    // } else if (selectedCompany == '') {
+    //   handleError(`*Please select your company`, 'company')
+    //   valid = false
+    // }
     if (valid) {
       setIsLoading(true)
       handleEmailCheck(inputs.email).then((res) => {
@@ -154,7 +155,8 @@ const SignupPrimary = ({ navigation }) => {
         >
           <>
             <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
-              Sign Up
+            Contractor Sign Up
+
             </Text>
 
             <InputField
@@ -240,7 +242,7 @@ const SignupPrimary = ({ navigation }) => {
               }}
             />
 
-            <View style={{ height: 100, justifyContent: 'flex-start', flexDirection: 'column', zIndex: 1, marginTop: 3 }}>
+            {/* <View style={{ height: 100, justifyContent: 'flex-start', flexDirection: 'column', zIndex: 1, marginTop: 3 }}>
               <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Company'}</Text>
               <DropDownPicker
                 closeAfterSelecting={true}
@@ -308,9 +310,9 @@ const SignupPrimary = ({ navigation }) => {
                 </View>
               }
 
-            </View>
+            </View> */}
 
-            <View style={{ height: 100, justifyContent: 'flex-start', flexDirection: 'column', zIndex: openAccountType ? 2 : 0, marginTop: 3 }}>
+            {/* <View style={{ height: 100, justifyContent: 'flex-start', flexDirection: 'column', zIndex: openAccountType ? 2 : 0, marginTop: 3 }}>
               <Text allowFontScaling={false} style={{ fontSize: FontSize.medium, color: Colors(scheme).Black, fontFamily: Fonts.SemiBold }}>{'Account Type'}</Text>
               <DropDownPicker
                 closeAfterSelecting={true}
@@ -378,25 +380,25 @@ const SignupPrimary = ({ navigation }) => {
                 </View>
               }
 
-            </View>
+            </View> */}
 
 
 
-            <View style={{ width: '100%', marginTop: dynamicVerticalSize(60), alignSelf: 'center' }}>
+              <View style={{ width: '100%', marginTop: dynamicVerticalSize(60), alignSelf: 'center' }}>
 
-              <ContainedButton
-                onPress={onSubmit}
-                label="Continue"
-                loading={isLoading}
-              />
+                <ContainedButton
+                  onPress={onSubmit}
+                  label="Continue"
+                  loading={isLoading}
+                />
 
-              <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
-                <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
-                  Already have an account?
-                  <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
-                </Text>
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity onPress={() => navigation.navigate(References.LoginPrimary)} style={{ alignSelf: 'center' }}>
+                  <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+                    Already have an account?
+                    <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.Medium }}> Sign In</Text>
+                  </Text>
+                </TouchableOpacity>
+              </View>
           </>
         </KeyboardAwareScrollView>
       </View>

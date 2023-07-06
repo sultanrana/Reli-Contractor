@@ -59,7 +59,7 @@ const LoginSecondary = ({ navigation, route }) => {
       valid = false
     }
     if (valid) {
-      setIsLoading(true)
+      // setIsLoading(true)
       handleLogin(email, inputs.password, fcmToken).then(async (data) => {
         if (data) {
           await AsyncStorage.setItem('token', '' + data?.token).then(() => {
@@ -70,6 +70,10 @@ const LoginSecondary = ({ navigation, route }) => {
               routes: [{ name: References.DashboardStack }],
             })
           })
+        }
+        else{
+          // setIsLoading(true)
+          handleError('*Please check your email and password, then try again', 'password')
         }
       }).finally(() => {
         setIsLoading(false)
@@ -105,7 +109,7 @@ const LoginSecondary = ({ navigation, route }) => {
 
   return (
     <View pointerEvents={isLoading ? 'none' : 'auto'} style={[AppStyles.CommonScreenStyles]}>
-      <LogoOver navigation={navigation} shouldShowBack={true} border={false}/>
+      <LogoOver navigation={navigation} shouldShowBack={true} border={false} />
       <View style={[AppStyles.CommonScreenStyles, AppStyles.HorizontalStyle]}>
 
         <KeyboardAwareScrollView
@@ -157,6 +161,17 @@ const LoginSecondary = ({ navigation, route }) => {
               Forgot Password
             </Text>
           </TouchableOpacity>
+          <View style={{ width: '100%', marginTop: dynamicVerticalSize(240), alignSelf: 'center' }}>
+
+
+
+            <TouchableOpacity onPress={() => navigation.navigate(References.SignupPrimary)} style={{ alignSelf: 'center' }}>
+              <Text allowFontScaling={false} style={{ marginTop: 30, color: Colors(scheme).Text, fontFamily: Fonts.Light }}>
+              Don't have an account? 
+    <Text allowFontScaling={false} style={{ color: Colors(scheme).Primary, fontFamily: Fonts.SemiBold }}> Sign Up</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAwareScrollView>
       </View>
     </View>

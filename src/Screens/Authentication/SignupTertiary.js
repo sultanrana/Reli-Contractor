@@ -39,7 +39,7 @@ import { Images } from '../../Assets/Images/Index';
 
 const SignupTertiary = ({ navigation, route }) => {
 
-  const { email, password, firstname, lastname, address, apartment, travel, accountType, company } = route?.params || ''
+  const { email, password, firstname, lastname, address, apartment, travel, company } = route?.params || ''
   const { location } = useSelector(state => state.Location)
   const [services, setServices] = useState([])
   const [selectedServices, setSelectedServices] = useState([])
@@ -79,7 +79,7 @@ const SignupTertiary = ({ navigation, route }) => {
   // }))
 
   const checkIsPermission = () => {
-    if (services.length === 0) {
+    if (selectedServices.length === 0) {
       showMessage({
         message: '*Please choose at least one service',
         type: 'danger'
@@ -167,9 +167,13 @@ const SignupTertiary = ({ navigation, route }) => {
     //   address,
     //   apartment,
     //   travel,
-    //   info ? info.coords.latitude : location.coords.latitude,
-    //   info ? info.coords.longitude : location.coords.longitude,
-    //   services);
+    //   32.1877,
+    //   74.1945,
+    //   // info ? info.coords.latitude : location.coords.latitude,
+    //   // info ? info.coords.longitude : location.coords.longitude,
+    //   services,
+    //   company
+    //   );
     setIsLoading(true)
     handleRegister(
       email,
@@ -183,11 +187,10 @@ const SignupTertiary = ({ navigation, route }) => {
       info != null ? info.coords.latitude : location.coords.latitude,
       info != null ? info.coords.latitude : location.coords.latitude,
       selectedServices,
-      accountType,
       company
     ).then(async (data) => {
       if (data) {
-        // console.log('...................', data);
+        console.log('...................', data);
         showMessage({
           message: data?.message,
           type: 'success',

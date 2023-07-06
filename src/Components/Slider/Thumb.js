@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     backgroundColor: colors.Primary,
     shadowColor: "#000000",
-    shadowOffset: { width: 0, height: -1 },
+    // shadowOffset: { width: 0, height: -1 },
     shadowOpacity: 0.16,
     shadowRadius: 6
   }

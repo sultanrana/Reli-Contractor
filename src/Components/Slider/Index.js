@@ -36,17 +36,21 @@ const RangeSlider = ({ from, to, distance = () => { }, step, unit='m' }) => {
 
   return (
     <>
+     <View style={{alignItems: 'flex-end'}}>
+        <Label text={`${low ? low :  0}${unit}`} />
+      </View>
       <RangeSliderRN
         min={from}
         max={to}
         step={step}
+        floatingLabel
         // floatingLabel
         renderThumb={renderThumb}
         renderRail={renderRail}
         renderRailSelected={renderRailSelected}
         disableRange
-        renderLabel={renderLabel}
-        renderNotch={renderNotch}
+        // renderLabel={renderLabel}
+        // renderNotch={renderNotch}
         onValueChanged={handleValueChange}
         
       />

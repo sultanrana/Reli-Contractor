@@ -31,11 +31,11 @@ export const handleLogin = async (email, password, fcm) => {
         if (response?.code === 200) {
 
             return response?.data
-        } else if (response?.code === 400) {
-            showMessage({
-                message: response?.message,
-                type: 'danger',
-            })
+        } else if (response?.code === 400) {    
+            // showMessage({
+            //     message: response?.message,
+            //     type: 'danger',
+            // })
             return null
         }
     } catch (e) {
@@ -50,7 +50,8 @@ export const handleLogin = async (email, password, fcm) => {
 }
 
 //Register
-export const handleRegister = async (email, password, fName, lName, type, address, apartment, distance, lat, long, services, accountType, company) => {
+export const handleRegister = async (email, password, fName, lName, type, address, apartment, distance, lat, long, services, company) => {
+   console.log('company',company);
     const formData = new URLSearchParams();
     formData.append('email', email);
     formData.append('password', password);
@@ -58,20 +59,22 @@ export const handleRegister = async (email, password, fName, lName, type, addres
     formData.append('lastName', lName);
     formData.append('userType', type);
     formData.append('address', address);
-    formData.append('accountType', accountType);
-    formData.append('company', company);
     formData.append('appartment', apartment);
     formData.append('willingRange', distance);
-    formData.append('lat', lat);
+    // formData.append('company', company);
+    formData.append('lat', lat );
     formData.append('lng', long);
     for (var i = 0; i < services.length; i++) {
         // console.log(services[i]);
         formData.append('services[]', services[i]);
     }
 
+
     // console.log(formData);
     // return
     try {
+            console.log(formData);
+
         const response = await fetch.post(
             API_URL + '/' + Endpoints.AuthProfile.Signup,
             formData.toString(),
@@ -83,6 +86,13 @@ export const handleRegister = async (email, password, fName, lName, type, addres
         if (response?.code === 200) {
             return response
         } else if (response?.code === 400) {
+            showMessage({
+                message: response?.message,
+                type: 'danger',
+            })
+            return null
+        }
+        else if (response?.code === 500) {
             showMessage({
                 message: response?.message,
                 type: 'danger',
@@ -518,7 +528,7 @@ export const handleGetAllCompanies = async () => {
             return null
         }
     } catch (e) {
-        SimpleToast.show(e?.message)
+        SimpleToast.show('Please check your internet connection')
         console.log(e);
         throw e
     }

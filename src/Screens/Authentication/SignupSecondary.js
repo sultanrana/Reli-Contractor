@@ -15,20 +15,23 @@ import { dynamicSize, dynamicVerticalSize, getFontSize } from '../../Helpers/Res
 
 const SignupSecondary = ({ navigation, route }) => {
 
-  const { email, password, firstname, lastname, accountType, company } = route?.params || ''
+  const { email, password, firstname, lastname } = route?.params || ''
   const [inputs, setInputs] = useState({
     address: '',
     apartment: '',
+    company:'',
     travel: '0',
   })
   const [errors, setErrors] = useState({
     address: null,
     apartment: null,
     travel: null,
+    company:null
   })
   const [isKO, setIsKO] = useState(false)
   const addressRef = useRef()
   const unitRef = useRef()
+  const companyRef = useRef()
   const scheme = useColorScheme()
   const AppStyles = GetStyles(scheme)
 
@@ -47,9 +50,13 @@ const SignupSecondary = ({ navigation, route }) => {
     if (!!!inputs.address) {
       handleError('*Please provide valid address', 'address')
       valid = false
-    }
+    } 
     if (!!!inputs.apartment) {
       handleError('*Please provide valid apartment', 'apartment')
+      valid = false
+    }
+    if (!!!inputs.company) {
+      handleError('*Please select your company', 'company')
       valid = false
     }
     if (inputs.travel === '0') {
@@ -62,8 +69,8 @@ const SignupSecondary = ({ navigation, route }) => {
         password: password,
         firstname: firstname,
         lastname: lastname,
-        accountType: accountType,
-        company: company,
+        // accountType: accountType,
+        company: inputs.company,
         address: inputs.address,
         apartment: inputs.apartment,
         travel: inputs.travel
@@ -115,6 +122,24 @@ const SignupSecondary = ({ navigation, route }) => {
             <Text allowFontScaling={false} style={[AppStyles.AuthScreenTitle]}>
               Where do you work?
             </Text>
+
+            <InputField
+              fieldRef={companyRef}
+              title="Company Name"
+              value={inputs.company}
+              onChangeText={(val) => {
+                handleOnChange(val, 'company')
+              }}
+              error={errors.company}
+              onFocus={() => {
+                handleError(null, 'company')
+              }}
+              placeholder="Construction Co"
+              returnKeyType={'done'}
+              onSubmitEditing={() => {
+                Keyboard.dismiss()
+              }}
+            />
 
             <InputField
               fieldRef={addressRef}
